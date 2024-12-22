@@ -13,9 +13,10 @@ export default function Home() {
 
   return (
     <>
-      <div className=" h-auto w-full">
-      <BgHeader/>
+      <div className=" h-auto w-full bg-main">
+        <BgHeader/>
       </div>
     </>
   );
 }
+// bg-main

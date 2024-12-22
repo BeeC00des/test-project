@@ -1,5 +1,9 @@
 "use client";
 import Image from "next/image"
+import { useState } from "react";
+import "./GradientMask.css"
+
+
 
 type card = {
     numberTitle: string
@@ -11,30 +15,44 @@ type card = {
 
 function SettleCard({ numberTitle, text, unit, img }: card) {
 
-    console.log("from card compontent");
+    const [currentMask, setCurrentMask] = useState(0);
+
+    const handleRectangleClick = () => {
+        setCurrentMask((prevMask) => (prevMask + 1) % 3);
+    };
+
+    console.log("from mask card compontent");
 
     return (
-        <div className="lg:w-10/12 sm:w-full h-[7000px] sm:mx-5 lg:mx-auto lg:my-20 border border-white rounded-xl ">
-            <div className=" flex px-3 py-10 justify-center items-end">
-                <div className="text-left lg:w-8/12 border border-red-500">
+        <div>
 
-                    <div className=" px-5 lex justify-betweem items-center">
-                        <div>
-                            <h1 className="text-[80px] font-bold text-white">{numberTitle}</h1>
-                            <p className="text-[60px] text-white capitilize">{unit}</p>
-                        </div>
+            <div className="lg:w-10/12 lg:h-[600px] md:h-[400px] sm:h-[200px] lg:mt-60 md:mt-70 md:w-auto  sm:w-full sm:mx-5 lg:mx-auto rectangle rounded-xl flex justify-center items-center" onClick={handleRectangleClick} >
 
+{/* gradinet */}
+                <div
+                    className={`mask mask1 ${currentMask === 0 ? "active" : ""}`}
+                ></div>
+                <div
+                    className={`mask mask2 ${currentMask === 1 ? "active" : ""}`}
+                ></div>
+                <div
+                    className={`mask mask3 ${currentMask === 2 ? "active" : ""}`}
+                ></div>
+                {/* gradinet */}
 
-                        <div className="flex justify-center items-center">
-                            <Image src={img} alt="settlecCash" width={150} height={150} />
-                            <p className="text-xl font-thin text-white pb-12">{text}</p>
-                        </div>
+                <div className="px-5 lg:flex md:flex justify-betweem items-center lg:w-10/12 rectangle-content">
+                    <div className="relative mt-10 md:mt-0">
+                        <h1 className="lg:text-[80px] md:text-[50px] sm:text-[30px] font-extrabold font-[Rubik] text-white">{numberTitle}</h1>
+                        <p className="lg:text-[60px] sm:text-[25px] md:text-[40px] font-[rubik] font-extrabold text-white uppercase md:pb-5 pb-0">{unit}</p>
+                    </div>
+
+                    <div className="md:pt-10  pt-0 relative">
+                        <Image src={img} alt="items" width={320} height={320} />
+                        <p className="text-2xl font-medium text-white pb-12 w-10/12 hidden md:hidden lg:block absolute lg:top-[240px] md:top-[230px] lg:left-[230px] md:left-30px">{text}</p>
+                       
                     </div>
 
                 </div>
-                {/* <div className="flex justify-left items-center pt-10">
-                    <Image src={img} alt="items" width={320} height={320} />
-                </div> */}
             </div>
         </div>
     );

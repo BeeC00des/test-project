@@ -1,0 +1,157 @@
+/* start merchant */
+.merchant-card{
+  
+  width: 100%;
+  height: 500px; 
+  position: relative;
+  z-index: 1; 
+}
+
+.blur-cardText {
+  color: white;
+  z-index: 2;
+ 
+}
+
+
+.blur-card {
+  border-radius: 972.968px;
+  background: radial-gradient(67.79% 67.79% at 50% 100%, #F5B14D 22.39%, #CF4708 68.21%, #8A2F05 100%);
+  filter: blur(150px);
+  border-radius: 500px;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: 100%;
+  top: 40%;
+  z-index: 2;
+}
+
+/* end merchant card */
+
+/* start homepage */
+
+
+
+/* start dashboard */
+
+/* start section 1 */
+
+.blur-section1{
+  border-radius: 972.968px;
+  background: radial-gradient(67.79% 67.79% at 50% 100%, #F5B14D 22.39%, #CF4708 68.21%, #8A2F05 100%);
+  filter: blur(150px);
+  border-radius: 500px;
+  width: 800px;
+  height: 700px;
+  
+  position: absolute;
+  left: 75%;
+  z-index: 2;
+}
+
+
+.blur-textSection1 {
+  color: white;
+  z-index: 3;
+  position: relative;
+}
+
+/* end section 1 */
+
+/* start section 2 */
+
+.blur-section2{
+  /* border-radius: 972.968px;  */
+  
+  background-image: url('/images/ellipse6.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+   /* radial-gradient(67.79% 67.79% at 50% 100%,#CF4708 68.21%, #F5B14D  100%, #8A2F05 22.39%);
+  filter: blur(150px);
+  width: 1000px;
+  height: 1080px;
+  border-radius: 1375px; */
+  /* position: absolute;
+  top:50%;
+  left: -10%;
+  z-index: 1; */
+}
+
+
+.blur-section2Image{
+  background-image: url('/images/badge.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border:1px solid red;
+  background-position: center center;
+  position: relative;
+  top:-120%;
+  left:5%;
+  z-index:2;
+  width: 800px;
+  height:500px;
+}
+
+.blur-textSection2 {
+  color: white;
+  z-index: 3;
+  position: relative;
+}
+
+
+
+.bg-card{
+  background: linear-gradient(
+    to top right , 
+    rgba(0, 184, 194, 1),
+    rgba(253, 181, 21, 0.5), /* Faint red at top-left */
+     /* Faint blue at bottom-right */
+  );
+
+
+
+}  
+/* end section 2 */
+
+
+
+
+/* start homepage */
+
+/* start Header */
+
+.bg-header {
+  background: radial-gradient(67.79% 67.79% at 50% 100%, #F5B14D 22.39%, #CF4708 68.21%, #8A2F05 100%);
+  filter: blur(75px);
+  border-radius: 1451.702px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 1080px;
+
+}
+
+.bg-headerImage {
+  background-image: url('/images/bg.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+  width: 100%;
+  height: 1200px;
+}
+
+.bg-headerText {
+  position: absolute;
+  text-align: center;
+  top: 10%;
+  left: 20%;
+  z-index: 1;
+}
+
+/* End Header */
+

@@ -1,20 +1,33 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter, Rubik } from "next/font/google";
 import "./globals.css";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
 
+// Load Google Fonts
+const inter = Inter({ 
+  subsets: ["latin"], 
+  variable: "--font-inter" 
+});
 
+const rubik = Rubik({
+   subsets: ["latin"], 
+   variable: "--font-rubik" 
+});
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+// Load Custom Font (Asgard Trial)
+const asgard = localFont({
+  src: "../public/fonts/AsgardTrial-WideXbold.ttf", 
+  variable: "--font-asgard", 
+});
+
+const asgardRegular = localFont({
+  src: "../public/fonts/AsgardTrial-WideRegular.ttf", 
+  variable: "--font-asgard", 
+});
 
  // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+//  className={`${inter.variable} ${rubik.variable} ${asgard} antialiased`}
 
 export const metadata: Metadata = {
   title: "Create Next App",
