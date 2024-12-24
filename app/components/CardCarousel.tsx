@@ -55,7 +55,7 @@ const CardCarousel = ({ cardsData }: CardCarouselProps) => {
         {cardsData.map((card, index) => (
           <div
             key={card.id}
-            className={`flex-shrink-0 w-[90%] md:w-[90%] mr-[4%] md:mr-[1%] ${
+            className={`flex-shrink-0 w-[90%] md:w-[90%] mr-[1%]  ${
               index === currentIndex ? "z-10" : "z-0"
             }`}
           >

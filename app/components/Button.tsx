@@ -1,37 +1,36 @@
 "use client";
-import { useRouter } from 'next/navigation'
+import Image from "next/image";
+
+
 type ButtonProps = {
   label: string;
   type?: "button" | "submit" | "reset"; 
   onClick?: () => void; 
   className?: string; 
+  img:string
+  // isloading: boolean
  
 };
 
-function Button({ label, type = "button", onClick, className, }: ButtonProps) {
+function Button({ label, type = "button", onClick, img, className}: ButtonProps) {
+  // , isloading 
 
-  const router = useRouter();
+  // const router = useRouter();
 
-
-  // if (!router) {
-  //   // If the router is not available, throw an error or handle it gracefully
-  //   throw new Error('NextRouter is not available');
+  // const handleRedirect = () => {
+  //   router.push('/dashboard'); 
+  // onClick={handleRedirect}
   // }
 
-  const handleRedirect = () => {
-    router.push('/dashboard'); 
-  }
-
   return (
-    <div>
-
-      {/* fix scroll redirection */}
+    <div className="flex justify-center items-center">
       <button
         type={type}
-        onClick={handleRedirect}
-        className={`px-10 py-2 my-7 rounded-3xl font-medium text-base text-white border border-white bg-transparent hover:bg-black transition-all duration-300 ${className}`}
+        
+        className={`my-8 rounded-full flex font-light text-white border border-white bg-transparent transition-all duration-300 ${className}`}
         >
-        {label}
+        <Image src={img} alt="downarrow" width={30} height={30}/>
+        <strong className="pl-1 pt-1 text-base">{label}</strong>
       </button>
     </div>
   );

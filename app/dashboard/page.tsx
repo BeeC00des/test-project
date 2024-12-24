@@ -8,6 +8,7 @@ import ShortCard from "../components/Shortcard";
 import InvertCard from "../components/Shortcard2"
 import SettleCard from "../components/SettleCard";
 import MessageCard from "../components/MessageCard";
+import getMerchantData from "../api/page";
 
 import { useEffect, useState } from "react";
 import CardCarousel from "../components/CardCarousel";

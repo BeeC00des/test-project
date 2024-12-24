@@ -17,12 +17,12 @@ const rubik = Rubik({
 
 // Load Custom Font (Asgard Trial)
 const asgard = localFont({
-  src: "../public/fonts/AsgardTrial-WideXbold.ttf", 
+  src: "../public/fonts/asgard/AsgardTrial-FitBold.ttf", 
   variable: "--font-asgard", 
 });
 
 const asgardRegular = localFont({
-  src: "../public/fonts/AsgardTrial-WideRegular.ttf", 
+  src: "../public/fonts/asgard/AsgardTrial-FitRegular.ttf", 
   variable: "--font-asgard", 
 });
 
