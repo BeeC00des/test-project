@@ -100,17 +100,6 @@ function Card({ transparentText, numberTitle, subTitle, text, unit, img }: CardP
                             {text}
                         </p>
 
-                        {/* Loading and Error States */}
-                        {loading && <p className="text-white">Loading...</p>}
-                        {error && <p className="text-red-500">{error}</p>}
-
-                        {/* Merchant Data */}
-                        {merchantData && (
-                            <div className="text-white">
-                                <p>Merchant Name: {merchantData.data.business_name}</p>
-                                <p>Collection Number: {merchantData.data.best_collection_month_value}</p>
-                            </div>
-                        )}
                     </div>
                     <div className="hidden md:flex justify-left items-center pt-10">
                         <Image src={img} alt="items" width={320} height={320} />

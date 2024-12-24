@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Card from "../components/Card"; // Import Card component
+import Card from "../components/Card"; 
 
 type CardData = {
   id: number;
