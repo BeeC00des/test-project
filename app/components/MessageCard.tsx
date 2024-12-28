@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image"
-import { useRouter } from 'next/navigation'
+import useScrollAnimations from "./scrollAnimation";
 
 type CardProps = {
     title: string
@@ -12,33 +12,33 @@ type CardProps = {
 
 
 function MessageCard({ title, subTitle, text, ratings, img }: CardProps) {
-    const router = useRouter();
-    
-
-  const handleRedirect = () => {
-    router.push('/dashboard'); 
 
 
-  }
-
-    console.log("from card compontent");
+    useScrollAnimations(); // Activate scroll animations
 
     return (
-        <div className="lg:w-5/12 lg:h-[550px] h-auto sm:w-full mx-10 lg:mx-auto lg:mt-40 md:mt-44 lg:mb-44 flex justify-center items-center">
-            <div className="flex justify-center items-center lg:w-full ">
-                <div className="text-white text-center ">
-                    <Image src={img} alt="items" width={200} height={200} className="thumb" />
-                    <h3 className="text-lg md:text-2xl font-medium py-3">{subTitle}</h3>
-                    <h1 className="text-[35px] md:text-[60px] capitalize font-[asgard]  font-bold pb-3 ">{title}</h1>
-                    <div className="relative h-10">
-                        <Image src={ratings} alt="star" width={90} height={32} className="absolute top-0 lg:left-[240px] 
-                        md:left-[320px] left-[70px]" />
+        <div className="h-auto lg:h-[800px] w-full flex justify-center items-center bg-sectionMsg md:p-0 p-5">
+            <div className="flex flex-col justify-center items-center w-full text-center text-white">
+                <div className="md:w-3/12 w-full text-center relative mt-50 slide-top">
+                    <Image src={img} alt="items" width={200} height={200} className="thumb absolute top-0 left-1/2 transform -translate-x-1/2 z-10" />
+                    <h3 className="text-[22px] md:text-lg lg:text-2xl font-normal leading-tight relative z-0 mt-40">{subTitle}</h3>
+                </div>
+
+                <div className="slide-bottom ">
+                    <h1 className="text-[45px] md:text-[60px] capitalize font-[asgard] font-bold py-3">{title}</h1>
+
+                    <div className="flex justify-center items-center h-10 my-5">
+                        <Image src={ratings} alt="star" width={90} height={32} />
                     </div>
 
-                    <p className=" text-base md:text-lg font-medium md:py-7 font-[inter]">{text}</p>
+                  
                 </div>
+                <p className="md:w-5/12 w-full text-[20px] md:text-[24px] font-normal md:py-7 font-[inter] leading-relaxed slide-bottom">{text}</p>
+
+
             </div>
         </div>
+
     );
 }
 

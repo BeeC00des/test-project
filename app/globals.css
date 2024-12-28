@@ -3,97 +3,406 @@
 @tailwind utilities;
 
 :root {
-  --background: #043235;
-  --foreground: #F5B14C;
-  --font-inter: 'Inter', sans-serif;
-  --font-rubik: 'Rubik', sans-serif;
-  --font-asgard: 'Asgard Trial', serif;
+	--font-inter: 'Inter', sans-serif;
+	--font-rubik: 'Rubik', sans-serif;
+	--font-asgard: 'Asgard Trial', serif;
+	--card-height: 40vw;
+	--card-margin: 4vw;
+	--card-top-offset: 1em;
+	--numcards: 6;
+	--outline-width: 0px;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
-
-/* Utility classes for font usage */
 .font-inter {
-  font-family: var(--font-inter);
+	font-family: var(--font-inter);
 }
 
 .font-rubik {
-  font-family: var(--font-rubik);
+	font-family: var(--font-rubik);
 }
 
 .font-asgard {
-  font-family: var(--font-asgard);
+	font-family: var(--font-asgard);
 }
 
 .font-asgardRegular {
-  font-family: var(--font-asgardRegular);
+	font-family: var(--font-asgardRegular);
 }
 
 
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "Rubik", sans-serif;
-  overflow-x: hidden;
+	color: black;
+	background: white;
+	font-family: "Rubik", sans-serif;
+	overflow-x: hidden;
 }
 
-.bg-page {
-  background-image: url(/images/bg-page.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  min-height: 100vh;
-  height: auto; 
-  width: 100%;
+.bg-header1 {
+	background-image: url(/images/header.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	/* min-height: 100vh; */
+	height: 695px;
+	width: 100%;
+	border-top-left-radius: 80px;
+	border-top-right-radius: 80px;
+
 }
 
-.bg-main {
-  background-image: url(/images/bg-main.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  min-height: 100vh;
-  height: auto; 
-  width: 100%;
+/* Base Card Style */
+/* Keyframes for sliding in from the left */
+@keyframes slideInFromLeft {
+	0% {
+		transform: translateX(-100vw);
+		/* Off-screen to the left */
+		opacity: 0;
+		/* Start invisible */
+	}
+
+	100% {
+		transform: translateX(0);
+		/* Slide into the normal position */
+		opacity: 1;
+		/* End fully visible */
+	}
 }
 
-.thumb{
-  display: inline;
+/* Keyframes for sliding in from the right */
+@keyframes slideInFromRight {
+	0% {
+		transform: translateX(100vw);
+		/* Off-screen to the right */
+		opacity: 0;
+		/* Start invisible */
+	}
+
+	100% {
+		transform: translateX(0);
+		/* Slide into the normal position */
+		opacity: 1;
+		/* End fully visible */
+	}
 }
+
+/* Apply the slide-left animation */
+.slide-left {
+	animation: slideInFromLeft 1s ease-out forwards;
+}
+
+/* Apply the slide-right animation */
+.slide-right {
+	/* position: relative; */
+	animation: slideInFromRight 1s ease-out forwards;
+}
+
+/* end slide*/
+
+
+
+.bg-header2 {
+	background-image: url(/images/header2.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	/* min-height: 100vh;  */
+	height: 600px;
+	width: 100%;
+	border-bottom-left-radius: 80px;
+	border-bottom-right-radius: 80px;
+}
+
+
+/* Slide from top (initially hidden) */
+@keyframes slideInTop {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/* Slide from bottom (initially hidden) */
+@keyframes slideInBottom {
+	from {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+/* Initial hidden state */
+.slide-top,
+.slide-bottom {
+	opacity: 0;
+	transform: translateY(0);
+}
+
+/* When the element is in view, apply animation */
+.slide-top.visible {
+	animation: slideInTop 0.6s ease-out forwards;
+}
+
+.slide-bottom.visible {
+	animation: slideInBottom 0.6s ease-out forwards;
+}
+
+
+
+.bg-sectionMsg {
+	background-image: url(/images/footer.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 800px;
+	width: 100%;
+	border-bottom-left-radius: 80px;
+	border-bottom-right-radius: 80px;
+}
+
+.thumb {
+	display: inline;
+}
+
+/* Stakec cards */
+
+
+
+
+#card_1 {
+	--index: 1;
+}
+
+#card_2 {
+	--index: 2;
+
+}
+
+#card_3 {
+	--index: 3;
+}
+
+#card_4 {
+	--index: 4;
+}
+
+#card_5 {
+	--index: 5;
+}
+
+#card_6 {
+	--index: 6;
+}
+
+/* spacing around cards */
+
+#cards {
+	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+	/* Make place at bottom, as items will slide to that position*/
+	/* margin-bottom: var(--card-margin); */
+	/* Don't include the --card-margin in padding, as that will affect the scroll-timeline*/
+}
+
+/* animation top spacing */
+
+.card {
+	position: sticky;
+	top: 0;
+	padding-top: calc(var(--index) * var(--card-top-offset));
+	margin-top: -55px;
+
+	/* outline: var(--outline-width) solid hotpink; */
+	border: 1px solid red;
+}
+
+
+@supports (animation-timeline: works) {
+
+	@scroll-timeline cards-element-scrolls-in-body {
+		source: selector(body);
+		scroll-offsets:
+			/* Start when the start edge touches the top of the scrollport */
+			selector(#cards) start 1,
+			/* End when the start edge touches the start of the scrollport */
+			selector(#cards) start 0;
+		start: selector(#cards) start 1;
+		/* Start when the start edge touches the top of the scrollport */
+		end: selector(#cards) start 0;
+		/* End when the start edge touches the start of the scrollport */
+		time-range: 4s;
+	}
+
+	.card {
+		--index0: calc(var(--index) - 1);
+		/* 0-based index */
+		--reverse-index: calc(var(--numcards) - var(--index0));
+		/* reverse index */
+		--reverse-index0: calc(var(--reverse-index) - 1);
+		/* 0-based reverse index */
+	}
+
+	.card__content {
+		transform-origin: 50% 0%;
+		will-change: transform;
+
+		--duration: calc(var(--reverse-index0) * 1s);
+		--delay: calc(var(--index0) * 1s);
+
+		animation: var(--duration) linear scale var(--delay) forwards;
+		animation-timeline: cards-element-scrolls-in-body;
+	}
+
+	@keyframes scale {
+		to {
+			transform:
+				scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+		}
+	}
+
+
+}
+
+/* page styling */
+
+main {
+	width: 100vw;
+	margin: 0 auto;
+	/* border: 1px solid red; */
+}
+
+#cards {
+	position: sticky;
+	/* top: 0; */
+	padding-top: calc(var(--index) * var(--card-top-offset));
+	list-style: none;
+	outline: calc(var(--outline-width) * 10) solid blue;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(var(--numcards), var(--card-height));
+	/* gap: var(--card-margin); space between cards */
+
+}
+
+.card__content {
+
+	overflow: hidden;
+}
+
+.card__content>div {
+	grid-area: text;
+	/* width: 90%; */
+	/* place-self: center; */
+	text-align: left;
+	display: grid;
+	gap: 1em;
+	place-items: start;
+}
+
+
+
+/* inner scroll card  */
+
+.small-card {}
+
+#small-cards {
+	height: 500px;
+	width: 400px;
+	margin: 20px auto;
+	border-radius: 30px;
+	overflow-y: scroll;
+	scrollbar-width: none !important;
+	-ms-overflow-style: none !important;
+}
+
+.small-card {
+	-ms-overflow-style: none !important;
+	scrollbar-width: none !important;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.small-card-content {
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	z-index: 3
+}
+
+/* end of card content */
+
+/* scroll effect  */
+.no-scroll {
+	overflow: hidden;
+}
+
+
+
 
 
 @media (max-width: 640px) {
-  /* Mobile (sm) */
-  .bg-page {
-    width:100%;
-    background-position: center center;
-    background-size: cover;
-  }
+
+	/*Mobile (sm) */
+	.bg-page {
+		width: 100%;
+		background-position: center center;
+		background-size: cover;
+	}
+
+	/* #small-cards {
+		height: 150px;
+		width: 150px;
+		border: 1px solid red;
+		
+	} */
+
+	
+	.bg-header1 {
+		background-image: url(/images/header.svg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		height: 400px;
+		width: 100%;
+		border-top-left-radius: 40px;
+		border-top-right-radius: 40px;
+	}
+
+	.card{
+		width: 100%;
+		background-size: cover;
+		margin-top: -20px;
+		border-radius:35px !important;
+		border: none;
+	
+	}
+
+	/* #card{
+		margin-left: 15px !important;
+		margin-right:15px !important;
+	} */
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
-  /* Tablet (md) */
-  .bg-page {
-    width:100%;
-    background-position: center center;
-    background-size: cover;
-  }
+
+	/* Tablet (md) */
+	.bg-page {
+		width: 100%;
+		background-position: center center;
+		background-size: cover;
+	}
 }
 
 @media (min-width: 1025px) {
-  /* Desktop (lg, xl) */
-  .bg-page {
-    background-size: cover;
-    background-position: center center;
-  }
+
+	/* Desktop (lg, xl) */
+	.bg-page {
+		background-size: cover;
+		background-position: center center;
+	}
 }
-
-
-

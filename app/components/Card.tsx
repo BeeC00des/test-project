@@ -1,113 +1,149 @@
-// "use client";
-// import Image from "next/image";
-
-// // Define the props for the Card component
-// type CardProps = {
-//     transparentText: string;
-//     numberTitle: string;
-//     unit: string;
-//     subTitle: string;
-//     text: string;
-//     img: string;
-// };
-
-// function Card({ transparentText, numberTitle, subTitle, text, unit, img }: CardProps) {
-
-//     return (
-//         <div className=" sm:w-1/2  md:w-10/12 lg:w-10/12 lg:h-[580px] md:h-[400px] sm:h-[250px] sm:mx-5 lg:ml-16 rounded-xl bg-[#FFFFFF1A] ">
-//             <div className=" sm:my-20 lg:my-0">
-//                 <p className="sm:text-[30px] md:text-[45px] lg:text-[150px]  font-[asgard] font-extrabold text-[#0000000D] [word-spacing:0.5rem]">{transparentText}</p>
-
-//                 <div className="flex justify-center items-center ">
-//                     <div className="px-7 lg:w-8/12">
-//                         <h1 className="lg:text-[85px] sm:text-[30px] md:text-[60px] font-[rubik] font-extrabold text-white ">{numberTitle}</h1>
-//                         <p className="lg:text-[60px] sm:text-[25px] md:text-[40px] font-[rubik] font-extrabold text-white uppercase pb-5">{unit}</p>
-//                         <h3 className="lg:text-4xl sm:text-xl font-normal font-[asgardRegular] text-[#FDB515] pb-4 ">{subTitle}</h3>
-//                         <p className="lg:text-2xl sm:text-base  font-[inter] font-normal text-white pb-12">{text}</p>
-//                     </div>
-//                     <div className="hidden md:flex justify-left items-center pt-10 ">
-//                         <Image src={img} alt="items" width={320} height={320} />
-//                     </div>
-//                 </div>
-
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Card;
-
 
 "use client";
-import Image from "next/image";
-import getMerchantData from "../api/page";
-import { useState, useEffect } from "react";
+import { relative } from "path";
+import { useState, useEffect, useRef } from "react";
+// import '../globals.css'
 
 // Define the props for the Card component
 type CardProps = {
-    transparentText: string;
     numberTitle: string;
     unit: string;
-    subTitle: string;
     text: string;
-    img: string;
+    backgroundImage: string;
+    index: number;
+    id: string;
+    top:string;
+    // height:string; ,height
+    smallCardsData?: any[]; // Optional prop for small cards inside a parent card
 };
 
-function Card({ transparentText, numberTitle, subTitle, text, unit, img }: CardProps) {
-    const [merchantData, setMerchantData] = useState<any>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData,top }: CardProps) {
+    const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
+    const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
+
+    // Scroll event handler to track scrolling of small cards
+    const handleChildScroll = () => {
+        const smallCardsContainer = smallCardsContainerRef.current;
+
+        if (smallCardsContainer) {
+            // If the child container is scrolled to the bottom, resume scrolling for parent
+            if (
+                smallCardsContainer.scrollHeight - smallCardsContainer.scrollTop ===
+                smallCardsContainer.clientHeight
+            ) {
+                setIsScrollingPaused(false); // Allow scrolling for parent sections
+            }
+        }
+    };
+
+    // Update isScrollingPaused when index changes
+    useEffect(() => {
+        if (index === 2) {
+            // Initially pause scrolling for all sections when index === 2
+            setIsScrollingPaused(true);
+        }
+    }, [index]);
+
+    const [formattedText, setFormattedText] = useState<string>("");
 
     useEffect(() => {
-        const fetchMerchantData = async () => {
-            const merchantId = "581b763d636c88ee8585e78cf490d063";
-
-            setLoading(true);
-            setError(null);
-            try {
-                const data = await getMerchantData(merchantId);
-                setMerchantData(data);
-                console.log(data);
-            } catch (err) {
-                setError("Failed to fetch merchant data. Please try again.");
-            } finally {
-                setLoading(false);
+        const styleLastWord = (text: string) => {
+            if (!text) {
+                return ''; // Return empty string if text is undefined or null
             }
+
+            const textArray = text.split(' '); // Split text into words
+            const lastWord = textArray.pop(); // Get the last word
+
+            if (lastWord) {
+                // Return the rest of the text and apply a span to the last word
+                return `${textArray.join(' ')} <span class="underline decoration-wavy">${lastWord}</span>`;
+            }
+            return text; // If there's no last word, return text as it is
         };
 
-        fetchMerchantData();
-    }, []); // Empty dependency array ensures this runs only once on component mount
+        // Apply the function and set the formatted text
+        setFormattedText(styleLastWord(text));
+    }, [text]);
 
     return (
-        <div className="sm:w-1/2 md:w-10/12 lg:w-11/12 lg:h-[580px] md:h-[400px] sm:h-[250px] sm:mx-5 lg:ml-16 rounded-xl bg-[#FFFFFF1A]">
-            <div className="sm:my-20 lg:my-0">
-                <p className="sm:text-[30px] md:text-[45px] lg:text-[120px] font-[asgard] font-extrabold text-[#0000000D]">
-                    {transparentText}
-                </p>
-
-                <div className="flex justify-center items-center">
-                    <div className="px-7 lg:w-8/12">
-                        <h1 className="lg:text-[85px] sm:text-[30px] md:text-[60px] font-[rubik] font-extrabold text-white">
+        <li
+            className={`card w-10/12 lg:w-12/12 mx-auto ${index === 5 ? 'border-2 border-red-600' : 'border-none'}`}
+            style={{
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover cover",
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                borderRadius: "50px",
+                position:'sticky',
+                top: `${top}`,
+                // height:`${height}`
+            }}
+        >
+            {/* sm:p-5 p-0 */}
+            <div className=" card__content block md:flex ">
+                <div className="w-full md:w-7/12  slide-left">
+                    <div className=" pl-2 md:pl-14 py-5 w-full text-white font-[rubik]">
+                        <h1
+                            className={`lg:text-[80px] sm:text-[30px] md:text-[60px]  font-extrabold  ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'}  ${index === 6 ? 'pt-16' : 'pt-5'}`}
+                        >
                             {numberTitle}
                         </h1>
-                        <p className="lg:text-[60px] sm:text-[25px] md:text-[40px] font-[rubik] font-extrabold text-white uppercase pb-5">
+                        <p className={`lg:text-[60px] sm:text-[25px] md:text-[40px]  font-extrabold pb-5 ${[3, 4].includes(index) ? 'text-[#063A4F]' : 'text-white'}   ${index === 5 ? 'text-[#F8C47A]' : 'text-white'} `}>
                             {unit}
                         </p>
-                        <h3 className="lg:text-4xl sm:text-xl font-normal font-[asgardRegular] text-[#FDB515] pb-4">
-                            {subTitle}
-                        </h3>
-                        <p className="lg:text-2xl sm:text-base font-[inter] font-normal text-white pb-12">
+
+                        {/* General text display */}
+                        {/* <p className="lg:text-[24px] sm:text-base font-normal pb-12">
                             {text}
-                        </p>
+                        </p> */}
+                        <p
+                            className={`lg:text-[24px] sm:text-base font-normal pb-12 ` }
+                            dangerouslySetInnerHTML={{ __html: formattedText }}
+                        />
+
 
                     </div>
-                    <div className="hidden md:flex justify-left items-center pt-10">
-                        <Image src={img} alt="items" width={320} height={320} />
-                    </div>
+                </div>
+                <div
+                    className={`hidden md:w-5/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                    style={{
+                        overflowY: isScrollingPaused ? "hidden" : "scroll",
+                    }}>
+                    {/* If index === 2, render the small cards */}
+                    {index === 2 && smallCardsData && (
+                        <ul
+                            id="small-cards"
+                            ref={smallCardsContainerRef} // Ref for the small cards container
+                        >
+                            <li
+                                className="small-card"
+                                style={{ maxHeight: "600px", overflowY: "scroll" }}
+                                onScroll={handleChildScroll}
+                            >
+                                <div className="small-card-container">
+                                    {smallCardsData.map((smallCard) => (
+                                        <div
+                                            key={smallCard.id}
+                                            className="small-card-content flex justify-center items-center text-center backdrop-blur-lg text-white bg-transparent p-10"
+                                            style={{
+                                                height: "300px",
+                                                margin: "30px",
+                                                borderRadius: "40px",
+                                            }}
+                                        >
+                                            <h3 className=" text-base lg:text-3xl font-bold">{smallCard.text}</h3>
+                                        </div>
+                                    ))}
+                                </div>
+                            </li>
+                        </ul>
+                    )}
                 </div>
             </div>
-        </div>
+        </li>
     );
 }
 
 export default Card;
+
