@@ -384,9 +384,9 @@ main {
 	}
 
 	
-
+ /* inner cards on medium screen */
 	#small-cards {
-		border:1px solid red;
+		/* border:1px solid red; */
 		height: 700 !important;
 		width: 250px;
 		overflow-y: scroll;

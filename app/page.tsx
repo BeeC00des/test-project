@@ -5,6 +5,8 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 
 import Card from "./components/Card";
+import collectionCard from "./components/collectionCard";
+import disbursementCard from "./components/disbursementCard";
 import getMerchantData from "./api/page";
 import MessageCard from "./components/MessageCard";
 import Footer from "./components/Footer";
