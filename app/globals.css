@@ -208,20 +208,16 @@ body {
 #cards {
 	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
 	/* Make place at bottom, as items will slide to that position*/
-	/* margin-bottom: var(--card-margin); */
-	/* Don't include the --card-margin in padding, as that will affect the scroll-timeline*/
 }
 
 /* animation top spacing */
 
 .card {
 	position: sticky;
-	top: 0;
-	padding-top: calc(var(--index) * var(--card-top-offset));
-	margin-top: -55px;
-
-	/* outline: var(--outline-width) solid hotpink; */
-	border: 1px solid red;
+	top:0px;
+	/* padding-top: calc(var(--index) * var(--card-top-offset)); */
+	margin-top: -45px;
+	/* border: 1px solid red; */
 }
 
 
@@ -276,19 +272,16 @@ body {
 main {
 	width: 100vw;
 	margin: 0 auto;
-	/* border: 1px solid red; */
 }
 
 #cards {
 	position: sticky;
-	/* top: 0; */
 	padding-top: calc(var(--index) * var(--card-top-offset));
 	list-style: none;
 	outline: calc(var(--outline-width) * 10) solid blue;
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: repeat(var(--numcards), var(--card-height));
-	/* gap: var(--card-margin); space between cards */
 
 }
 
@@ -299,8 +292,6 @@ main {
 
 .card__content>div {
 	grid-area: text;
-	/* width: 90%; */
-	/* place-self: center; */
 	text-align: left;
 	display: grid;
 	gap: 1em;
@@ -311,7 +302,6 @@ main {
 
 /* inner scroll card  */
 
-.small-card {}
 
 #small-cards {
 	height: 500px;
@@ -354,12 +344,7 @@ main {
 		background-size: cover;
 	}
 
-	/* #small-cards {
-		height: 150px;
-		width: 150px;
-		border: 1px solid red;
-		
-	} */
+
 
 	
 	.bg-header1 {
@@ -374,18 +359,19 @@ main {
 	}
 
 	.card{
-		width: 100%;
+		width: 90%;
 		background-size: cover;
 		margin-top: -20px;
 		border-radius:35px !important;
 		border: none;
-	
+		/* margin:auto; */
 	}
 
-	/* #card{
-		margin-left: 15px !important;
-		margin-right:15px !important;
-	} */
+	.small-card-content{
+		display: none;
+		border:none;
+	}
+
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
@@ -396,6 +382,26 @@ main {
 		background-position: center center;
 		background-size: cover;
 	}
+
+	
+
+	#small-cards {
+		border:1px solid red;
+		height: 700 !important;
+		width: 250px;
+		overflow-y: scroll;
+		scrollbar-width: none !important;
+	    -ms-overflow-style: none !important;
+		
+	}
+
+	.small-card-content{
+		height:200px !important;
+		width:200px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	
 }
 
 @media (min-width: 1025px) {

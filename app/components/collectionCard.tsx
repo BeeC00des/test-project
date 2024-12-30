@@ -20,7 +20,7 @@ type CardProps = {
     smallCardsData?: any[];
 };
 
-function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
+function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
 
@@ -204,5 +204,5 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
     );
 }
 
-export default Card;
+export default collectionCard;
 

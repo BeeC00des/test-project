@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useSearchParams } from 'next/navigation';
+
 
 import Card from "./components/Card";
-import CardStack from "./components/cardStack";
 import getMerchantData from "./api/page";
 import MessageCard from "./components/MessageCard";
 import Footer from "./components/Footer";
 import BgHeader from './components/Bgheader';
 
 export default function Home() {
-  
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   // State to hold merchant data, loading state, and error message
   const [cardData, setCardData] = useState<any[]>([]); // Updated to an empty array
   const [merchantData, setMerchantData] = useState<any>(null);
@@ -23,9 +27,26 @@ export default function Home() {
     return `₦${new Intl.NumberFormat('en-NG').format(value)}`;
   };
 
+  // month converter
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  // Extract ID from the URL
+  const extractMerchantId = () => {
+    const id = searchParams.get('id');
+    return id || ''; // Default to an empty string if not present
+  };
+
   // Handle API call
   const handleApiCall = async () => {
-    const merchantId = "581b763d636c88ee8585e78cf490d063";
+    const merchantId = extractMerchantId();
+    if (!merchantId) {
+      setError('Merchant ID is missing in the URL.');
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -42,115 +63,148 @@ export default function Home() {
   // UseEffect to handle API call on mount
   useEffect(() => {
     handleApiCall();
-  }, []);
+  }, [pathname, searchParams]);
 
-  // Dynamically update the cardData array when merchantData is loaded
+
   useEffect(() => {
-    if (merchantData && merchantData.data) {
-      // Dynamically populate the cardData array with merchant data
-      const updatedCardData = [
-        {
+
+
+    const updatedCardData: any[] = [];
+
+    // Check if collection_value exists and create the card
+    if (merchantData && merchantData.data.collection_value) {
+
+      //Get the month number from the response
+      const collectionMonthNumber = parseInt(merchantData.data.best_collection_month, 10);
+      const disbursementMonthNumber = parseInt(merchantData.data.best_disbursement_month, 10);
+
+      // Convert month number to month name, if valid
+      const collectionMonthName = collectionMonthNumber >= 1 && collectionMonthNumber <= 12
+        ? monthNames[collectionMonthNumber - 1]
+        : "Unknown Month";
+
+      const disbursementMonthName = disbursementMonthNumber >= 1 && disbursementMonthNumber <= 12
+        ? monthNames[disbursementMonthNumber - 1]
+        : "Unknown Month";
+
+      if (merchantData.data.collection_value) {
+        updatedCardData.push({
           index: 1,
           id: 'card_1',
           numberTitle: formatCurrency(merchantData.data.collection_value),
           unit: "Million in collection value",
-          text: `With count of  ${merchantData.data.best_collection_month}`,
+          text: `With count of ${merchantData.data.collection_volume}`,
           backgroundImage: "/images/collectionImg.svg",
-          top: "50px"
-        },
-        {
+          top: "50px",
+          img: '',
+        });
+      }
+
+      // Check if disbursement_value exists and create the card
+      if (merchantData.data.disbursement_value) {
+        updatedCardData.push({
           index: 2,
           id: 'card_2',
           numberTitle: formatCurrency(merchantData.data.disbursement_value),
           unit: "Million in disbursement value",
-          text: `With count of ${merchantData.data.top_collection_customer_name}`,
+          text: `With count of ${merchantData.data.disbursement_volume}`,
           backgroundImage: "/images/disbursement.svg",
           top: "100px",
-          // height:""
-        },
-        {
+          img: '',
+        });
+      }
+      if (merchantData.data.top_collection_customer_name) {
+        updatedCardData.push({
           index: 3,
           id: 'card_3',
-          numberTitle: formatCurrency(merchantData.data.best_collection_month_value),
-          unit: "Best Collection Month Value",
-          text: `Best Collection Month:${merchantData.data.business_name}`,
+          img: "/images/crown.png",
+          customerName: merchantData.data.top_collection_customer_name,
           backgroundImage: "/images/customer.svg",
           top: "150px",
-         
-
-          // Add smallCardsData for card 3
           smallCardsData: [
             {
               id: 'small_card_1',
               text: `Was your Best customer`,
-              
             },
             {
               id: 'small_card_2',
-              text: `With ${formatCurrency(merchantData.data.disbursement_value)} payment`,
-              
+              text: `With ${formatCurrency(merchantData.data.top_collection_customer_value)} payment`,
             },
             {
               id: 'small_card_3',
-              text: `Valued at ${merchantData.data.best_collection_month_value}`,
-            
+              text: `Valued at ${formatCurrency(merchantData.data.top_collection_customer_value)}`,
             },
           ],
-        },
+        });
+      }
 
-        {
+      // If best collection month exists, create the card
+      if (merchantData.data.best_collection_month_value) {
+        updatedCardData.push({
           index: 4,
           id: 'card_4',
-          numberTitle: formatCurrency(merchantData.data.best_disbursement_month_value),
-          unit: "Best Disbursement Month Value",
-          text: `Best Disbursement Month: ${merchantData.data.best_disbursement_month}`,
-          backgroundImage: "/images/disbursement.svg",
-          top: "200px"
-        },
-        {
+          numberTitle: "Your best collection month for the year was",
+          unit: `${collectionMonthName}`,
+          text: `Collection value that month was ${formatCurrency(merchantData.data.best_collection_month_value)}`,
+          backgroundImage: "/images/collectionImg.svg",
+          top: "200px",
+        });
+      }
+
+      // If best disbursement month exists, create the card
+      if (merchantData.data.best_disbursement_month_value) {
+        updatedCardData.push({
           index: 5,
           id: 'card_5',
-          numberTitle: formatCurrency(merchantData.data.top_collection_customer_value),
-          unit: "Top Collection Customer Value",
-          text: `Top Collection Customer: ${merchantData.data.top_collection_customer_name}`,
-          backgroundImage: "/images/collectionImg.svg",
-          top: "250px"
-        },
-        {
+          numberTitle: "Your best disbursement month for the year was",
+          unit: `${disbursementMonthName}`, // Assuming disbursementMonthName is available
+          text: `Disbursement value that month was ${formatCurrency(merchantData.data.best_disbursement_month_value)}`,
+          backgroundImage: "/images/disbursement.svg",
+          top: "250px",
+        });
+      }
+
+      // Always show the settlement value card if available
+      if (merchantData.data.total_settlement_value) {
+        updatedCardData.push({
           index: 6,
           id: 'card_6',
           numberTitle: formatCurrency(merchantData.data.total_settlement_value),
           unit: "Million in settlement value",
-          // text: "Total Settlement",
           backgroundImage: "/images/settle.svg",
-          // top: "300px"
-        },
+          img: '',
+        });
+      }
 
-      ];
-      console.log('Updated card data:', updatedCardData);
-      console.log('Small cards data for index 3:', updatedCardData.find(card => card.index === 3)?.smallCardsData);
-      setCardData(updatedCardData);  // Update card data with new information
+      // Only update if there's valid data to display
+      if (updatedCardData.length > 0) {
+        setCardData(updatedCardData);
+      }
     }
-  }, [merchantData]);  // Run this effect when merchantData changes
+  }, [merchantData]);
+
+
 
   return (
     <div className="h-auto w-full bg-main">
       <BgHeader />
 
+      <main className="mt-10 mb-2 md:mt-32 md:mb-2">
+
+        
+
+        {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
 
-      <main className=" mt-2 md:mt-32">
-        {/* loading state */}
-        {loading && <p  className="py-10 text-2xl text-center ">Loading...</p>}
-
-        {/* error message */}
         {error && <p className="text-red-500 mt-2 py-10 text-2xl text-center">{error}</p>}
 
         {/* Dynamically display cards based on merchant data */}
+     
         {merchantData && merchantData.data && (
-          <ul id="cards" style={{}}>
+          <ul id="cards">
             {/* Map over the cardData array and render the Card component */}
             {cardData.map((card, index) => (
+            
               <Card
                 index={index}
                 key={index}
@@ -161,16 +215,15 @@ export default function Home() {
                 top={card.top}
                 backgroundImage={card.backgroundImage}
                 smallCardsData={card.smallCardsData}
-                // height={card.height}
+                customerName={card.customerName}
+                img={card.img}
               />
             ))}
           </ul>
         )}
+
       </main>
 
-      
-
-      {/* MessageCard and Footer */}
       <MessageCard
         subTitle="Your performance this year describe you as a"
         title=" Monni Maker"
@@ -179,6 +232,7 @@ export default function Home() {
         img="/images/thumb.png"
       />
       <Footer />
+
     </div>
   );
 }
