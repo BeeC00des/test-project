@@ -1,0 +1,102 @@
+ // // Dynamically update the cardData array when merchantData is loaded
+  // useEffect(() => {
+  //   if (merchantData && merchantData.data) {
+  //      // Get the month number from the response
+  //   const collectionMonthNumber = parseInt(merchantData.data.best_collection_month, 10);
+  //   const disbursementMonthNumber = parseInt(merchantData.data.best_disbursement_month, 10); 
+
+  //   // Convert month number to month name, if valid
+  //   const collectionMonthName = collectionMonthNumber >= 1 && collectionMonthNumber <= 12 
+  //     ? monthNames[collectionMonthNumber - 1] 
+  //     : "Unknown Month";
+
+  //     const disbursementMonthName = disbursementMonthNumber >= 1 && disbursementMonthNumber <= 12 
+  //     ? monthNames[disbursementMonthNumber - 1] 
+  //     : "Unknown Month";
+
+  //     // Dynamically populate the cardData array with merchant data
+  //     const updatedCardData = [
+  //       {
+  //         index: 1,
+  //         id: 'card_1',
+  //         numberTitle: formatCurrency(merchantData.data.collection_value),
+  //         unit: "Million in collection value",
+  //         text: `With count of  ${merchantData.data.collection_volume}`,
+  //         backgroundImage: "/images/collectionImg.svg",
+  //         top: "50px",
+  //         img:"/none"
+  //       },
+  //       {
+  //         index: 2,
+  //         id: 'card_2',
+  //         numberTitle: formatCurrency(merchantData.data.disbursement_value),
+  //         unit: "Million in disbursement value",
+  //         text: `With count of ${merchantData.data.disbursement_volume}`,
+  //         backgroundImage: "/images/disbursement.svg",
+  //         top: "100px",
+  //         // height:""
+  //       },
+  //       {
+  //         index: 3,
+  //         id: 'card_3',
+  //         img: "/images/crown.png",
+  //         customerName: merchantData.data.top_collection_customer_name,
+  //         backgroundImage: "/images/customer.svg",
+  //         top: "150px",
+
+
+  //         // Add smallCardsData for card 3
+  //         smallCardsData: [
+  //           {
+  //             id: 'small_card_1',
+  //             text: `Was your Best customer`,
+
+  //           },
+  //           {
+  //             id: 'small_card_2',
+  //             text: `With ${formatCurrency(merchantData.data.top_collection_customer_value)} payment`,
+
+  //           },
+  //           {
+  //             id: 'small_card_3',
+  //             // ask for the right data here 
+  //             text: `Valued at ${merchantData.data.top_collection_customer_value }`,
+
+  //           },
+  //         ],
+  //       },
+
+  //       {
+  //         index: 4,
+  //         id: 'card_4',
+  //         numberTitle:"Your best collection month for the year was",
+  //         unit: ` ${collectionMonthName}`,
+  //         text:`Collection value that month was ${formatCurrency(merchantData.data.best_collection_month_value)} ` ,
+  //         backgroundImage: "/images/disbursement.svg",
+  //         top: "200px"
+  //       },
+
+  //       {
+  //         index: 5,
+  //         id: 'card_5',
+  //         numberTitle:"Your best disbursement month for the year was",
+  //         unit: ` ${disbursementMonthName}`,
+  //         text:`Disbursement value that month was ${formatCurrency(merchantData.data.best_disbursement_month_value)} ` ,
+  //         backgroundImage: "/images/collectionImg.svg",
+  //         top: "250px"
+  //       },
+  //       {
+  //         index: 6,
+  //         id: 'card_6',
+  //         numberTitle: formatCurrency(merchantData.data.total_settlement_value),
+  //         unit: "Million in settlement value",
+  //         backgroundImage: "/images/settle.svg",
+
+  //       },
+
+  //     ];
+  //     console.log('Updated card data:', updatedCardData);
+  //     console.log('Small cards data for index 3:', updatedCardData.find(card => card.index === 3)?.smallCardsData);
+  //     setCardData(updatedCardData);  // Update card data with new information
+  //   }
+  // }, [merchantData]);  // Run this effect when merchantData changes

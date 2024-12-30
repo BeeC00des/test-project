@@ -20,7 +20,7 @@ type CardProps = {
     smallCardsData?: any[];
 };
 
-function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
+function CollectionCard({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
 
@@ -90,7 +90,7 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
         };
 
         // Check if the current index is 3 or 4
-        if ([3, 4].includes(index)) {
+        if (index == 2) {
             setFormattedUnitText(styleLastWord(unit));
         } else {
             setFormattedUnitText(unit); // Use the text as-is for other indices
@@ -103,7 +103,7 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
 
     return (
         <li
-            className={`card md:w-10/12 lg:w-10/12 mx-auto ${index === 5 ? 'border-2 border-red-600' : 'border-none'}`}
+            className={`card md:w-10/12 lg:w-10/12 mx-auto ${index === 3 ? 'h-[350px]' : 'h-auto'} ${[1, 4].includes(index) ? 'h-[600px]' : 'h-auto'}`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover cover",
@@ -124,7 +124,7 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
                             {numberTitle}
                         </h1>
 
-                        {index === 2 && (
+                        {index === 1 && (
                             <div className="relative">
                                 {/* Responsive Image */}
                                 <Image
@@ -144,13 +144,13 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
                         )}
 
                         <p
-                            className={` sm:text-[25px] md:text-[40px] font-bold pb-5 ${index === 5
+                            className={` sm:text-[25px] md:text-[40px] font-bold pb-5 ${index === 3
                                 ? 'text-[#F8C47A]'
-                                : [3, 4].includes(index)
+                                : [2].includes(index)
                                     ? 'text-[#063A4F]'
                                     : 'text-white'
                                 }
-                                ${index === 5
+                                ${index === 3
                                     ? 'lg:text-[55px]' : [0, 1].includes(index)
                                         ? 'lg:text-[60px]'
                                         : 'lg:text-[40px]'}`}
@@ -170,7 +170,7 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
                         overflowY: isScrollingPaused ? "hidden" : "scroll",
                     }}>
                     {/* If index === 2, render the small cards */}
-                    {index === 2 && smallCardsData && (
+                    {index === 1 && smallCardsData && (
                         <ul
                             id="small-cards"
                             ref={smallCardsContainerRef} // Ref for the small cards container
@@ -204,5 +204,5 @@ function collectionCard({ numberTitle, text, unit, backgroundImage, index, id, s
     );
 }
 
-export default collectionCard;
+export default CollectionCard;
 

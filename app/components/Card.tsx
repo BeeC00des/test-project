@@ -103,7 +103,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     return (
         <li
-            className={`card md:w-10/12 lg:w-10/12 mx-auto ${index === 5 ? 'border-2 border-red-600' : 'border-none'}`}
+            className={`card md:w-10/12 lg:w-10/12 mx-auto ${index === 5 ? 'h-[350px]' : 'h-auto'} ${[1, 4].includes(index) ? 'h-[600px]' : 'h-auto'}`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover cover",
@@ -119,7 +119,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 <div className="w-full md:w-7/12  slide-left">
                     <div className=" pl-2 md:pl-14 py-7 w-full font-[rubik]">
                         <h1
-                            className={` sm:text-[30px] md:text-[40px] font-bold  ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'} ${[3, 4].includes(index) ? 'lg:text-[55px]' : 'lg:text-[65px]'}`}
+                            className={` sm:text-[30px] md:text-[40px] font-bold  ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'} ${[3, 4].includes(index) ? 'lg:text-[55px]' : 'lg:text-[65px]'} ${[3, 4].includes(index) ? 'pt-5' : 'pt-0'}`}
                         >
                             {numberTitle}
                         </h1>
