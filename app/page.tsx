@@ -173,6 +173,7 @@ export default function Home() {
           unit: "Million in settlement value",
           backgroundImage: "/images/settle.svg",
           img: '',
+          top: "300px",
         });
       }
 
@@ -184,55 +185,55 @@ export default function Home() {
   }, [merchantData]);
 
   return (
-    <div className="h-auto w-full bg-main">
-      <BgHeader  />
+      <div className="h-auto w-full bg-main">
+        <BgHeader  />
 
-      <main className="mt-10 mb-2 md:mt-32 md:mb-2">
+        <main className="mt-10 mb-2 md:mt-32 md:mb-2">
 
-        {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
+          {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
-        {error && <p className="text-red-500 mt-2 py-10 text-2xl text-center">{error}</p>}
+          {error && <p className="text-red-500 mt-2 py-10 text-2xl text-center">{error}</p>}
 
-        {/* Dynamically display cards based on merchant data */}
+          {/* Dynamically display cards based on merchant data */}
 
-        {merchantData && merchantData.data && (
-          <ul id="cards">
-            {/* Map over the cardData array and render the Card component */}
-            {cardData.map((card, index) => (
+          {merchantData && merchantData.data && (
+            <ul id="cards">
+              {/* Map over the cardData array and render the Card component */}
+              {cardData.map((card, index) => (
 
-              <Card
-                index={index}
-                key={index}
-                id={`card_${index}`}
-                numberTitle={card.numberTitle}
-                unit={card.unit}
-                text={card.text}
-                top={card.top}
-                backgroundImage={card.backgroundImage}
-                smallCardsData={card.smallCardsData}
-                customerName={card.customerName}
-                img={card.img}
-              />
-            ))}
-          </ul>
-        )}
-
-
-        
+                <Card
+                  index={index}
+                  key={index}
+                  id={`card_${index}`}
+                  numberTitle={card.numberTitle}
+                  unit={card.unit}
+                  text={card.text}
+                  top={card.top}
+                  backgroundImage={card.backgroundImage}
+                  smallCardsData={card.smallCardsData}
+                  customerName={card.customerName}
+                  img={card.img}
+                />
+              ))}
+            </ul>
+          )}
 
 
-      </main>
+          
 
 
-      <MessageCard
-        subTitle="Your performance this year describe you as a"
-        title=" Monni Maker"
-        ratings="/images/star.svg"
-        text="You have done an amazing job and we are happy to continue our partnership with you in 2025"
-        img="/images/thumb.png"
-      />
-      <Footer />
+        </main>
 
-    </div>
+
+        <MessageCard
+          subTitle="Your performance this year describe you as a"
+          title=" Monni Maker"
+          ratings="/images/star.svg"
+          text="You have done an amazing job and we are happy to continue our partnership with you in 2025"
+          img="/images/thumb.png"
+        />
+        <Footer />
+
+      </div>
   );
 }

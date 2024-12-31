@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, UIEventHandler } from "react";
 import useScrollAnimations from "./scrollAnimation";
 import Image from "next/image";
 
@@ -23,9 +23,17 @@ type CardProps = {
 function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
+    const mainCardContainerRef = useRef<HTMLLIElement | null>(null);
+
+    const preventBodyScroll = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
 
     // Scroll event handler to track scrolling of small cards
-    const handleChildScroll = () => {
+    const handleChildScroll: UIEventHandler<HTMLLIElement> = (e) => {
+        // e.stopPropagation();
+        // e.preventDefault();
         const smallCardsContainer = smallCardsContainerRef.current;
 
         if (smallCardsContainer) {
@@ -37,7 +45,80 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 setIsScrollingPaused(false); // Allow scrolling for parent sections
             }
         }
+
+        // const miniCard = smallCardsContainerRef.current;
+        // if (miniCard) {
+        //     const miniCardTop = miniCard.getBoundingClientRect().top;
+    
+        //     if (miniCardTop <= 0 && miniCardTop + miniCard.clientHeight > window.innerHeight) {
+        //         // Prevent scrolling the body while scrolling mini cards
+        //         document.body.style.overflow = 'hidden';  // Prevent body scroll
+        //         document.addEventListener('wheel', preventBodyScroll, { passive: false });
+        //         document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+        //     } else {
+        //         // Allow body scroll again when not inside mini card
+        //         document.body.style.overflow = 'auto'; // Re-enable body scroll
+        //         document.removeEventListener('wheel', preventBodyScroll, { passive: false });
+        //         document.removeEventListener('touchmove', preventBodyScroll, { passive: false });
+        //     }
+        // }
     };
+
+    const [isInView, setIsInView] = useState(false);
+
+    // Handle the intersection changes
+    const handleIntersection = (entries) => {
+        entries.forEach(entry => {
+            // Set the state based on whether the element is in the viewport
+            setIsInView(entry.isIntersecting);
+        });
+    };
+
+    useEffect(() => {
+        // Create an IntersectionObserver instance
+        const observer = new IntersectionObserver(handleIntersection, {
+            root: null, // use the viewport as the root
+            threshold: 1, // Trigger when 50% of the element is in the viewport
+            rootMargin: '0px 0px -300px 0px'
+        });
+
+        // Start observing the mini card container
+        const miniCard = smallCardsContainerRef.current;
+        if (miniCard) {
+            observer.observe(miniCard);
+        }
+
+        // Cleanup on unmount
+        return () => {
+            if (miniCard) {
+                observer.unobserve(miniCard);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isInView) {
+            // Prevent body scroll when mini card is in view
+            document.body.style.overflow = 'hidden';
+
+            // Add the global scroll listeners to prevent body scroll
+            // const preventBodyScroll = (e) => {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            // };
+
+            // document.addEventListener('wheel', preventBodyScroll, { passive: false });
+            // document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+
+            // return () => {
+            //     document.removeEventListener('wheel', preventBodyScroll);
+            //     document.removeEventListener('touchmove', preventBodyScroll);
+            // };
+        } else {
+            // Restore body scroll when mini card is out of view
+            document.body.style.overflow = 'auto';
+        }
+    }, [isInView]);
 
     // Update isScrollingPaused when index changes
     useEffect(() => {
@@ -103,17 +184,20 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     return (
         <li
-            className={`card w-6/12 md:w-10/12 lg:w-10/12 mx-auto ${index === 5 ? 'h-[350px]' : 'h-auto'} ${[1, 4].includes(index) ? 'h-[600px]' : 'h-auto'}`}
+            className={`card w-6/12 md:w-10/12 lg:w-10/12 mx-auto ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover cover",
+                backgroundSize: "cover",
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 borderRadius: "50px",
                 position: 'sticky',
-                top: `${top}`,
+                top: `${top}`,// index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
+                marginTop: index >= 1 ? '-100px' : 0
                 // height:`${height}`
             }}
+            onScroll={handleChildScroll}
+            ref={index === 2 ? mainCardContainerRef : undefined}
         >
             <div className=" card__content block md:flex ">
                 <div className="w-full md:w-6/12  slide-left">

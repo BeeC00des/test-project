@@ -304,9 +304,9 @@ main {
 	padding-top: calc(var(--index) * var(--card-top-offset));
 	list-style: none;
 	outline: calc(var(--outline-width) * 10) solid blue;
-	display: grid;
+	/* display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: repeat(var(--numcards), var(--card-height));
+	grid-template-rows: repeat(var(--numcards), var(--card-height)); */
 
 }
 
