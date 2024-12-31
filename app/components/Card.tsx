@@ -6,6 +6,19 @@ import useScrollAnimations from "./scrollAnimation";
 import Image from "next/image";
 import throttle from 'lodash.throttle';
 
+function runAfterFramePaint(callback) {
+    // Queue a "before Render Steps" callback via requestAnimationFrame.
+    requestAnimationFrame(() => {
+        const messageChannel = new MessageChannel();
+
+        // Setup the callback to run in a Task
+        messageChannel.port1.onmessage = callback;
+
+        // Queue the Task on the Task Queue
+        messageChannel.port2.postMessage(undefined);
+    });
+}
+
 
 // Define the props for the Card component
 type CardProps = {
@@ -109,6 +122,30 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
     const [isInnerScrollComplete, setIsInnerScrollComplete] = useState(false);
     const parentCardRef = useRef<HTMLLIElement>(null);
 
+    useEffect(() => 
+    {
+        if (index === 5) {
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutationRecord) {
+                    console.log("🚀 ~ mutationRecord:", mutationRecord)
+                    const isAbsolute = mutationRecord.target.style.position === 'absolute';
+                    console.log("🚀 ~ newHeight:", isAbsolute)
+                    // if (!isAbsolute) {
+                    //         window.scrollBy({
+                    //             top: 2200
+                    //         })
+                    // }
+                });
+            });
+
+            var target = document.querySelectorAll('li.card')[0];
+            observer.observe(target, { attributes: true, attributeFilter: ['style'] });
+            return () => {
+                observer.disconnect(target)
+            }
+        }
+    }, [index])
+
     useEffect(() => {
         // Observer for parent card
         if (parentCardRef.current) {
@@ -147,12 +184,9 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                             })
                             document.querySelector('ul#cards').style.height = '900px'
                             window.scrollBy({
-                                top: -800
+                                top: -1200
                             })
                         }
-                        // window.scrollBy({
-                        //     top: 2700
-                        // })
                     } else {
                         if (oldHeight.value === 900) {
                             document.querySelectorAll('li.card').forEach((item, index) => {
@@ -163,9 +197,11 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                                 item.style.transform = 'none';
                             })
                             document.querySelector('ul#cards').style.height = '4000px'
-                            // window.scrollBy({
-                            //     top: -500
-                            // })
+                            runAfterFramePaint(() => {
+                                window.scrollBy({
+                                    top: 2400
+                                })
+                            });
                         }
                         
                     }
