@@ -292,7 +292,7 @@ export default function Home() {
       <div className="h-auto">
         {/* 6 cards display on screen */}
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2">
+          <main className="mt-10 mb-2 md:mt-32 md:mb-2 relative">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
             {error && (
