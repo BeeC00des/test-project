@@ -222,9 +222,10 @@ body {
 
 #cards {
 	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
-	position: relative;
+	/* position: relative; */
 	/* Make place at bottom, as items will slide to that position*/
 	/* margin-bottom: 50px;  */
+	height: 4000px;
 }
 
 /* animation top spacing */
@@ -300,7 +301,6 @@ main {
 }
 
 #cards {
-	position: sticky;
 	padding-top: calc(var(--index) * var(--card-top-offset));
 	list-style: none;
 	outline: calc(var(--outline-width) * 10) solid blue;
@@ -336,6 +336,7 @@ main {
 	overflow-y: scroll;
 	scrollbar-width: none !important;
 	-ms-overflow-style: none !important;
+	scroll-behavior: smooth;
 }
 
 .small-card {

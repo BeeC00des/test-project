@@ -185,10 +185,15 @@ export default function Home() {
   }, [merchantData]);
 
   return (
-      <div className="h-auto w-full bg-main">
+    <div className="h-auto w-full bg-main"
+    // id="bg-main"  style={{
+    //   height: '100dvh',
+    //   overflowY: 'auto'
+    // }}
+    >
         <BgHeader  />
 
-        <main className="mt-10 mb-2 md:mt-32 md:mb-2">
+        <main className="mt-10 mb-2 md:mt-32 md:mb-2 relative">
 
           {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 

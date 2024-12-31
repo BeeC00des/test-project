@@ -24,6 +24,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
     const mainCardContainerRef = useRef<HTMLLIElement | null>(null);
+    const [scrollPos, setScrollPos] = useState(0);
 
     const preventBodyScroll = (e) => {
         e.preventDefault();
@@ -64,61 +65,61 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
         // }
     };
 
-    const [isInView, setIsInView] = useState(false);
+    // const [isInView, setIsInView] = useState(false);
 
-    // Handle the intersection changes
-    const handleIntersection = (entries) => {
-        entries.forEach(entry => {
-            // Set the state based on whether the element is in the viewport
-            setIsInView(entry.isIntersecting);
-        });
-    };
+    // // Handle the intersection changes
+    // const handleIntersection = (entries) => {
+    //     entries.forEach(entry => {
+    //         // Set the state based on whether the element is in the viewport
+    //         setIsInView(entry.isIntersecting);
+    //     });
+    // };
 
-    useEffect(() => {
-        // Create an IntersectionObserver instance
-        const observer = new IntersectionObserver(handleIntersection, {
-            root: null, // use the viewport as the root
-            threshold: 1, // Trigger when 50% of the element is in the viewport
-            rootMargin: '0px 0px -300px 0px'
-        });
+    // useEffect(() => {
+    //     // Create an IntersectionObserver instance
+    //     const observer = new IntersectionObserver(handleIntersection, {
+    //         root: null, // use the viewport as the root
+    //         threshold: 1, // Trigger when 50% of the element is in the viewport
+    //         rootMargin: '0px 0px -300px 0px'
+    //     });
 
-        // Start observing the mini card container
-        const miniCard = smallCardsContainerRef.current;
-        if (miniCard) {
-            observer.observe(miniCard);
-        }
+    //     // Start observing the mini card container
+    //     const miniCard = smallCardsContainerRef.current;
+    //     if (miniCard) {
+    //         observer.observe(miniCard);
+    //     }
 
-        // Cleanup on unmount
-        return () => {
-            if (miniCard) {
-                observer.unobserve(miniCard);
-            }
-        };
-    }, []);
+    //     // Cleanup on unmount
+    //     return () => {
+    //         if (miniCard) {
+    //             observer.unobserve(miniCard);
+    //         }
+    //     };
+    // }, []);
 
-    useEffect(() => {
-        if (isInView) {
-            // Prevent body scroll when mini card is in view
-            document.body.style.overflow = 'hidden';
+    // useEffect(() => {
+    //     if (isInView) {
+    //         // Prevent body scroll when mini card is in view
+    //         document.body.style.overflow = 'hidden';
 
-            // Add the global scroll listeners to prevent body scroll
-            // const preventBodyScroll = (e) => {
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            // };
+    //         // Add the global scroll listeners to prevent body scroll
+    //         // const preventBodyScroll = (e) => {
+    //         //     e.preventDefault();
+    //         //     e.stopPropagation();
+    //         // };
 
-            // document.addEventListener('wheel', preventBodyScroll, { passive: false });
-            // document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+    //         // document.addEventListener('wheel', preventBodyScroll, { passive: false });
+    //         // document.addEventListener('touchmove', preventBodyScroll, { passive: false });
 
-            // return () => {
-            //     document.removeEventListener('wheel', preventBodyScroll);
-            //     document.removeEventListener('touchmove', preventBodyScroll);
-            // };
-        } else {
-            // Restore body scroll when mini card is out of view
-            document.body.style.overflow = 'auto';
-        }
-    }, [isInView]);
+    //         // return () => {
+    //         //     document.removeEventListener('wheel', preventBodyScroll);
+    //         //     document.removeEventListener('touchmove', preventBodyScroll);
+    //         // };
+    //     } else {
+    //         // Restore body scroll when mini card is out of view
+    //         document.body.style.overflow = 'auto';
+    //     }
+    // }, [isInView]);
 
     // Update isScrollingPaused when index changes
     useEffect(() => {
@@ -178,6 +179,90 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
         }
     }, [unit, index]); // Dependencies include `unit` and `index`
 
+    const [isParentStuck, setIsParentStuck] = useState(false);
+    const [isInnerScrollComplete, setIsInnerScrollComplete] = useState(false);
+    const parentCardRef = useRef(null);
+
+    useEffect(() => {
+        // Observer for parent card
+        if (parentCardRef.current) {
+            // const observer = new IntersectionObserver(
+            //     ([entry]) => {
+            //         const stickyTop = parseInt(window.getComputedStyle(parentCardRef.current).top)
+            //         const currentTop = entry.boundingClientRect.top;
+            //         console.log("🚀 ~ useEffect ~ currentTop:", {currentTop, stickyTop})
+            //         // setIsParentStuck(currentTop < 385);
+            //         setIsParentStuck(stickyTop === 150);
+            //     },
+            //     {
+            //         threshold: [1],
+            //      }
+            // );
+            // observer.observe(parentCardRef.current);
+            const handleMainScroll = (e) => {
+                if (!smallCardsContainerRef.current || index !== 2) return;
+                const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
+                const stickyElementTop = parseInt(stickyElementStyle.top, 10);
+                const currentTop = parentCardRef.current.getBoundingClientRect().top;
+
+                if (currentTop <= stickyElementTop) {
+                    preventBodyScroll(e);
+                    e.preventDefault();
+                    window.document.body.style.overflow = 'hidden';
+                    // window.document.getElementById('bg-main').style.overflow = 'hidden';
+                    const container = smallCardsContainerRef.current;
+                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+                    const currentScroll = container.scrollTop;
+        
+                    // Check if inner scroll is complete
+                    if (currentScroll >= scrollableHeight) {
+                        setIsInnerScrollComplete(true);
+                        document.body.style.overflow = 'auto';
+                        return;
+                    }
+        
+                    // Calculate and apply scroll
+                    const scrollStep = 300; // Adjust scroll speed
+                    container.scrollTop = currentScroll + scrollStep;
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            const onWheel = (e) => {
+                const isStuck = document.body.style.overflow === 'hidden';
+                if (!isStuck) return;
+                const container = smallCardsContainerRef.current;
+                if (container) {
+                    const currentScroll = container.scrollTop;
+                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+                        
+                    if (currentScroll >= scrollableHeight) {
+                        setIsInnerScrollComplete(true);
+                        document.body.style.overflow = 'auto';
+                        return;
+                    }
+
+                    // Calculate and apply scroll
+                    const scrollStep = 300; // Adjust scroll speed
+                    container.scrollTop = currentScroll + scrollStep;
+                    }
+                    // Check if inner scroll is complete
+            }
+    
+            window.addEventListener('scroll', handleMainScroll);
+            window.addEventListener('wheel', onWheel, { passive: false });
+    
+            return () => {
+                // observer.disconnect();
+                window.removeEventListener('scroll', handleMainScroll);
+                window.removeEventListener('wheel', onWheel);
+            };
+        }
+
+    }, []);
+    // console.log("🚀 ~ Card ~ isParentStuck:", isParentStuck)
+
 
 
     useScrollAnimations();
@@ -193,11 +278,12 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 borderRadius: "50px",
                 position: 'sticky',
                 top: `${top}`,// index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
-                marginTop: index >= 1 ? '-100px' : 0
+                marginTop: index >= 1 ? '-100px' : 0,
+                // zIndex: index,
                 // height:`${height}`
             }}
             onScroll={handleChildScroll}
-            ref={index === 2 ? mainCardContainerRef : undefined}
+            ref={index === 2 ? parentCardRef : undefined}
         >
             <div className=" card__content block md:flex ">
                 <div className="w-full md:w-6/12  slide-left">
