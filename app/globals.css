@@ -43,12 +43,27 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-	/* min-height: 100vh; */
 	height: 695px;
 	width: 100%;
 	border-top-left-radius: 80px;
 	border-top-right-radius: 80px;
 
+}
+
+.header-text {
+	line-height: 150px;
+}
+
+.header-img>img {
+	max-width: none !important;
+}
+
+.header-img {
+	width: 700px !important;
+	height: 420px !important;
+	max-width: none !important;
+
+	/* border:1px solid red; */
 }
 
 /* Base Card Style */
@@ -163,7 +178,7 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-	height: 800px;
+	height: 950px !important;
 	width: 100%;
 	border-bottom-left-radius: 80px;
 	border-bottom-right-radius: 80px;
@@ -207,19 +222,29 @@ body {
 
 #cards {
 	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+	position: relative;
 	/* Make place at bottom, as items will slide to that position*/
+	/* margin-bottom: 50px;  */
 }
 
 /* animation top spacing */
 
 .card {
 	position: sticky;
-	top:0px;
-	/* padding-top: calc(var(--index) * var(--card-top-offset)); */
-	margin-top: -45px;
+	top: 0px;
+	height: 600px;
+	/* margin-top:150px; */
 	/* border: 1px solid red; */
 }
 
+
+.card-text {
+	line-height: 57px;
+}
+
+.card-header-text {
+	line-height: 60px;
+}
 
 @supports (animation-timeline: works) {
 
@@ -345,8 +370,6 @@ main {
 	}
 
 
-
-	
 	.bg-header1 {
 		background-image: url(/images/header.svg);
 		background-size: cover;
@@ -358,18 +381,60 @@ main {
 		border-top-right-radius: 40px;
 	}
 
-	.card{
-		width: 90%;
+	#cards {
+	height: auto; 	/* this vary */
+		padding-bottom: 20px;
+		overflow-y: none;
+	}
+
+	.card {
+		width: 80%;
 		background-size: cover;
-		margin-top: -20px;
-		border-radius:35px !important;
+		margin-top: -15px;
+		border-radius: 35px !important;
 		border: none;
+		height: auto;
+		overflow-y: hidden;
 		/* margin:auto; */
 	}
 
-	.small-card-content{
+	.small-card-content {
 		display: none;
-		border:none;
+		border: none;
+
+	}
+/* 
+	.card__content > li{
+		overflow-y: none;
+	} */
+
+	.header-img>img {
+		max-width: none !important;
+	}
+
+	.header-img {
+		width: 150px !important;
+		height: 200px !important;
+		max-width: none !important;
+
+		/* border:1px solid red; */
+	}
+
+	.card-header-text {
+		line-height: 20px;
+	}
+
+	.header-text {
+		line-height: 50px;
+	}
+
+	.bg-sectionMsg {
+		background-image: url(/images/footer.svg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		height: 600px !important;
+		width: 100%;
 	}
 
 }
@@ -383,25 +448,25 @@ main {
 		background-size: cover;
 	}
 
-	
- /* inner cards on medium screen */
+
+
 	#small-cards {
 		/* border:1px solid red; */
 		height: 700 !important;
 		width: 250px;
 		overflow-y: scroll;
 		scrollbar-width: none !important;
-	    -ms-overflow-style: none !important;
-		
+		-ms-overflow-style: none !important;
+
 	}
 
-	.small-card-content{
-		height:200px !important;
-		width:200px;
+	.small-card-content {
+		height: 200px !important;
+		width: 200px;
 		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
-	
+
 }
 
 @media (min-width: 1025px) {

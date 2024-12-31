@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { usePathname, useSearchParams } from 'next/navigation';
 
-
 import Card from "./components/Card";
 import collectionCard from "./components/collectionCard";
 import disbursementCard from "./components/disbursementCard";
@@ -11,6 +10,7 @@ import getMerchantData from "./api/page";
 import MessageCard from "./components/MessageCard";
 import Footer from "./components/Footer";
 import BgHeader from './components/Bgheader';
+import DisbursementCard from "./components/disbursementCard";
 
 export default function Home() {
 
@@ -67,9 +67,7 @@ export default function Home() {
     handleApiCall();
   }, [pathname, searchParams]);
 
-
   useEffect(() => {
-
 
     const updatedCardData: any[] = [];
 
@@ -185,28 +183,23 @@ export default function Home() {
     }
   }, [merchantData]);
 
-
-
   return (
     <div className="h-auto w-full bg-main">
-      <BgHeader />
+      <BgHeader  />
 
       <main className="mt-10 mb-2 md:mt-32 md:mb-2">
 
-        
-
         {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
-
 
         {error && <p className="text-red-500 mt-2 py-10 text-2xl text-center">{error}</p>}
 
         {/* Dynamically display cards based on merchant data */}
-     
+
         {merchantData && merchantData.data && (
           <ul id="cards">
             {/* Map over the cardData array and render the Card component */}
             {cardData.map((card, index) => (
-            
+
               <Card
                 index={index}
                 key={index}
@@ -224,7 +217,12 @@ export default function Home() {
           </ul>
         )}
 
+
+        
+
+
       </main>
+
 
       <MessageCard
         subTitle="Your performance this year describe you as a"
