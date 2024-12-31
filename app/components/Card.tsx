@@ -38,30 +38,16 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
             }
         }
     };
-    // Handle the window scroll event
-    const handleWindowScroll = (event: WheelEvent) => {
-        if (isScrollingPaused) {
-            event.preventDefault(); // Prevent the window scroll if it's paused
-        }
-    };
 
+    // Update isScrollingPaused when index changes
     useEffect(() => {
         if (index === 2) {
-            // Attach the window scroll event listener when index is 2
-            window.addEventListener("wheel", handleWindowScroll, { passive: false });
+            // Initially pause scrolling for all sections when index === 2
+            setIsScrollingPaused(true);
         } else {
-            // Remove the event listener if index is not 2
-            window.removeEventListener("wheel", handleWindowScroll);
+            setIsScrollingPaused(false);
         }
-
-        // Cleanup the event listener on component unmount
-        return () => {
-            window.removeEventListener("wheel", handleWindowScroll);
-        };
-    }, [isScrollingPaused, index]);
-
-
-
+    }, [index]);
 
     const [formattedText, setFormattedText] = useState<string>("");
 
@@ -131,12 +117,13 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
         >
             <div className=" card__content block md:flex ">
                 <div className="w-full md:w-6/12  slide-left">
-                    <div className=" pl-5 md:pl-14 lg:py-7 py-2 w-full font-[rubik]">
+                    <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik]">
                         <h1
-                            className={` card-header-text sm:text-[30px] md:text-[40px] font-bold 
+                            className={`  text-[30px] md:text-[60px] font-bold 
                                  ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'} 
-                                 ${[3, 4].includes(index) ? 'lg:text-[60px]' : 'lg:text-[50px]'} 
+                                 ${[3, 4].includes(index) ? 'lg:text-[60px]' : 'lg:text-[60px]'} 
                                  ${[3, 4].includes(index) ? 'font-semibold' : ''} 
+                                    ${[3, 4].includes(index) ? 'card-header-text' : ''} 
                                  ${[3, 4].includes(index) ? 'pt-5' : 'pt-0'}`}
                         >
                             {numberTitle}
@@ -146,7 +133,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                             <div className="relative">
                                 {/* Responsive Image */}
                                 <Image
-                                    src={img || ''}
+                                    src={img || ''} 
                                     alt="crown"
                                     width={260}
                                     height={260}
@@ -170,7 +157,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                                 }
                                 ${index === 5
                                     ? 'lg:text-[55px]' : [0, 1].includes(index)
-                                        ? 'lg:text-[45px]'
+                                        ? 'lg:text-[60px]'
                                         : 'lg:text-[40px]'}`}
 
                             dangerouslySetInnerHTML={{ __html: formattedUnitText }}
@@ -195,7 +182,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                         >
                             <li
                                 className="small-card"
-                                // style={{ maxHeight: "600px" }}
+                                // style={{ maxHeight: "600px", }}
                                 onScroll={handleChildScroll}
                             >
                                 <div className="small-card-container">

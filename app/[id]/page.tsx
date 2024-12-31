@@ -180,7 +180,7 @@ export default function Home() {
         unit: "Million in disbursement value",
         text: `With count of ${merchantData.data.disbursement_volume}`,
         backgroundImage: "/images/collectionImg.svg",
-        top:`${topValue}px`,
+        top: `${topValue}px`,
       });
     }
 
@@ -193,10 +193,10 @@ export default function Home() {
           merchantData.data.best_disbursement_month_value
         )}`,
         backgroundImage: "/images/disbursement.svg",
-        top:"100px"
+        top: "100px"
       });
     }
-    
+
 
     //only disbursement data
 
@@ -226,7 +226,7 @@ export default function Home() {
         index: 2,
         id: "card_2",
         img: "/images/crown.png",
-        
+
         customerName: merchantData.data.top_collection_customer_name,
         backgroundImage: "/images/customer.svg",
         top: "100px",
@@ -287,7 +287,7 @@ export default function Home() {
   return (
     <div className="h-auto w-full bg-main">
       {/* <BgHeader merchantData={merchantData.data.business_name ?? ""} /> */}
- <BgHeader /> 
+      <BgHeader merchantData={merchantData} />
 
       <div className="h-auto">
         {/* 6 cards display on screen */}
@@ -335,7 +335,7 @@ export default function Home() {
               </p>
             )}
 
-           
+
             {/* 2 cards display disbursement on screen  */}
             <ul id="cards">
               {disburseData.map((card, index) => (
@@ -351,7 +351,7 @@ export default function Home() {
             </ul>
 
           </main>
-          
+
         ) : (
           <main className="mt-10 mb-2 md:mt-32 md:mb-2">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
@@ -362,8 +362,8 @@ export default function Home() {
               </p>
             )}
 
-  
-{/* 4 cards display collection screen  */}
+
+            {/* 4 cards display collection screen  */}
             <ul id="cards">
               {collectData.map((card, index) => (
                 <CollectionCard
@@ -385,7 +385,7 @@ export default function Home() {
 
         )
 
-          
+
 
         }
       </div>

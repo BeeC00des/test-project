@@ -384,6 +384,7 @@ main {
 	#cards {
 	height: auto; 	/* this vary */
 		padding-bottom: 20px;
+		overflow-y: none;
 	}
 
 	.card {
@@ -393,7 +394,7 @@ main {
 		border-radius: 35px !important;
 		border: none;
 		height: auto;
-		overflow-y: none;
+		overflow-y: hidden;
 		/* margin:auto; */
 	}
 
