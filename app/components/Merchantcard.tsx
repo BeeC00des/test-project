@@ -24,7 +24,7 @@ function Merchantcard({ title, text, img }: Props) {
           </div>
 
           <div className="slide-bottom">
-            <p className="lg:text-[27px] text-[20px] font-light md:py-16 pt-0 pb-7 leading-normal">{text}</p>
+            <p className="lg:text-[27px] text-[16px] font-light md:py-16 pt-0 pb-7 leading-normal">{text}</p>
           </div>
         </div>
       </div>

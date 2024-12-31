@@ -183,7 +183,7 @@ export default function Home() {
 
   return (
     <div className="h-auto w-full bg-main">
-      <BgHeader />
+      <BgHeader  />
 
       <main className="mt-10 mb-2 md:mt-32 md:mb-2">
 

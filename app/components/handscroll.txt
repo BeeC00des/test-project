@@ -1,0 +1,21 @@
+// Handle the window scroll event
+    const handleWindowScroll = (event: WheelEvent) => {
+        if (isScrollingPaused) {
+            event.preventDefault(); // Prevent the window scroll if it's paused
+        }
+    };
+
+    useEffect(() => {
+        if (index === 2) {
+            // Attach the window scroll event listener when index is 2
+            window.addEventListener("wheel", handleWindowScroll, { passive: false });
+        } else {
+            // Remove the event listener if index is not 2
+            window.removeEventListener("wheel", handleWindowScroll);
+        }
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener("wheel", handleWindowScroll);
+        };
+    }, [isScrollingPaused, index]);

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
 import Card from "../components/Card";
+import Merchantcard from "../components/Merchantcard";
 import getMerchantData from "../api/page";
 import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
@@ -21,6 +22,7 @@ export default function Home() {
   const [collectData, setCollectData] = useState<any[]>([]);
   const [merchantData, setMerchantData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // console.log(merchantData.data.best_collection_month);
@@ -194,6 +196,7 @@ export default function Home() {
         top:"100px"
       });
     }
+    
 
     //only disbursement data
 
@@ -283,9 +286,10 @@ export default function Home() {
 
   return (
     <div className="h-auto w-full bg-main">
-      <BgHeader />
+      {/* <BgHeader merchantData={merchantData.data.business_name ?? ""} /> */}
+ <BgHeader /> 
 
-      <div>
+      <div className="h-auto">
         {/* 6 cards display on screen */}
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
           <main className="mt-10 mb-2 md:mt-32 md:mb-2">
