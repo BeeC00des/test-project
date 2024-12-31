@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, UIEventHandler } from "react";
 import useScrollAnimations from "./scrollAnimation";
 import Image from "next/image";
 import throttle from 'lodash.throttle';
+import { useMediaQuery } from 'react-responsive'
 
 function runAfterFramePaint(callback) {
     // Queue a "before Render Steps" callback via requestAnimationFrame.
@@ -37,6 +38,7 @@ type CardProps = {
 function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
     const preventBodyScroll = (e) => {
         e.preventDefault();
@@ -148,7 +150,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     useEffect(() => {
         // Observer for parent card
-        if (parentCardRef.current) {
+        if (parentCardRef.current && !isTabletOrMobile) {
             // const observer = new IntersectionObserver(
             //     ([entry]) => {
             //         const stickyTop = parseInt(window.getComputedStyle(parentCardRef.current).top)
@@ -268,7 +270,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
             };
         }
 
-    }, []);
+    }, [isTabletOrMobile]);
     // console.log("🚀 ~ Card ~ isParentStuck:", isParentStuck)
 
 
@@ -286,7 +288,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 borderRadius: "50px",
                 position: 'sticky',
                 top: `${top}`,// index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
-                marginTop: index >= 1 ? '-100px' : 0,
+                marginTop: index >= 1 ? isTabletOrMobile ? '-20px' : '-100px' : 0,
                 // zIndex: index,
                 // height:`${height}`
             }}
