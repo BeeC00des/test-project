@@ -39,12 +39,13 @@ type CardProps = {
     numberVolume: string;
     cardUpperText: string;
     cardText: string;
-    specialUppertext: string;
-    beforeBtnText: string
-    afterBtnText: string
+    specialUppertext:string;
+    beforeBtnText:string
+    afterBtnText:string
+    marginTop:string
 };
 
-function Card({ numberTitle, headerText, unit, backgroundImage, index, id, specialUppertext, afterBtnText, beforeBtnText, smallCardsData, top, customerName, img, uppertext,
+function Card({ numberTitle, headerText, unit, backgroundImage, index, id,  marginTop, specialUppertext,afterBtnText, beforeBtnText,smallCardsData, top, customerName, img, uppertext,
     numberValue, cardSupText, numberVolume, cardUpperText, cardText }: CardProps) {
 
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
@@ -55,6 +56,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
         e.preventDefault();
         e.stopPropagation();
     };
+
 
     // Scroll event handler to track scrolling of small cards
     const handleChildScroll: UIEventHandler<HTMLLIElement> = (e) => {
@@ -75,7 +77,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
 
     // Update isScrollingPaused when index changes
     useEffect(() => {
-        if (index === 2) {
+        if (index === 2 ) {
             // Initially pause scrolling for all sections when index === 2
             setIsScrollingPaused(true);
         } else {
@@ -83,6 +85,8 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
         }
     }, [index]);
 
+
+   
 
 
     const [isParentStuck, setIsParentStuck] = useState(false);
@@ -243,7 +247,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
 
     return (
         <li
-            className={`card  mx-auto ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
+            className={`card  mx-auto  ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover",
@@ -252,7 +256,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
                 borderRadius: "50px",
                 position: 'sticky',
                 top: `${top}`, // index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
-                marginTop: index >= 1 ? isTabletOrMobile ? '-20px' : '-100px' : 0,
+                marginTop: index >= 1 ? isTabletOrMobile ? '-20px' : `${marginTop}` : 0,
                 // zIndex: index,
                 // height:`${height}`
             }}
@@ -264,33 +268,33 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
                     <div className=" pl-2 md:pl-5 w-full font-[rubik]">
 
                         {(index === 0 || index === 3) && (
-                            <div className="pl-8 md:pl-14 lg:py-14 py-2 w-full font-[rubik]">
+                            <div className="pl-5 md:pl-14 lg:py-14 py-2 w-full font-[rubik]">
                                 <div>
-                                    <p className="text-[32px] text-white font-[inter line-height1">{uppertext}</p>
+                                    <p className="lg:text-[32px] md:text-[20px] text-[16px] text-white font-[inter line-height1">{uppertext}</p>
                                     <h1
-                                        className={`text-[30px] md:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                        className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
                                     >
                                         {numberValue}
                                     </h1>
                                     <p
-                                        className={`sm:text-[25px] md:text-[40px] font-bold text-white line-height3`}
+                                        className={`text-[16px]  md:text-[24px] lg:text-[40px] font-bold text-white line-height3`}
                                     >{headerText} </p>
 
                                 </div>
-                                <div className="pt-10">
-                                    <p className="lg:w-6/12 w-full text-[30px] text-white font-normal leading-tight line-height3">{cardSupText}</p>
+                                <div className="lg:pt-10 md:pt-5">
+                                    <p className="lg:w-6/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal leading-tight line-height3">{cardSupText}</p>
                                     <h1
-                                        className={`text-[30px] md:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                        className={`text-[20px] md:text[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
                                     >
                                         {numberVolume}
                                     </h1>
                                     <p
-                                        className={`sm:text-[25px] md:text-[35px] font-bold text-white pb-5 line-height1`}
+                                        className={` text-[16px] md:text-[24px] lg:text-[35px] font-bold text-white pb-5 line-height1`}
                                     > {cardUpperText}</p>
 
                                     {cardText && (
                                         <button
-                                            className="md:text-[24px] text-sm font-normal py-5 px-7 text-white bg-[#063A4F33] rounded-full"
+                                            className="md:text-[20px] text-[16px] lg:text-[24px] font-normal py-5 px-7 text-white bg-[#063A4F33] rounded-full"
                                         >
                                             {cardText}
                                         </button>
@@ -304,32 +308,32 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
                                 <div className="w-full md:w-8/12 lg:py-7 slide-left">
                                     <div className=" pl-5 md:pl-14  py-2 w-full font-[rubik] leading-tight">
 
-                                        {specialUppertext && (
-                                            <p className="text-[30px] text-white">{specialUppertext}</p>
-                                        )}
-
+                                    {specialUppertext && (
+                                        <p className=" text-[16px] md:text-[20px] lg:text-[30px] text-white">{specialUppertext}</p>
+                                    )}
+                                   
                                         <h1
-                                            className={`text-[30px] md:text-[60px] font-bold text-[#063A4F]`}
+                                            className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F]`}
                                         >
                                             {numberValue}
                                         </h1>
                                         <p
-                                            className={`sm:text-[25px] md:text-[40px] font-normal text-white`}
+                                            className={`text-[16px] md:text-[24px] lg:text-[40px] font-normal text-white`}
                                         >{cardText}</p>
 
                                     </div>
                                     <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik] leading-tight">
-                                        {cardSupText && (
-                                            <p className="lg:w-8/12 w-full text-[30px] text-white font-normal leading-tight line-height3">{cardSupText}</p>
-                                        )}
+                                    {cardSupText && (
+                                    <p className="lg:w-8/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal line-height3">{cardSupText}</p>
+                                    )}
                                         <h1
-                                            className={`text-[30px] md:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                            className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
                                         >
                                             {numberVolume}
                                         </h1>
 
                                         <button
-                                            className={`md:text-[28px] w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
+                                            className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
                                         > {beforeBtnText} <span className="text-[#063A4F]">{numberTitle} </span>{afterBtnText} </button>
                                     </div>
                                 </div>
@@ -340,7 +344,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
 
                         {(index === 2 || index === 5) && (
                             <div className="flex">
-                                <div className="relative w-5/12 lg:pl-7 ">
+                                <div className="relative md:w-5/12 md:pl-5">
                                     {/* Responsive Image */}
                                     <Image
                                         src={img || ''}
@@ -351,7 +355,7 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
 
                                     />
                                     <h3
-                                        className="card-text sm:text-[30px] md:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
+                                        className="card-text sm:text-[24px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
                                     >
                                         {customerName}
                                     </h3>
@@ -362,8 +366,6 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
                                         overflowY: isScrollingPaused ? "hidden" : "scroll",
                                     }}>
                                     {/* If index === 2, render the small cards */}
-
-
                                     {(index === 2 || index === 5) && smallCardsData && (
                                         <ul
                                             id="small-cards"
@@ -371,40 +373,36 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id, speci
                                         >
                                             <li
                                                 className="small-card"
+                                                // style={{ maxHeight: "600px", }}
                                                 onScroll={handleChildScroll}
                                             >
                                                 <div className="small-card-container">
                                                     {smallCardsData.map((smallCard) => (
                                                         <div
                                                             key={smallCard.id}
-                                                            // tailwindcss backdrop-blur-lg is  not working why? onload screen 
-                                                            className="small-card-content  flex justify-center items-center text-white text-left  p-10  backdrop-blur-lg bg-white/7"
+                                                            className="small-card-content flex justify-center items-center text-left  text-white p-10 border-[0.5px]"
                                                             style={{
                                                                 height: "300px",
                                                                 margin: "30px",
                                                                 borderRadius: "40px",
-                                                                border: "1px solid rgba(255, 255, 255, 0.2)",
-                                                                // background: "transparent",
-                                                                // backdropFilter: "blur(22.73px)",
+                                                                // backgroundColor: "rgba(255, 255, 255, 0.1)",
+                                                                // backdropFilter: "blur(5px)",
                                                             }}
                                                         >
-                                                    <h3 className="text-base lg:text-3xl md:text-lg font-bold">
-                                                        {smallCard.text}
-                                                    </h3>
-                                                </div>
+                                                            <h3 className="text-[16px] md:text-[26px] lg:text-[32px] font-bold">{smallCard.text}</h3>
+                                                        </div>
                                                     ))}
-                                            </div>
-                                        </li>
+                                                </div>
+                                            </li>
                                         </ul>
                                     )}
-
-                            </div>
+                                </div>
                             </div>
 
                         )}
+                    </div>
                 </div>
             </div>
-        </div>
         </li >
     );
 }
