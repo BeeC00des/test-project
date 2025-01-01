@@ -350,13 +350,16 @@ main {
 .small-card {
 	-ms-overflow-style: none !important;
 	scrollbar-width: none !important;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 }
 
-.small-card-content {
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	z-index: 3
-}
+/* .small-card-content {
+	border: 1px solid rgba(255, 255, 255, 0.2); 
+	background: transparent; 
+	backdrop-filter: blur(22.73px); 
+  }  */
+
+  
 
 /* end of card content */
 
@@ -469,11 +472,11 @@ main {
 
 	}
 
-	.small-card-content {
+	/* .small-card-content {
 		height: 200px !important;
 		width: 200px;
 		border: 1px solid rgba(255, 255, 255, 0.2);
-	}
+	} */
 
 
 }

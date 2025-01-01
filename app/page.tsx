@@ -13,7 +13,7 @@ import MessageCard from "./components/MessageCard";
 import Footer from "./components/Footer";
 import BgHeader from "./components/Bgheader";
 
-import TransactionCard from "./components/TransactionCard";
+// import TransactionCard from "./components/TransactionCard";
 
 
 export default function Home() {

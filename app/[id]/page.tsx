@@ -15,7 +15,7 @@ import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
 
-import TransactionCard from "../components/TransactionCard";
+
 
 
 export default function Home() {
@@ -76,9 +76,7 @@ export default function Home() {
 
 
     if (merchantData?.data?.collection_value) {
-
       console.log(`card 1 `, merchantData);
-      
       updatedCardData.push({
         index: 1,
         id: "card_1",
@@ -87,36 +85,41 @@ export default function Home() {
         backgroundImage: "../images/collectionImg.svg",
         top: `${topValue}px`,
         uppertext: "In 2024, you had",
-        numberValue:formatCurrency(
+        numberValue: formatCurrency(
           merchantData.data.collection_value)
         ,
-        numberVolume: `${formatCurrency(
+        numberVolume:
           merchantData.data.collection_volume
-        )}`,
+        ,
         cardSupText: "You've been raking in the Naira with",
         cardText: "🤑 Keep the bell ringing!",
         cardUpperText: "total paid transaction",
       });
     }
 
-    // Check if disbursement_value exists and create the card
-    if (merchantData?.data?.disbursement_value) {
+
+    if (merchantData?.data?.collection_value) {
+      console.log('------------- ', merchantData.data.best_collection_month);
       updatedCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        numberTitle: merchantData.data.best_collection_month_volume,
         headerText: "Collected",
         backgroundImage: "../images/disbursement.svg",
         top: "100px",
-        uppertext: "In 2024, you had",
+        uppertext: "bagging",
+        specialUppertext: "",
         numberValue:
-          merchantData.data.collection_month,
+          merchantData.data.best_collection_month,
         numberVolume: `${formatCurrency(
-          merchantData.data.collection_volume
+          merchantData.data.best_collection_month_value
         )}`,
-        cardSupText: "You've been raking in the Naira with",
-        cardText: "🤑 Keep the bell ringing!",
+        cardSupText: "",
+        cardText: "was your peak performance month,",
         cardUpperText: "total paid transaction",
+         beforeBtnText:'And you racked',
+        afterBtnText: "transactions in this month, wow! 💵"
+  
       });
     }
 
@@ -149,102 +152,106 @@ export default function Home() {
       });
     }
 
-    // If best collection month exists, create the card
-    if (merchantData?.data?.best_collection_month_value) {
+    // Check if disbursement_value exists and create the card
+    if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 4,
         id: "card_4",
-        numberTitle: formatCurrency(merchantData.data?.collection_value),
-        headerText: "Collected",
+        numberTitle: formatCurrency(merchantData.data?.disbursement_value),
+        headerText: "total paid out amount",
         backgroundImage: "../images/collectionImg.svg",
         top: "200px",
-        uppertext: "In 2024, you had",
-        numberValue:formatCurrency(
+        uppertext: "",
+        numberValue: formatCurrency(
           merchantData.data.disbursement_value)
         ,
-        numberVolume: `${formatCurrency(
-          merchantData.data.disbursement_volume
-        )}`,
-        cardSupText: "You've been raking in the Naira with",
-        cardText: "🤑 Keep the bell ringing!",
-        cardUpperText: "total paid transaction",
-    
+        numberVolume:
+          merchantData.data.disbursement_volume,
+        cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
+        cardText: "",
+        cardUpperText: "transaction",
+
       });
     }
 
-    // If best disbursement month exists, create the card
-    if (merchantData?.data?.best_disbursement_month_value) {
+    // 
+    if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 5,
-        id: "card_6",
-        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        id: "card_5",
+        numberTitle: merchantData.data?.best_disbursement_month_volume,
         headerText: "Collected",
         backgroundImage: "../images/disbursement.svg",
-        // top: `${topValue}px`,
-        uppertext: "In 2024, you had",
-        numberValue:formatCurrency(
-          merchantData.data.collection_value)
-        ,
+        top: "250px",
+        uppertext: "", //no content,
+        specialUppertext: "🥂Cheers to",
+        numberValue:
+          merchantData.data.best_disbursement_month,
         numberVolume: `${formatCurrency(
-          merchantData.data.collection_volume
+          merchantData.data.best_disbursement_month_value
         )}`,
-        cardSupText: "You've been raking in the Naira with",
-        cardText: "🤑 Keep the bell ringing!",
-        cardUpperText: "total paid transaction",
+
+        cardSupText: "When you paid out the most,",
+        cardText: "", //no content
+        cardUpperText: "", //no content
+        beforeBtnText:'This day you paid out',
+        afterBtnText: "what a day!👍🏽"
+
       });
     }
 
-    
+
 
     // Always show the settlement value card if available
-    if (merchantData?.data?.total_settlement_value) {
-      updatedCardData.push({
-        index: 6,
-        id: "card_6",
-        img: "/images/crown.png",
-        numberTitle: formatCurrency(merchantData.data.total_settlement_value),
-        backgroundImage: "/images/settle.svg",
-        uppertext: "In 2024, you had",
-        numberValue:formatCurrency(
-          merchantData.data.collection_value)
-        ,
-        numberVolume: `${formatCurrency(
-          merchantData.data.collection_volume
-        )}`,
-        cardSupText: "You've been raking in the Naira with",
-        cardText: "🤑 Keep the bell ringing!",
-        cardUpperText: "total paid transaction",
-      });
-    }
-
-    // if (merchantData?.data?.top_collection_customer_name) {
+    // if (merchantData?.data?.total_settlement_value) {
     //   updatedCardData.push({
     //     index: 6,
     //     id: "card_6",
     //     img: "/images/crown.png",
-    //     customerName: merchantData.data.top_collection_customer_name,
-    //     backgroundImage: "/images/customer.svg",
-    //     top: "150px",
-    //     smallCardsData: [
-    //       {
-    //         id: "small_card_1",
-    //         text: `Was your Best customer`,
-    //       },
-    //       {
-    //         id: "small_card_2",
-    //         text: `With ${formatCurrency(
-    //           merchantData.data.top_collection_customer_value
-    //         )} payment`,
-    //       },
-    //       {
-    //         id: "small_card_3",
-    //         text: `Valued at ${formatCurrency(
-    //           merchantData.data.top_collection_customer_value
-    //         )}`,
-    //       },
-    //     ],
+    //     top: "300px",
+    //     numberTitle: formatCurrency(merchantData.data.total_settlement_value),
+    //     backgroundImage: "/images/settle.svg",
+    //     uppertext: "In 2024, you had",
+    //     numberValue: formatCurrency(
+    //       merchantData.data.collection_value)
+    //     ,
+    //     numberVolume: `${formatCurrency(
+    //       merchantData.data.collection_volume
+    //     )}`,
+    //     cardSupText: "You've been raking in the Naira with",
+    //     cardText: "🤑 Keep the bell ringing!",
+    //     cardUpperText: "total paid transaction",
     //   });
     // }
+
+    if (merchantData?.data?.top_collection_customer_name) {
+      updatedCardData.push({
+        index: 6,
+        id: "card_6",
+        img: "/images/crown.png",
+        customerName: merchantData.data.top_collection_customer_name,
+        backgroundImage: "/images/settle.svg",
+        top: "300px",
+        smallCardsData: [
+          {
+            id: "small_card_1",
+            text: `Was your Best customer`,
+          },
+          {
+            id: "small_card_2",
+            text: `With ${formatCurrency(
+              merchantData.data.top_collection_customer_value
+            )} payment`,
+          },
+          {
+            id: "small_card_3",
+            text: `Valued at ${formatCurrency(
+              merchantData.data.top_collection_customer_value
+            )}`,
+          },
+        ],
+      });
+    }
 
     // Only update if there's valid data to display
     if (updatedCardData.length > 0) {
@@ -371,7 +378,7 @@ export default function Home() {
       <div className="h-auto">
         {/* 6 cards display on screen */}
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2 relative ">
+          <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
             {error && (
@@ -398,12 +405,15 @@ export default function Home() {
                   smallCardsData={card.smallCardsData}
                   customerName={card.customerName}
                   img={card.img}
+                  specialUppertext={card.specialUppertext}
                   cardUpperText={card.cardUpperText}
                   cardText={card.cardText}
                   uppertext={card.uppertext}
                   numberValue={card.numberValue}
                   numberVolume={card.numberVolume}
                   cardSupText={card.cardSupText}
+                  afterBtnText={card.afterBtnText}
+                  beforeBtnText={card.beforeBtnText}
                 />
               ))}
             </ul>
