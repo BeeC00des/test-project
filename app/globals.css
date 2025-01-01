@@ -223,9 +223,6 @@ body {
 
 #cards {
 	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
-	/* position: relative; */
-	/* Make place at bottom, as items will slide to that position*/
-	/* margin-bottom: 50px;  */
 	height: 4000px;
 }
 
@@ -235,8 +232,9 @@ body {
 	position: sticky;
 	top: 0px;
 	height: 600px;
+	width:86%;
+
 	/* margin-top:150px; */
-	/* border: 1px solid red; */
 }
 
 
@@ -324,6 +322,15 @@ main {
 	place-items: start;
 }
 
+.line-height1{
+	line-height: 32px;
+}
+.line-height2{
+	line-height: 71px;
+}
+.line-height3{
+	line-height: 47px;
+}
 
 
 /* inner scroll card  */

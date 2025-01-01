@@ -25,7 +25,7 @@ function runAfterFramePaint(callback) {
 type CardProps = {
     numberTitle: string;
     unit: string;
-    text: string;
+    headerText: string;
     backgroundImage: string;
     index: number;
     id: string;
@@ -33,9 +33,17 @@ type CardProps = {
     customerName: string;
     img: string | null;
     smallCardsData?: any[];
+    uppertext: string;
+    numberValue: string;
+    cardSupText: string;
+    numberVolume: string;
+    cardUpperText: string;
+    cardText: string
 };
 
-function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
+function Card({ numberTitle, headerText, unit, backgroundImage, index, id, smallCardsData, top, customerName, img, uppertext,
+    numberValue, cardSupText, numberVolume, cardUpperText, cardText }: CardProps) {
+
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -72,60 +80,13 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
         }
     }, [index]);
 
-    const [formattedText, setFormattedText] = useState<string>("");
 
-    useEffect(() => {
-        const styleLastWord = (text: string) => {
-            if (!text) {
-                return ''; // Return empty string if text is undefined or null
-            }
-
-            const textArray = text.split(' '); // Split text into words
-            const lastWord = textArray.pop(); // Get the last word
-
-            if (lastWord) {
-                // Return the rest of the text and apply a span to the last word
-                return `${textArray.join(' ')} <span class="underline decoration-wavy">${lastWord}</span>`;
-            }
-            return text;
-        };
-
-
-        setFormattedText(styleLastWord(text));
-    }, [text]);
-
-    const [formattedUnitText, setFormattedUnitText] = useState<string>("");
-
-    useEffect(() => {
-        const styleLastWord = (text: string) => {
-            if (!text) {
-                return ""; // Return empty string if text is undefined or null
-            }
-
-            const textArray = text.split(" "); // Split text into words
-            const lastWord = textArray.pop(); // Get the last word
-
-            if (lastWord) {
-                // Return the rest of the text and apply a span to the last word
-                return `${textArray.join(" ")} <span class="underline decoration-wavy md:text-[60px] text-[20px]">${lastWord}</span>`;
-            }
-            return text;
-        };
-
-        // Check if the current index is 3 or 4
-        if ([3, 4].includes(index)) {
-            setFormattedUnitText(styleLastWord(unit));
-        } else {
-            setFormattedUnitText(unit); // Use the text as-is for other indices
-        }
-    }, [unit, index]); // Dependencies include `unit` and `index`
 
     const [isParentStuck, setIsParentStuck] = useState(false);
     const [isInnerScrollComplete, setIsInnerScrollComplete] = useState(false);
     const parentCardRef = useRef<HTMLLIElement>(null);
 
-    useEffect(() => 
-    {
+    useEffect(() => {
         if (index === 5) {
             var observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutationRecord) {
@@ -205,7 +166,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                                 })
                             });
                         }
-                        
+
                     }
 
                     return;
@@ -223,14 +184,14 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                     const container = smallCardsContainerRef.current;
                     const scrollableHeight = container.scrollHeight - container.clientHeight;
                     const currentScroll = container.scrollTop;
-        
+
                     // Check if inner scroll is complete
                     if (currentScroll >= scrollableHeight) {
                         setIsInnerScrollComplete(true);
                         document.body.style.overflow = 'auto';
                         return;
                     }
-        
+
                     // Calculate and apply scroll
                     const scrollStep = 300; // Adjust scroll speed
                     container.scrollTop = currentScroll + scrollStep;
@@ -246,7 +207,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 if (container) {
                     const currentScroll = container.scrollTop;
                     const scrollableHeight = container.scrollHeight - container.clientHeight;
-                        
+
                     if (currentScroll >= scrollableHeight) {
                         setIsInnerScrollComplete(true);
                         document.body.style.overflow = 'auto';
@@ -256,13 +217,13 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                     // Calculate and apply scroll
                     const scrollStep = e.deltaY > 0 ? 330 : -330; // Adjust scroll speed
                     container.scrollTop = currentScroll + scrollStep;
-                    }
-                    // Check if inner scroll is complete
+                }
+                // Check if inner scroll is complete
             }
-    
+
             window.addEventListener('scroll', throttle(handleMainScroll, 200));
             window.addEventListener('wheel', throttle(onWheel, 200), { passive: false });
-    
+
             return () => {
                 // observer.disconnect();
                 window.removeEventListener('scroll', handleMainScroll);
@@ -279,7 +240,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     return (
         <li
-            className={`card w-6/12 md:w-10/12 lg:w-10/12 mx-auto ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
+            className={`card  mx-auto border border-red-500 ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover",
@@ -287,7 +248,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
                 backgroundRepeat: "no-repeat",
                 borderRadius: "50px",
                 position: 'sticky',
-                top: `${top}`,// index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
+                top: `${top}`, // index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
                 marginTop: index >= 1 ? isTabletOrMobile ? '-20px' : '-100px' : 0,
                 // zIndex: index,
                 // height:`${height}`
@@ -296,93 +257,131 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
             ref={parentCardRef}
         >
             <div className=" card__content block md:flex ">
-                <div className="w-full md:w-6/12  slide-left">
-                    <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik]">
-                        <h1
-                            className={`  text-[30px] md:text-[60px] font-bold 
-                                 ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'} 
-                                 ${[3, 4].includes(index) ? 'lg:text-[60px]' : 'lg:text-[60px]'} 
-                                 ${[3, 4].includes(index) ? 'font-semibold' : ''} 
-                                    ${[3, 4].includes(index) ? 'card-header-text' : ''} 
-                                 ${[3, 4].includes(index) ? 'pt-5' : 'pt-0'}`}
-                        >
-                            {numberTitle}
-                        </h1>
+                <div className="w-full  slide-left">
+                    <div className=" pl-2 md:pl-5 lg:py-10 py-2 w-full font-[rubik]">
 
-                        {index === 2 && (
-                            <div className="relative">
-                                {/* Responsive Image */}
-                                <Image
-                                    src={img || ''} 
-                                    alt="crown"
-                                    width={260}
-                                    height={260}
-                                    className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
+                        {(index === 0 || index === 3) && (
+                            <div className="pl-8 md:pl-14 lg:py-10 py-2 w-full font-[rubik]">
+                                <div>
+                                    <p className="text-[32px] text-white font-[inter line-height1">{uppertext}</p>
+                                    <h1
+                                        className={`text-[30px] md:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                    >
+                                        {numberValue}
+                                    </h1>
+                                    <p
+                                        className={`sm:text-[25px] md:text-[40px] font-bold text-white line-height3`}
+                                    >{headerText} </p>
 
-                                />
-                                <h3
-                                    className="card-text sm:text-[30px] md:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
-                                >
-                                    {customerName}
-                                </h3>
+                                </div>
+                                <div className="pt-10 border">
+                                    <p className="text-[30px] text-white font-thin leading-tight line-height1">{cardSupText}</p>
+                                    <h1
+                                        className={`text-[30px] md:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                    >
+                                        {numberVolume}
+                                    </h1>
+                                    <p
+                                        className={`sm:text-[25px] md:text-[35px] font-bold text-white pb-3 line-height3`}
+                                    > {cardUpperText}</p>
+
+                                    <button
+                                        className={`md:text-[24px] text-sm font-normal py-3 px-4  text-white bg-[#063A4F33] rounded-full  `}
+                                    > {cardText}</button>
+                                </div>
                             </div>
                         )}
 
-                        <p
-                            className={` card-text sm:text-[25px] md:text-[35px] font-bold ${index === 5
-                                ? 'text-[#F8C47A]'
-                                : [3, 4].includes(index)
-                                    ? 'text-[#063A4F]'
-                                    : 'text-white'
-                                }
-                                ${index === 5
-                                    ? 'lg:text-[55px]' : [0, 1].includes(index)
-                                        ? 'lg:text-[60px]'
-                                        : 'lg:text-[40px]'}`}
+                        {(index === 1 || index === 4) && (
+                            <div>
+                                <div className="w-full md:w-8/12 lg:py-7 slide-left">
+                                    <div className=" pl-5 md:pl-14  py-2 w-full font-[rubik] leading-tight">
 
-                            dangerouslySetInnerHTML={{ __html: formattedUnitText }}
-                        />
-
-                        <p
-                            className={`md:text-[24px] text-base font-normal lg:py-7 py-2 text-white  `}
-                            dangerouslySetInnerHTML={{ __html: formattedText }}
-                        />
-                    </div>
-                </div>
-                <div
-                    className={`hidden md:w-6/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
-                    style={{
-                        overflowY: isScrollingPaused ? "hidden" : "scroll",
-                    }}>
-                    {/* If index === 2, render the small cards */}
-                    {index === 2 && smallCardsData && (
-                        <ul
-                            id="small-cards"
-                            ref={smallCardsContainerRef} // Ref for the small cards container
-                        >
-                            <li
-                                className="small-card"
-                                // style={{ maxHeight: "600px", }}
-                                onScroll={handleChildScroll}
-                            >
-                                <div className="small-card-container">
-                                    {smallCardsData.map((smallCard) => (
-                                        <div
-                                            key={smallCard.id}
-                                            className="small-card-content flex justify-center items-center text-left backdrop-blur-lg text-white bg-transparent p-10"
-                                            style={{
-                                                height: "300px",
-                                                margin: "30px",
-                                                borderRadius: "40px",
-                                            }}
+                                        <h1
+                                            className={`text-[30px] md:text-[60px] font-bold text-[#063A4F]`}
                                         >
-                                            <h3 className=" text-base lg:text-3xl  md:text-lg font-bold">{smallCard.text}</h3>
-                                        </div>
-                                    ))}
+                                            {numberValue}
+                                        </h1>
+                                        <p
+                                            className={`sm:text-[25px] md:text-[32px] font-normal text-white`}
+                                        >{cardText}</p>
+
+                                    </div>
+                                    <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik] leading-tight">
+                                        <p className="text-[50px] text-white leading-tight font-semibold">{uppertext}</p>
+                                        <h1
+                                            className={`text-[30px] md:text-[60px] font-bold text-[#063A4F]`}
+                                        >
+                                            {numberVolume}
+                                        </h1>
+
+                                        <button
+                                            className={`md:text-[22px] w-8/12 text-left text-sm font-normal py-3 pl-3 pr-12  text-white bg-[#063A4F33] rounded-lg leading-loose  `}
+                                        >  then 7th of {numberValue} you rank the in  <span className="text-[#063A4F]">{numberVolume} </span>in one day, wow 💵 </button>
+                                    </div>
                                 </div>
-                            </li>
-                        </ul>
-                    )}
+
+
+                            </div>
+                        )}
+
+                        {(index === 2 || index === 5) && (
+                            <div className="flex">
+                                <div className="relative w-6/12 pl-5">
+                                    {/* Responsive Image */}
+                                    <Image
+                                        src={img || ''}
+                                        alt="crown"
+                                        width={260}
+                                        height={260}
+                                        className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
+
+                                    />
+                                    <h3
+                                        className="card-text sm:text-[30px] md:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
+                                    >
+                                        {customerName}
+                                    </h3>
+                                </div>
+                                <div
+                                    className={`hidden md:w-6/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                                    style={{
+                                        overflowY: isScrollingPaused ? "hidden" : "scroll",
+                                    }}>
+                                    {/* If index === 2, render the small cards */}
+                                    {index === 2 && smallCardsData && (
+                                        <ul
+                                            id="small-cards"
+                                            ref={smallCardsContainerRef} // Ref for the small cards container
+                                        >
+                                            <li
+                                                className="small-card"
+                                                // style={{ maxHeight: "600px", }}
+                                                onScroll={handleChildScroll}
+                                            >
+                                                <div className="small-card-container">
+                                                    {smallCardsData.map((smallCard) => (
+                                                        <div
+                                                            key={smallCard.id}
+                                                            className="small-card-content flex justify-center items-center text-left backdrop-blur-lg text-white bg-transparent p-10"
+                                                            style={{
+                                                                height: "300px",
+                                                                margin: "30px",
+                                                                borderRadius: "40px",
+                                                            }}
+                                                        >
+                                                            <h3 className=" text-base lg:text-3xl  md:text-lg font-bold">{smallCard.text}</h3>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                            </div>
+
+                        )}
+                    </div>
                 </div>
             </div>
         </li >

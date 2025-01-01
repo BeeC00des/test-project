@@ -1,16 +1,22 @@
+// KARAN
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
 import Card from "../components/Card";
-import Merchantcard from "../components/Merchantcard";
+import DisbursementCard from "../components/disbursementCard";
+import CollectionCard from "../components/collectionCard";
+
+
 import getMerchantData from "../api/page";
 import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
-import DisbursementCard from "../components/disbursementCard";
-import CollectionCard from "../components/collectionCard";
+
+import TransactionCard from "../components/TransactionCard";
+
 
 export default function Home() {
   const params = useParams();
@@ -22,10 +28,11 @@ export default function Home() {
   const [collectData, setCollectData] = useState<any[]>([]);
   const [merchantData, setMerchantData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
   // console.log(merchantData.data.best_collection_month);
+  // console.log(merchantData)
 
   // currency formatter function
 
@@ -60,23 +67,35 @@ export default function Home() {
   }, [merchantId]);
 
   useEffect(() => {
+
+
     const updatedCardData: any[] = [];
     const disburseCardData: any[] = [];
     const collectCardData: any[] = [];
     const topValue = 50;
 
-    // general loop
 
     if (merchantData?.data?.collection_value) {
+
+      console.log(`card 1 `, merchantData);
+      
       updatedCardData.push({
         index: 1,
         id: "card_1",
         numberTitle: formatCurrency(merchantData.data?.collection_value),
-        unit: "Million in collection value",
-        text: `With count of ${merchantData.data.collection_volume}`,
+        headerText: "Collected",
         backgroundImage: "../images/collectionImg.svg",
         top: `${topValue}px`,
-        img: "",
+        uppertext: "In 2024, you had",
+        numberValue:formatCurrency(
+          merchantData.data.collection_value)
+        ,
+        numberVolume: `${formatCurrency(
+          merchantData.data.collection_volume
+        )}`,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
       });
     }
 
@@ -85,14 +104,22 @@ export default function Home() {
       updatedCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: formatCurrency(merchantData.data.disbursement_value),
-        unit: "Million in disbursement value",
-        text: `With count of ${merchantData.data.disbursement_volume}`,
-        backgroundImage: "/images/disbursement.svg",
+        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        headerText: "Collected",
+        backgroundImage: "../images/disbursement.svg",
         top: "100px",
-        img: "",
+        uppertext: "In 2024, you had",
+        numberValue:
+          merchantData.data.collection_month,
+        numberVolume: `${formatCurrency(
+          merchantData.data.collection_volume
+        )}`,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
       });
     }
+
     if (merchantData?.data?.top_collection_customer_name) {
       updatedCardData.push({
         index: 3,
@@ -127,13 +154,21 @@ export default function Home() {
       updatedCardData.push({
         index: 4,
         id: "card_4",
-        numberTitle: "Your best collection month for the year was",
-        unit: `${merchantData.data.best_collection_month}`, // Assuming best_collection_month is available
-        text: `Collection value that month was ${formatCurrency(
-          merchantData.data.best_collection_month_value
-        )}`,
-        backgroundImage: "/images/collectionImg.svg",
+        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        headerText: "Collected",
+        backgroundImage: "../images/collectionImg.svg",
         top: "200px",
+        uppertext: "In 2024, you had",
+        numberValue:formatCurrency(
+          merchantData.data.disbursement_value)
+        ,
+        numberVolume: `${formatCurrency(
+          merchantData.data.disbursement_volume
+        )}`,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
+    
       });
     }
 
@@ -141,29 +176,75 @@ export default function Home() {
     if (merchantData?.data?.best_disbursement_month_value) {
       updatedCardData.push({
         index: 5,
-        id: "card_5",
-        numberTitle: "Your best disbursement month for the year was",
-        unit: `${merchantData.data.best_disbursement_month}`, // Assuming disbursementMonthName is available
-        text: `Disbursement value that month was ${formatCurrency(
-          merchantData.data.best_disbursement_month_value
+        id: "card_6",
+        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        headerText: "Collected",
+        backgroundImage: "../images/disbursement.svg",
+        // top: `${topValue}px`,
+        uppertext: "In 2024, you had",
+        numberValue:formatCurrency(
+          merchantData.data.collection_value)
+        ,
+        numberVolume: `${formatCurrency(
+          merchantData.data.collection_volume
         )}`,
-        backgroundImage: "/images/disbursement.svg",
-        top: "250px",
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
       });
     }
+
+    
 
     // Always show the settlement value card if available
     if (merchantData?.data?.total_settlement_value) {
       updatedCardData.push({
         index: 6,
         id: "card_6",
+        img: "/images/crown.png",
         numberTitle: formatCurrency(merchantData.data.total_settlement_value),
-        unit: "Million in settlement value",
         backgroundImage: "/images/settle.svg",
-        img: "",
-        top: "700px",
+        uppertext: "In 2024, you had",
+        numberValue:formatCurrency(
+          merchantData.data.collection_value)
+        ,
+        numberVolume: `${formatCurrency(
+          merchantData.data.collection_volume
+        )}`,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
       });
     }
+
+    // if (merchantData?.data?.top_collection_customer_name) {
+    //   updatedCardData.push({
+    //     index: 6,
+    //     id: "card_6",
+    //     img: "/images/crown.png",
+    //     customerName: merchantData.data.top_collection_customer_name,
+    //     backgroundImage: "/images/customer.svg",
+    //     top: "150px",
+    //     smallCardsData: [
+    //       {
+    //         id: "small_card_1",
+    //         text: `Was your Best customer`,
+    //       },
+    //       {
+    //         id: "small_card_2",
+    //         text: `With ${formatCurrency(
+    //           merchantData.data.top_collection_customer_value
+    //         )} payment`,
+    //       },
+    //       {
+    //         id: "small_card_3",
+    //         text: `Valued at ${formatCurrency(
+    //           merchantData.data.top_collection_customer_value
+    //         )}`,
+    //       },
+    //     ],
+    //   });
+    // }
 
     // Only update if there's valid data to display
     if (updatedCardData.length > 0) {
@@ -197,10 +278,6 @@ export default function Home() {
       });
     }
 
-
-    //only disbursement data
-
-    // Only update if there's valid data to display
     if (disburseCardData.length > 0) {
       setDisburseData(disburseCardData);
     }
@@ -286,13 +363,15 @@ export default function Home() {
 
   return (
     <div className="h-auto w-full bg-main">
-      {/* <BgHeader merchantData={merchantData.data.business_name ?? ""} /> */}
+
       <BgHeader merchantData={merchantData} />
 
+
+      {/* start of old card */}
       <div className="h-auto">
         {/* 6 cards display on screen */}
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2 relative">
+          <main className="mt-10 mb-2 md:mt-32 md:mb-2 relative ">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
             {error && (
@@ -313,12 +392,18 @@ export default function Home() {
                   id={`card_${index}`}
                   numberTitle={card.numberTitle}
                   unit={card.unit}
-                  text={card.text}
+                  headerText={card.headerText}
                   top={card.top}
                   backgroundImage={card.backgroundImage}
                   smallCardsData={card.smallCardsData}
                   customerName={card.customerName}
                   img={card.img}
+                  cardUpperText={card.cardUpperText}
+                  cardText={card.cardText}
+                  uppertext={card.uppertext}
+                  numberValue={card.numberValue}
+                  numberVolume={card.numberVolume}
+                  cardSupText={card.cardSupText}
                 />
               ))}
             </ul>
@@ -381,6 +466,8 @@ export default function Home() {
               ))}
             </ul>
 
+
+
           </main>
 
         )
@@ -389,6 +476,8 @@ export default function Home() {
 
         }
       </div>
+
+
       <MessageCard
         subTitle="Your performance this year describe you as a"
         title=" Monni Maker"
