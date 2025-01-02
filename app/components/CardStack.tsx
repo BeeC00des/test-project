@@ -105,7 +105,7 @@ function CardStack({ cardList }: CardProps) {
     
     // console.log("🚀 ~ Card ~ isParentStuck:", isParentStuck)
 
-    const cardOverlap = 50; // 80px overlap between cards
+    const cardOverlap = 60; // 80px overlap between cards
     const marginBetweenSticky = 50; // margin when cards are stacked
 
     useEffect(() => {
@@ -127,58 +127,58 @@ function CardStack({ cardList }: CardProps) {
         return () => window.removeEventListener('resize', updateCardHeights);
     }, [cardList]);
 
-    useEffect(() => {
-        const handleWheel = (e: WheelEvent) => {
-            const target = e.target as HTMLElement;
-            const scrollableCard = cardRefs.current.find((ref) => {
-                if (!ref) return false;
-                return ref.contains(target);
-            });
+    // useEffect(() => {
+    //     const handleWheel = (e: WheelEvent) => {
+    //         const target = e.target as HTMLElement;
+    //         const scrollableCard = cardRefs.current.find((ref) => {
+    //             if (!ref) return false;
+    //             return ref.contains(target);
+    //         });
 
-            if (!scrollableCard) {
-                if (isScrollingCard) {
-                    setIsScrollingCard(false);
-                    document.body.style.overflow = 'auto';
-                }
-                return;
-            }
+    //         if (!scrollableCard) {
+    //             if (isScrollingCard) {
+    //                 setIsScrollingCard(false);
+    //                 document.body.style.overflow = 'auto';
+    //             }
+    //             return;
+    //         }
 
-            const isScrollable = scrollableCard.scrollHeight > scrollableCard.clientHeight;
-            if (!isScrollable) return;
+    //         const isScrollable = scrollableCard.scrollHeight > scrollableCard.clientHeight;
+    //         if (!isScrollable) return;
 
-            const isAtTop = scrollableCard.scrollTop === 0;
-            const isAtBottom = scrollableCard.scrollTop + scrollableCard.clientHeight >= scrollableCard.scrollHeight - 1;
+    //         const isAtTop = scrollableCard.scrollTop === 0;
+    //         const isAtBottom = scrollableCard.scrollTop + scrollableCard.clientHeight >= scrollableCard.scrollHeight - 1;
 
-            const shouldScrollCard = (
-                (e.deltaY > 0 && !isAtBottom) || // Scrolling down and not at bottom
-                (e.deltaY < 0 && !isAtTop)    // Scrolling up and not at top
-            );
+    //         const shouldScrollCard = (
+    //             (e.deltaY > 0 && !isAtBottom) || // Scrolling down and not at bottom
+    //             (e.deltaY < 0 && !isAtTop)    // Scrolling up and not at top
+    //         );
 
-            if (shouldScrollCard) {
-                e.preventDefault();
-                e.stopPropagation();
+    //         if (shouldScrollCard) {
+    //             e.preventDefault();
+    //             e.stopPropagation();
 
-                if (!isScrollingCard) {
-                    setIsScrollingCard(true);
-                    document.body.style.overflow = 'hidden';
-                }
+    //             if (!isScrollingCard) {
+    //                 setIsScrollingCard(true);
+    //                 document.body.style.overflow = 'hidden';
+    //             }
 
-                scrollableCard.scrollTop += e.deltaY;
-            } else {
-                if (isScrollingCard) {
-                    setIsScrollingCard(false);
-                    document.body.style.overflow = 'auto';
-                }
-            }
-        };
+    //             scrollableCard.scrollTop += e.deltaY;
+    //         } else {
+    //             if (isScrollingCard) {
+    //                 setIsScrollingCard(false);
+    //                 document.body.style.overflow = 'auto';
+    //             }
+    //         }
+    //     };
 
-        window.addEventListener('wheel', handleWheel, { passive: false });
+    //     window.addEventListener('wheel', handleWheel, { passive: false });
 
-        return () => {
-            window.removeEventListener('wheel', handleWheel);
-            document.body.style.overflow = 'auto';
-        };
-    }, [isScrollingCard]);
+    //     return () => {
+    //         window.removeEventListener('wheel', handleWheel);
+    //         document.body.style.overflow = 'auto';
+    //     };
+    // }, [isScrollingCard]);
 
     // Calculate total stack height
     const totalHeight = cardHeights.reduce((acc, height, index) => {
@@ -227,7 +227,7 @@ function CardStack({ cardList }: CardProps) {
                                 zIndex: index,
                                 position: 'sticky',
                                 top: '50px',
-                                overflow: 'hidden',
+                                // overflow: 'hidden',
                             }}
                         >
                             <li
@@ -238,7 +238,7 @@ function CardStack({ cardList }: CardProps) {
                                     // top: `${tops[index]}px`,
                                     overflow: 'hidden',
                                     // marginTop: `${index * marginBetweenSticky}px`,
-                                    scrollBehavior: 'smooth'
+                                    scrollBehavior: 'smooth',
                                     // marginBottom: '-80px', Adjust this value for spacing between cards
                                 }}
                                 ref={(el) => cardRefs.current[index] = el}
