@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
 import Card from "../components/Card";
+import CardStack from "../components/CardStack";
 import DisbursementCard from "../components/disbursementCard";
 import CollectionCard from "../components/collectionCard";
 
@@ -71,9 +72,13 @@ export default function Home() {
   useEffect(() => {
 
 
-    const updatedCardData: any[] = [];
-    const disburseCardData: any[] = [];
-    const collectCardData: any[] = [];
+    const updatedCardData: any[] = []; // general
+
+    
+    const disburseCardData: any[] = []; // disbursement
+    const collectCardData: any[] = []; // collection 
+
+
     const topValue = 50;
 
     // Check if collection_value and disbursement_value exists and create the card
@@ -84,7 +89,7 @@ export default function Home() {
         id: "card_1",
         numberTitle: formatCurrency(merchantData.data?.collection_value),
         headerText: "Collected",
-        backgroundImage: "../images/collectionImg.svg",
+        backgroundImage: "../images/mainCollection.svg",
         top: `${topValue}px`,
         marginTop: "0px",
         uppertext: "In 2024, you had",
@@ -108,7 +113,7 @@ export default function Home() {
         id: "card_2",
         numberTitle: merchantData.data.best_collection_month_volume,
         headerText: "Collected",
-        backgroundImage: "../images/disbursement.svg",
+        backgroundImage: "../images/mainDisbursement.svg",
         // top: `${topValue * 2}px`,
         top: "100px",
         marginTop: '-50px',
@@ -134,7 +139,7 @@ export default function Home() {
         id: "card_3",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/customer.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "150px",
         marginTop: "-50px",
         smallCardsData: [
@@ -164,7 +169,7 @@ export default function Home() {
         id: "card_4",
         numberTitle: formatCurrency(merchantData.data?.disbursement_value),
         headerText: "total paid out amount",
-        backgroundImage: "../images/collectionImg.svg",
+        backgroundImage: "../images/mainCollection.svg",
         top: "200px",
         marginTop: "-50px",
         uppertext: "",
@@ -187,7 +192,7 @@ export default function Home() {
         id: "card_5",
         numberTitle: merchantData.data?.best_disbursement_month_volume,
         headerText: "Collected",
-        backgroundImage: "../images/disbursement.svg",
+        backgroundImage: "../images/mainDisbursement.svg",
         top: "250px",
         marginTop: "-50px",
         uppertext: "", //no content,
@@ -213,7 +218,7 @@ export default function Home() {
         id: "card_6",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/settle.svg",
+        backgroundImage: "/images/footerCustomer.svg",
         top: "300px",
         marginTop: "-50px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
@@ -426,14 +431,14 @@ export default function Home() {
       cardTitle: "Card 2 - List 1",
       cardVolume: "Volume 2",
       cardText: "This is card number 2 from List 1",
-      backgroundImage: "https://via.placeholder.com/600x400",
+       backgroundImage: "../images/mainCollection.svg"
     },
     {
       cardTitle: "Card 3 - List 1",
       cardVolume: "Volume 3",
       cardText: "This is card number 3 from List 1",
-      // backgroundImage: "https://via.placeholder.com/600x400",
-      backgroundImage: "../images/collection.svg"
+      backgroundImage: "https://via.placeholder.com/600x400",
+      // backgroundImage: "../images/collection.svg"
     },
   ];
   return (
@@ -443,7 +448,7 @@ export default function Home() {
 
 
      
-      <div className="h-auto">
+      {/* <div className="h-auto">
      
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
           <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
@@ -577,12 +582,15 @@ export default function Home() {
 
         )
         }
-      </div>
+      </div> */}
 
       {/* <div className="flex justify-center items-center">
         <Cards cardList={card}  />
       </div> */}
 
+      <div className="flex justify-center items-center">
+        <CardStack cardList ={cardData}/>
+      </div>
 
       <MessageCard
         subTitle="Your performance this year describe you as a"
