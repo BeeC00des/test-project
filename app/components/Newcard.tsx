@@ -35,38 +35,31 @@ function Cards({ cardList }: CardsProps) {
                         style={{
                             position: 'relative',
                             marginBottom: '-50px', // Adjust this value for spacing between cards
-                             width: '300px', 
-                            height: '400px'
+                            //  width: '300px', 
+                            // height: '400px'
+                            
                         }}
                     >
-                        {/* Card with background image */}
-                        <div className="card-container" style={{ position: 'relative', width:"100%", height:"100%" }}>
+                       {/* border:'3px solid black',
+                       borderRadius:'40px' */}
+                        <div className="card-container" style={{ position: 'relative', width:"100%", height:"100%",}}>
+                             {/* Card with background image */}
                             <img
                                 src={card.backgroundImage}
                                 alt="Card Background"
-                                className="card-background border border-green-500"
-                                style={{ 
-                                    width: '100%', 
-                                    height: '100%', 
-                                    borderRadius:"50px",
-                                    objectFit:'cover',
-                                    aspectRatio: '1260/907',
-  
-  
-                                    //  objectFit:'contain'  
-                                    // backgroundSize:"cover"
-                                  }}/>
-                            {/*  */}
+                                // border border-green-500
+                                className="card-background  border border-green-500 rounded-3xl w-full h-full object-cover"
+                                  />
 
 
                         {/* Card text-content*/}
                             <div
-                                className="card-content"
+                                className="card-content top-0 bottom-0 left-5 right-0" //set all to 0
                                 style={{
                                     position: 'absolute',
-                                    top: '20%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
+                                    width:'100%',
+                                    height:"100%",
+                                    // border:"3px solid red",
                                     color: 'white',
                                     zIndex: 1,
                                 }}

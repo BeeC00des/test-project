@@ -442,9 +442,9 @@ export default function Home() {
       <BgHeader merchantData={merchantData} />
 
 
-      {/* start of old card
+     
       <div className="h-auto">
-        {/* 6 cards display on screen 
+     
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
           <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
@@ -455,11 +455,11 @@ export default function Home() {
               </p>
             )}
 
-            {/* Dynamically display cards based on merchant data 
+            
 
 
             <ul id="cards">
-              {/* Map over the cardData array and render the Card component
+            
               {cardData.map((card, index) => (
                 <Card
                   index={index}
@@ -500,7 +500,7 @@ export default function Home() {
             )}
 
 
-            {/* 2 cards display disbursement on screen  
+      
             <ul id="cards">
               {disburseData.map((card, index) => (
                 <DisbursementCard
@@ -542,7 +542,7 @@ export default function Home() {
             )}
 
 
-            {/* 4 cards display collection screen  
+         
             <ul id="cards">
               {collectData.map((card, index) => (
                 <CollectionCard
@@ -577,11 +577,11 @@ export default function Home() {
 
         )
         }
-      </div> */}
-
-      <div className="flex justify-center items-center">
-        <Cards cardList={card}  />
       </div>
+
+      {/* <div className="flex justify-center items-center">
+        <Cards cardList={card}  />
+      </div> */}
 
 
       <MessageCard
