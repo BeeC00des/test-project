@@ -589,7 +589,7 @@ export default function Home() {
       </div> */}
 
       <div className="flex justify-center items-center">
-        <CardStack cardList ={cardData}/>
+        {cardData.length > 0 ? <CardStack cardList ={cardData}/>: null}
       </div>
 
       <MessageCard
