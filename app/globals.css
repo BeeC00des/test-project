@@ -231,7 +231,7 @@ body {
 .card {
 	position: sticky;
 	top: 0px;
-	height: 600px;
+	/* height: 600px; whyyyy?  */ 
 	width:86%;
 	border:1px solid red;
 	/* margin-top:150px; */
@@ -302,12 +302,10 @@ main {
 #cards {
 	padding-top: calc(var(--index) * var(--card-top-offset));
 	list-style: none;
-	outline: calc(var(--outline-width) * 10) solid blue;
+	/* outline: calc(var(--outline-width) * 10) solid blue;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: repeat(var(--numcards), var(--card-height));
-	
-
+	grid-template-rows: repeat(var(--numcards), var(--card-height)); */
 }
 
 .card__content {
@@ -394,7 +392,7 @@ main {
 	.card {
 		width: 80%;
 		background-size: cover;
-		margin-top: -15px;
+		/* margin-top: -15px; */
 		border-radius: 35px !important;
 		border: none;
 		height: auto;
@@ -469,7 +467,7 @@ main {
 
 	#small-cards {
 		/* border:1px solid red; */
-		height: 700 !important;
+		/* height: 700 !important; */
 		width: 350px;
 		overflow-y: scroll;
 		scrollbar-width: none !important;

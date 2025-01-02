@@ -15,6 +15,8 @@ import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
 
+import Cards from "../components/Newcard"
+
 
 
 
@@ -74,7 +76,7 @@ export default function Home() {
     const collectCardData: any[] = [];
     const topValue = 50;
 
-  // Check if collection_value and disbursement_value exists and create the card
+    // Check if collection_value and disbursement_value exists and create the card
     if (merchantData?.data?.collection_value) {
       console.log(`card 1 `, merchantData);
       updatedCardData.push({
@@ -84,7 +86,7 @@ export default function Home() {
         headerText: "Collected",
         backgroundImage: "../images/collectionImg.svg",
         top: `${topValue}px`,
-        marginTop:"0px",
+        marginTop: "0px",
         uppertext: "In 2024, you had",
         numberValue: formatCurrency(
           merchantData.data.collection_value)
@@ -109,7 +111,7 @@ export default function Home() {
         backgroundImage: "../images/disbursement.svg",
         // top: `${topValue * 2}px`,
         top: "100px",
-        marginTop:'-50px',
+        marginTop: '-50px',
         uppertext: "bagging",
         specialUppertext: "",
         numberValue:
@@ -120,9 +122,9 @@ export default function Home() {
         cardSupText: "",
         cardText: "was your peak performance month,",
         cardUpperText: "total paid transaction",
-         beforeBtnText:'And you racked',
+        beforeBtnText: 'And you racked',
         afterBtnText: "transactions in this month, wow! 💵"
-  
+
       });
     }
 
@@ -134,7 +136,7 @@ export default function Home() {
         customerName: merchantData.data.top_collection_customer_name,
         backgroundImage: "/images/customer.svg",
         top: "150px",
-        marginTop:"-100px",
+        marginTop: "-50px",
         smallCardsData: [
           {
             id: "small_card_1",
@@ -148,15 +150,14 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${
-              merchantData.data.top_collection_customer_volume
-            }`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
     }
 
-   
+
     if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 4,
@@ -165,7 +166,7 @@ export default function Home() {
         headerText: "total paid out amount",
         backgroundImage: "../images/collectionImg.svg",
         top: "200px",
-        marginTop:"-150px",
+        marginTop: "-50px",
         uppertext: "",
         numberValue: formatCurrency(
           merchantData.data.disbursement_value)
@@ -179,7 +180,7 @@ export default function Home() {
       });
     }
 
-   
+
     if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 5,
@@ -188,7 +189,7 @@ export default function Home() {
         headerText: "Collected",
         backgroundImage: "../images/disbursement.svg",
         top: "250px",
-        marginTop:"-200px",
+        marginTop: "-50px",
         uppertext: "", //no content,
         specialUppertext: "🥂Cheers to",
         numberValue:
@@ -200,12 +201,12 @@ export default function Home() {
         cardSupText: "When you paid out the most,",
         cardText: "", //no content
         cardUpperText: "", //no content
-        beforeBtnText:'This day you paid out',
+        beforeBtnText: 'This day you paid out',
         afterBtnText: "what a day!👍🏽"
 
       });
     }
-//waiting for disbursement
+    //waiting for disbursement
     if (merchantData?.data?.top_collection_customer_name) {
       updatedCardData.push({
         index: 6,
@@ -214,7 +215,7 @@ export default function Home() {
         customerName: merchantData.data.top_collection_customer_name,
         backgroundImage: "/images/settle.svg",
         top: "300px",
-        marginTop:"-250px", // there sth going on here (reduce pixel to see the effect)
+        marginTop: "-50px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
           {
             id: "small_card_1",
@@ -228,9 +229,8 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${
-              merchantData.data.top_collection_customer_volume
-            }`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
@@ -252,7 +252,7 @@ export default function Home() {
         headerText: "total paid out amount",
         backgroundImage: "../images/collectionImg.svg",
         top: `${topValue}`,
-        marginTop:"0px", // set up right value
+        marginTop: "0px", // set up right value
         uppertext: "",
         numberValue: formatCurrency(
           merchantData.data.disbursement_value)
@@ -273,7 +273,7 @@ export default function Home() {
         headerText: "Collected",
         backgroundImage: "../images/disbursement.svg",
         top: "50px",
-        marginTop:"-100px", // set up right value
+        marginTop: "-100px", // set up right value
         uppertext: "", //no content,
         specialUppertext: "🥂Cheers to",
         numberValue:
@@ -285,11 +285,11 @@ export default function Home() {
         cardSupText: "When you paid out the most,",
         cardText: "", //no content
         cardUpperText: "", //no content
-        beforeBtnText:'This day you paid out',
+        beforeBtnText: 'This day you paid out',
         afterBtnText: "what a day!👍🏽"
       });
     }
-//waiting for disbursement
+    //waiting for disbursement
     if (merchantData?.data?.top_collection_customer_name) {
       disburseCardData.push({
         index: 3,
@@ -298,7 +298,7 @@ export default function Home() {
         customerName: merchantData.data.top_collection_customer_name,
         backgroundImage: "/images/settle.svg",
         top: "100px",
-        marginTop:"-150px", // there sth going on here (reduce pixel to see the effect)
+        marginTop: "-150px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
           {
             id: "small_card_1",
@@ -312,9 +312,8 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${
-              merchantData.data.top_collection_customer_volume
-            }`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
@@ -335,7 +334,7 @@ export default function Home() {
         headerText: "Collected",
         backgroundImage: "../images/collectionImg.svg",
         top: `${topValue}px`,
-        marginTop:"0px",
+        marginTop: "0px",
         uppertext: "In 2024, you had",
         numberValue: formatCurrency(
           merchantData.data.collection_value)
@@ -360,7 +359,7 @@ export default function Home() {
         backgroundImage: "../images/disbursement.svg",
         // top: `${topValue * 2}px`,
         top: "100px",
-        marginTop:'-50px',
+        marginTop: '-50px',
         uppertext: "bagging",
         specialUppertext: "",
         numberValue:
@@ -371,9 +370,9 @@ export default function Home() {
         cardSupText: "",
         cardText: "was your peak performance month,",
         cardUpperText: "total paid transaction",
-         beforeBtnText:'And you racked',
+        beforeBtnText: 'And you racked',
         afterBtnText: "transactions in this month, wow! 💵"
-  
+
       });
     }
 
@@ -385,7 +384,7 @@ export default function Home() {
         customerName: merchantData.data.top_collection_customer_name,
         backgroundImage: "/images/customer.svg",
         top: "150px",
-        marginTop:"-100px",
+        marginTop: "-100px",
         smallCardsData: [
           {
             id: "small_card_1",
@@ -399,9 +398,8 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${
-              merchantData.data.top_collection_customer_volume
-            }`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
@@ -412,17 +410,41 @@ export default function Home() {
     }
 
 
+
+
   }, [merchantData]);
 
+//ore's request format
+  const card = [
+    {
+      cardTitle: "Card 1 - List 1",
+      cardVolume: "Volume 1",
+      cardText: "This is card number 1 from List 1",
+      backgroundImage: "https://via.placeholder.com/600x400",
+    },
+    {
+      cardTitle: "Card 2 - List 1",
+      cardVolume: "Volume 2",
+      cardText: "This is card number 2 from List 1",
+      backgroundImage: "https://via.placeholder.com/600x400",
+    },
+    {
+      cardTitle: "Card 3 - List 1",
+      cardVolume: "Volume 3",
+      cardText: "This is card number 3 from List 1",
+      // backgroundImage: "https://via.placeholder.com/600x400",
+      backgroundImage: "../images/collection.svg"
+    },
+  ];
   return (
     <div className="h-auto w-full bg-main">
 
       <BgHeader merchantData={merchantData} />
 
 
-      {/* start of old card */}
+      {/* start of old card
       <div className="h-auto">
-        {/* 6 cards display on screen */}
+        {/* 6 cards display on screen 
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
           <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
@@ -433,11 +455,11 @@ export default function Home() {
               </p>
             )}
 
-            {/* Dynamically display cards based on merchant data */}
+            {/* Dynamically display cards based on merchant data 
 
 
             <ul id="cards">
-              {/* Map over the cardData array and render the Card component */}
+              {/* Map over the cardData array and render the Card component
               {cardData.map((card, index) => (
                 <Card
                   index={index}
@@ -478,7 +500,7 @@ export default function Home() {
             )}
 
 
-            {/* 2 cards display disbursement on screen  */}
+            {/* 2 cards display disbursement on screen  
             <ul id="cards">
               {disburseData.map((card, index) => (
                 <DisbursementCard
@@ -520,7 +542,7 @@ export default function Home() {
             )}
 
 
-            {/* 4 cards display collection screen  */}
+            {/* 4 cards display collection screen  
             <ul id="cards">
               {collectData.map((card, index) => (
                 <CollectionCard
@@ -554,10 +576,11 @@ export default function Home() {
           </main>
 
         )
-
-
-
         }
+      </div> */}
+
+      <div className="flex justify-center items-center">
+        <Cards cardList={card}  />
       </div>
 
 

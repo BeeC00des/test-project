@@ -247,7 +247,8 @@ function Card({ numberTitle, headerText, unit, backgroundImage, index, id,  marg
 
     return (
         <li
-            className={`card  mx-auto  ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}`}
+        // ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}
+            className={`card  mx-auto max-h-[37.5rem]`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: "cover",
