@@ -473,7 +473,7 @@ const Card = ({
                                 item.style.left = '50%';
                                 item.style.transform = 'translateX(-50%)';
                             })
-                            document.querySelector('ul#mainCards').style.height = isMobile ? '550px' : isTablet ? '800px' :  '900px'
+                            document.querySelector('ul#mainCards').style.height = isMobile ? '550px' : isTablet ? '700px' :  '900px'
                             window.scrollBy({
                                 top: isMobile ? -400 : isTablet ? -1100:  -1300
                             })
