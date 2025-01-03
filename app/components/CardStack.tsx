@@ -52,7 +52,7 @@ type CardProps = {
 };
 
 function CardStack({ cardList }: CardProps) {
-    console.log("🚀 ~ CardStack ~ cardList:", cardList)
+    // console.log("🚀 ~ CardStack ~ cardList:", cardList)
 
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
@@ -431,9 +431,9 @@ const Card = ({
         if (index === 5) {
             var observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutationRecord) {
-                    console.log("🚀 ~ mutationRecord:", mutationRecord)
+                    // console.log("🚀 ~ mutationRecord:", mutationRecord)
                     const isAbsolute = mutationRecord.target.style.position === 'absolute';
-                    console.log("🚀 ~ newHeight:", isAbsolute)
+                    // console.log("🚀 ~ newHeight:", isAbsolute)
                     // if (!isAbsolute) {
                     //         window.scrollBy({
                     //             top: 2200
@@ -461,11 +461,11 @@ const Card = ({
                     const currentTop = parentCardRef.current.getBoundingClientRect().top;
 
                     const oldPosition = document.querySelectorAll('li.card')?.[0].computedStyleMap().get('position');
-                    console.log("🚀 ~ handleMainScroll ~ oldHeight:", oldPosition);
+                    // console.log("🚀 ~ handleMainScroll ~ oldHeight:", oldPosition);
                     if (currentTop <= stickyElementTop) {
-                        console.log("🚀 ~ handleMainScroll ~ inside true og")
+                        // console.log("🚀 ~ handleMainScroll ~ inside true og")
                         if (oldPosition.value === 'sticky') {
-                            console.log("🚀 ~ handleMainScroll ~ inside true")
+                            // console.log("🚀 ~ handleMainScroll ~ inside true")
                             document.querySelectorAll('li.card').forEach((item, index) => {
                                 item.style.position = 'absolute';
                                 //item.style.top = 'unset !important';
@@ -475,7 +475,7 @@ const Card = ({
                             })
                             document.querySelector('ul#mainCards').style.height = isMobile ? '550px' : isTablet ? '700px' :  '900px'
                             window.scrollBy({
-                                top: isMobile ? -400 : isTablet ? -1100:  -1300
+                                top: isMobile ? -570 : isTablet ? -1100:  -1300
                             })
                         }
                     } else {
@@ -490,7 +490,7 @@ const Card = ({
                             document.querySelector('ul#mainCards').style.height = 'auto'
                             runAfterFramePaint(() => {
                                 window.scrollBy({
-                                    top: isMobile ? 700: isTablet ? 1300:  2900
+                                    top: isMobile ? 570: isTablet ? 1300:  2900
                                 })
                             });
                         }
@@ -503,7 +503,7 @@ const Card = ({
                 const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
                 const stickyElementTop = parseInt(stickyElementStyle.top, 10);
                 const currentTop = parentCardRef.current.getBoundingClientRect().top;
-                console.log("🚀 ~ handleMainScroll ~ currentTop:", {currentTop, stickyElementTop})
+                // console.log("🚀 ~ handleMainScroll ~ currentTop:", {currentTop, stickyElementTop})
 
                 if (currentTop <= stickyElementTop) {
                     // preventBodyScroll(e);
@@ -512,8 +512,11 @@ const Card = ({
                     window.document.body.style.overflow = 'hidden';
                     // window.document.getElementById('bg-main').style.overflow = 'hidden';
                     const container = smallCardsContainerRef.current;
-                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight;
                     const currentScroll = container.scrollTop;
+                    console.log("🚀 ~ handleMainScroll ~ container:", container)
+
+                    console.log("🚀 ~ handleMainScroll ~ currentScroll:", { currentScroll, scrollableHeight })
 
                     // Check if inner scroll is complete
                     if (currentScroll >= scrollableHeight) {
@@ -524,7 +527,10 @@ const Card = ({
 
                     // Calculate and apply scroll
                     const scrollStep = isTabletOrMobile ? 150: 300; // Adjust scroll speed
-                    container.scrollTop = currentScroll + scrollStep;
+                    requestAnimationFrame(() => {
+                        container.scrollTop = currentScroll + scrollStep;
+                    })
+                    // container.scrollTo(0, currentScroll + scrollStep)
                 } else {
                     document.body.style.overflow = 'auto';
                 }
@@ -534,9 +540,11 @@ const Card = ({
                 const isStuck = document.body.style.overflow === 'hidden';
                 if (!isStuck) return;
                 const container = smallCardsContainerRef.current;
-                if (container) {
+                // console.log("🚀 ~ handleMainScroll ~ container:", container)
+                if (container && parentCardRef.current) {
                     const currentScroll = container.scrollTop;
-                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight;
+                    // console.log("🚀 ~ handleMainScroll ~ currentScroll:", { currentScroll, scrollableHeight })
 
                     if (currentScroll >= scrollableHeight) {
                         // setIsInnerScrollComplete(true);
@@ -551,13 +559,39 @@ const Card = ({
                 // Check if inner scroll is complete
             }
 
+            const onTouchMove = (e: TouchEvent) => {
+                e.preventDefault();
+                const isStuck = document.body.style.overflow === 'hidden';
+                if (!isStuck) return;
+                const container = smallCardsContainerRef.current;
+                // console.log("🚀 ~ handleMainScroll ~ container:", container)
+                if (container && parentCardRef.current) {
+                    const currentScroll = container.scrollTop;
+                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight;
+                    // console.log("🚀 ~ handleMainScroll ~ currentScroll:", { currentScroll, scrollableHeight })
+
+                    if (currentScroll >= scrollableHeight) {
+                        // setIsInnerScrollComplete(true);
+                        document.body.style.overflow = 'auto';
+                        return;
+                    }
+
+                    // Calculate and apply scroll
+                    const scrollStep =  100 // : -100; // Adjust scroll speed
+                    container.scrollTop = currentScroll + scrollStep;
+                }
+                // Check if inner scroll is complete
+            }
+
             window.addEventListener('scroll', throttle(handleMainScroll, 200));
             window.addEventListener('wheel', throttle(onWheel, 200), { passive: false });
+            document.addEventListener('touchmove', throttle(onTouchMove, 200), { passive: false });
 
             return () => {
                 // observer.disconnect();
                 window.removeEventListener('scroll', handleMainScroll);
                 window.removeEventListener('wheel', onWheel);
+                document.addEventListener('touchmove', onTouchMove);
             };
         }
 
