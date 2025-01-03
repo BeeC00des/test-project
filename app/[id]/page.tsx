@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import CardStack from "../components/CardStack";
 
 
-import getMerchantData from "../api/page";
+import getMerchantData from "../api/helper";
 import BgHeader from "../components/Bgheader";
 import Footer from "../components/Footer";
 import MessageCard from "../components/MessageCard";
