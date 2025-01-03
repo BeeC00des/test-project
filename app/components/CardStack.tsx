@@ -192,9 +192,9 @@ function CardStack({ cardList }: CardProps) {
 
     return (
 
-        <div className="mainCard" style={{
+        <div className="mainCard my-[80px] mx-auto mb-[50px] lg:mb-[420px]" style={{
             width: '80%',
-            margin: '80px auto 420px',
+            // margin: '80px auto',
             position: 'relative'
         }}>
             {/* Render the list of cards from array */}
@@ -421,7 +421,9 @@ const Card = ({
     }) => {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' })
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 })
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    const isTabletOrMobile = isMobile || isTablet
 
     const parentCardRef = useRef<HTMLLIElement>(null);
 
@@ -471,9 +473,9 @@ const Card = ({
                                 item.style.left = '50%';
                                 item.style.transform = 'translateX(-50%)';
                             })
-                            document.querySelector('ul#mainCards').style.height = '900px'
+                            document.querySelector('ul#mainCards').style.height = isMobile ? '550px' : isTablet ? '800px' :  '900px'
                             window.scrollBy({
-                                top: -1300
+                                top: isMobile ? -400 : isTablet ? -1100:  -1300
                             })
                         }
                     } else {
@@ -488,7 +490,7 @@ const Card = ({
                             document.querySelector('ul#mainCards').style.height = 'auto'
                             runAfterFramePaint(() => {
                                 window.scrollBy({
-                                    top: 2200
+                                    top: isMobile ? 700: isTablet ? 1300:  2900
                                 })
                             });
                         }
@@ -521,7 +523,7 @@ const Card = ({
                     }
 
                     // Calculate and apply scroll
-                    const scrollStep = 300; // Adjust scroll speed
+                    const scrollStep = isTabletOrMobile ? 150: 300; // Adjust scroll speed
                     container.scrollTop = currentScroll + scrollStep;
                 } else {
                     document.body.style.overflow = 'auto';
@@ -559,9 +561,10 @@ const Card = ({
             };
         }
 
-    }, [isTabletOrMobile]);
+    }, [isTabletOrMobile, isTablet, isMobile]);
 
-    const tops = [100, 175, 250, 325, 400, 475]
+    const tops =
+        isTabletOrMobile ? [50, 100, 150, 200, 250, 300] : [100, 175, 250, 325, 400, 475]
 
     return (
         // <motion.div
