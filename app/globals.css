@@ -235,7 +235,6 @@ body {
 	width:100%;
 	max-width: 1260px;
 	margin: 0 auto;
-	border:1px solid red;
 	/* margin-top:150px; */
 }
 
@@ -328,7 +327,7 @@ main {
 
 
 #small-cards {
-	height: 500px;
+	height: 570px;
 	width: 400px;
 	margin: 20px auto;
 	border-radius: 30px;

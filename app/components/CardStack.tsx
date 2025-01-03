@@ -597,7 +597,7 @@ const Card = ({
                     <img
                         src={card.backgroundImage}
                         alt="Card Background"
-                        className="card-background border border-green-500 w-full h-full object-cover"
+                        className="card-background w-full h-full object-cover"
                     />
 
 
