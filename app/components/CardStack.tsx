@@ -490,7 +490,7 @@ const Card = ({
                             document.querySelector('ul#mainCards').style.height = 'auto'
                             runAfterFramePaint(() => {
                                 window.scrollBy({
-                                    top: isMobile ? 570: isTablet ? 1300:  2900
+                                    top: isMobile ? 550: isTablet ? 1300:  2900
                                 })
                             });
                         }
@@ -526,7 +526,7 @@ const Card = ({
                     }
 
                     // Calculate and apply scroll
-                    const scrollStep = isTabletOrMobile ? 150: 300; // Adjust scroll speed
+                    const scrollStep = isTabletOrMobile ? 100: 300; // Adjust scroll speed
                     requestAnimationFrame(() => {
                         container.scrollTop = currentScroll + scrollStep;
                     })

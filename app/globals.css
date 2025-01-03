@@ -37,6 +37,7 @@ body {
 	font-family: "Rubik", sans-serif;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
 }
 
 .bg-header1 {
