@@ -5,19 +5,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
-import Card from "../components/Card";
 import CardStack from "../components/CardStack";
-import DisbursementCard from "../components/disbursementCard";
-import CollectionCard from "../components/collectionCard";
 
 
-import getMerchantData from "../api/page";
+import getMerchantData from "../helper/api";
 import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
-
-import Cards from "../components/Newcard"
-
 
 
 
