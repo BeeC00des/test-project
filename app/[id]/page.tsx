@@ -1,16 +1,20 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 "use client";
 
-import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import CardStack from "../components/CardStack";
 
-import Card from "../components/Card";
-import Merchantcard from "../components/Merchantcard";
-import getMerchantData from "../api/page";
-import MessageCard from "../components/MessageCard";
-import Footer from "../components/Footer";
+
+import getMerchantData from "../api/helper";
 import BgHeader from "../components/Bgheader";
-import DisbursementCard from "../components/disbursementCard";
-import CollectionCard from "../components/collectionCard";
+import Footer from "../components/Footer";
+import MessageCard from "../components/MessageCard";
+
+
+
+
 
 export default function Home() {
   const params = useParams();
@@ -22,10 +26,11 @@ export default function Home() {
   const [collectData, setCollectData] = useState<any[]>([]);
   const [merchantData, setMerchantData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
   // console.log(merchantData.data.best_collection_month);
+  // console.log(merchantData)
 
   // currency formatter function
 
@@ -60,47 +65,78 @@ export default function Home() {
   }, [merchantId]);
 
   useEffect(() => {
-    const updatedCardData: any[] = [];
-    const disburseCardData: any[] = [];
-    const collectCardData: any[] = [];
+
+
+    const updatedCardData: any[] = []; // general
+
+    
+    const disburseCardData: any[] = []; // disbursement
+    const collectCardData: any[] = []; // collection 
+
+
     const topValue = 50;
 
-    // general loop
-
+    // Check if collection_value and disbursement_value exists and create the card
     if (merchantData?.data?.collection_value) {
+      console.log(`card 1 `, merchantData);
       updatedCardData.push({
         index: 1,
         id: "card_1",
         numberTitle: formatCurrency(merchantData.data?.collection_value),
-        unit: "Million in collection value",
-        text: `With count of ${merchantData.data.collection_volume}`,
-        backgroundImage: "../images/collectionImg.svg",
+        headerText: "Collected",
+        backgroundImage: "../images/mainCollection.svg",
         top: `${topValue}px`,
-        img: "",
+        marginTop: "0px",
+        uppertext: "In 2024, you had",
+        numberValue: formatCurrency(
+          merchantData.data.collection_value)
+        ,
+        numberVolume:
+          merchantData.data.collection_volume
+        ,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
       });
     }
 
-    // Check if disbursement_value exists and create the card
-    if (merchantData?.data?.disbursement_value) {
+
+    if (merchantData?.data?.collection_value) {
+      console.log('------------- ', merchantData.data.best_collection_month);
       updatedCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: formatCurrency(merchantData.data.disbursement_value),
-        unit: "Million in disbursement value",
-        text: `With count of ${merchantData.data.disbursement_volume}`,
-        backgroundImage: "/images/disbursement.svg",
+        numberTitle: merchantData.data.best_collection_month_volume,
+        headerText: "Collected",
+        backgroundImage: "../images/mainDisbursement.svg",
+        // top: `${topValue * 2}px`,
         top: "100px",
-        img: "",
+        marginTop: '-50px',
+        uppertext: "bagging",
+        specialUppertext: "",
+        numberValue:
+          merchantData.data.best_collection_month,
+        numberVolume: `${formatCurrency(
+          merchantData.data.best_collection_month_value
+        )}`,
+        cardSupText: "",
+        cardText: "was your peak performance month,",
+        cardUpperText: "total paid transaction",
+        beforeBtnText: 'And you racked',
+        afterBtnText: "transactions in this month, wow! 💵"
+
       });
     }
+
     if (merchantData?.data?.top_collection_customer_name) {
       updatedCardData.push({
         index: 3,
         id: "card_3",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/customer.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "150px",
+        marginTop: "-50px",
         smallCardsData: [
           {
             id: "small_card_1",
@@ -114,122 +150,155 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )}`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
     }
 
-    // If best collection month exists, create the card
-    if (merchantData?.data?.best_collection_month_value) {
+
+    if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 4,
         id: "card_4",
-        numberTitle: "Your best collection month for the year was",
-        unit: `${merchantData.data.best_collection_month}`, // Assuming best_collection_month is available
-        text: `Collection value that month was ${formatCurrency(
-          merchantData.data.best_collection_month_value
-        )}`,
-        backgroundImage: "/images/collectionImg.svg",
+        numberTitle: formatCurrency(merchantData.data?.disbursement_value),
+        headerText: "total paid out amount",
+        backgroundImage: "../images/mainCollection.svg",
         top: "200px",
+        marginTop: "-50px",
+        uppertext: "",
+        numberValue: formatCurrency(
+          merchantData.data.disbursement_value)
+        ,
+        numberVolume:
+          merchantData.data.disbursement_volume,
+        cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
+        cardText: "",
+        cardUpperText: "transaction",
+
       });
     }
 
-    // If best disbursement month exists, create the card
-    if (merchantData?.data?.best_disbursement_month_value) {
+
+    if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 5,
         id: "card_5",
-        numberTitle: "Your best disbursement month for the year was",
-        unit: `${merchantData.data.best_disbursement_month}`, // Assuming disbursementMonthName is available
-        text: `Disbursement value that month was ${formatCurrency(
+        numberTitle: merchantData.data?.best_disbursement_month_volume,
+        headerText: "Collected",
+        backgroundImage: "../images/mainDisbursement.svg",
+        top: "250px",
+        marginTop: "-50px",
+        uppertext: "", //no content,
+        specialUppertext: "🥂Cheers to",
+        numberValue:
+          merchantData.data.best_disbursement_month,
+        numberVolume: `${formatCurrency(
           merchantData.data.best_disbursement_month_value
         )}`,
-        backgroundImage: "/images/disbursement.svg",
-        top: "250px",
+
+        cardSupText: "When you paid out the most,",
+        cardText: "", //no content
+        cardUpperText: "", //no content
+        beforeBtnText: 'This day you paid out',
+        afterBtnText: "what a day!👍🏽"
+
       });
     }
-
-    // Always show the settlement value card if available
-    if (merchantData?.data?.total_settlement_value) {
+    //waiting for disbursement
+    if (merchantData?.data?.top_collection_customer_name) {
       updatedCardData.push({
         index: 6,
         id: "card_6",
-        numberTitle: formatCurrency(merchantData.data.total_settlement_value),
-        unit: "Million in settlement value",
-        backgroundImage: "/images/settle.svg",
-        img: "",
-        top: "700px",
+        img: "/images/crown.png",
+        customerName: merchantData.data.top_collection_customer_name,
+        backgroundImage: "/images/mainCustomer.svg",
+        top: "300px",
+        marginTop: "-50px", // there sth going on here (reduce pixel to see the effect)
+        smallCardsData: [
+          {
+            id: "small_card_1",
+            text: `Was your Best customer`,
+          },
+          {
+            id: "small_card_2",
+            text: `With ${formatCurrency(
+              merchantData.data.top_collection_customer_value
+            )} payment`,
+          },
+          {
+            id: "small_card_3",
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
+          },
+        ],
       });
     }
 
-    // Only update if there's valid data to display
+    // caller : Only update if there's valid data to display
     if (updatedCardData.length > 0) {
       setCardData(updatedCardData);
     }
 
 
-    //disurbement  card 
+    // only disbursement value present  fill the cards only
 
     if (merchantData?.data?.disbursement_value) {
       disburseCardData.push({
         index: 1,
-        numberTitle: formatCurrency(merchantData.data.disbursement_value),
-        unit: "Million in disbursement value",
-        text: `With count of ${merchantData.data.disbursement_volume}`,
-        backgroundImage: "/images/collectionImg.svg",
-        top: `${topValue}px`,
+        id: "card_1",
+        numberTitle: formatCurrency(merchantData.data?.disbursement_value),
+        headerText: "total paid out amount",
+        backgroundImage: "../images/mainCollection.svg",
+        top: `${topValue}`,
+        marginTop: "0px", // set up right value
+        uppertext: "",
+        numberValue: formatCurrency(
+          merchantData.data.disbursement_value)
+        ,
+        numberVolume:
+          merchantData.data.disbursement_volume,
+        cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
+        cardText: "",
+        cardUpperText: "transaction",
       });
     }
 
     if (merchantData?.data?.best_disbursement_month_value) {
       disburseCardData.push({
         index: 2,
-        numberTitle: "Your best disbursement month for the year was",
-        unit: `${merchantData.data.best_disbursement_month}`,
-        text: `Disbursement value that month was ${formatCurrency(
+        id: "card_2",
+        numberTitle: merchantData.data?.best_disbursement_month_volume,
+        headerText: "Collected",
+        backgroundImage: "../images/mainDisbursement.svg",
+        top: "50px",
+        marginTop: "-100px", // set up right value
+        uppertext: "", //no content,
+        specialUppertext: "🥂Cheers to",
+        numberValue:
+          merchantData.data.best_disbursement_month,
+        numberVolume: `${formatCurrency(
           merchantData.data.best_disbursement_month_value
         )}`,
-        backgroundImage: "/images/disbursement.svg",
-        top: "100px"
+
+        cardSupText: "When you paid out the most,",
+        cardText: "", //no content
+        cardUpperText: "", //no content
+        beforeBtnText: 'This day you paid out',
+        afterBtnText: "what a day!👍🏽"
       });
     }
-
-
-    //only disbursement data
-
-    // Only update if there's valid data to display
-    if (disburseCardData.length > 0) {
-      setDisburseData(disburseCardData);
-    }
-
-    //Collection card
-
-    if (merchantData?.data?.collection_value) {
-      collectCardData.push({
-        index: 1,
-        id: "card_1",
-        numberTitle: formatCurrency(merchantData.data?.collection_value),
-        unit: "Million in collection value",
-        text: `with count of ${merchantData.data.collection_volume}`,
-        backgroundImage: "../images/collectionImg.svg",
-        top: `${topValue}px`,
-        img: "",
-
-      });
-    }
-
+    //waiting for disbursement
     if (merchantData?.data?.top_collection_customer_name) {
-      collectCardData.push({
-        index: 2,
-        id: "card_2",
+      disburseCardData.push({
+        index: 3,
+        id: "card_3",
         img: "/images/crown.png",
-
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/customer.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "100px",
+        marginTop: "-150px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
           {
             id: "small_card_1",
@@ -243,37 +312,96 @@ export default function Home() {
           },
           {
             id: "small_card_3",
-            text: `Valued at ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )}`,
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
           },
         ],
       });
     }
 
-    if (merchantData?.data?.best_collection_month_value) {
+    if (disburseCardData.length > 0) {
+      setDisburseData(disburseCardData);
+    }
+
+    //only collection value present, fill the cards only
+
+    if (merchantData?.data?.collection_value) {
+      console.log(`card 1 `, merchantData);
       collectCardData.push({
-        index: 3,
-        id: "card_3",
-        numberTitle: "Your best collection month for the year was",
-        unit: `${merchantData.data.best_collection_month}`, // Assuming best_collection_month is available
-        text: `Collection value that month was ${formatCurrency(
+        index: 1,
+        id: "card_1",
+        numberTitle: formatCurrency(merchantData.data?.collection_value),
+        headerText: "Collected",
+        backgroundImage: "../images/mainCollection.svg",
+        top: `${topValue}px`,
+        marginTop: "0px",
+        uppertext: "In 2024, you had",
+        numberValue: formatCurrency(
+          merchantData.data.collection_value)
+        ,
+        numberVolume:
+          merchantData.data.collection_volume
+        ,
+        cardSupText: "You've been raking in the Naira with",
+        cardText: "🤑 Keep the bell ringing!",
+        cardUpperText: "total paid transaction",
+      });
+    }
+
+
+    if (merchantData?.data?.collection_value) {
+      console.log('------------- ', merchantData.data.best_collection_month);
+      collectCardData.push({
+        index: 2,
+        id: "card_2",
+        numberTitle: merchantData.data.best_collection_month_volume,
+        headerText: "Collected",
+        backgroundImage: "../images/mainDisbursement.svg",
+        // top: `${topValue * 2}px`,
+        top: "100px",
+        marginTop: '-50px',
+        uppertext: "bagging",
+        specialUppertext: "",
+        numberValue:
+          merchantData.data.best_collection_month,
+        numberVolume: `${formatCurrency(
           merchantData.data.best_collection_month_value
         )}`,
-        backgroundImage: "/images/collectionImg.svg",
-        top: "150px",
+        cardSupText: "",
+        cardText: "was your peak performance month,",
+        cardUpperText: "total paid transaction",
+        beforeBtnText: 'And you racked',
+        afterBtnText: "transactions in this month, wow! 💵"
 
       });
     }
 
-    if (merchantData?.data?.total_settlement_value) {
+    if (merchantData?.data?.top_collection_customer_name) {
       collectCardData.push({
-        index: 4,
-        id: "card_4",
-        numberTitle: formatCurrency(merchantData.data.total_settlement_value),
-        unit: "Million in settlement value",
-        backgroundImage: "/images/settle.svg",
-        top: "450px",
+        index: 3,
+        id: "card_3",
+        img: "/images/crown.png",
+        customerName: merchantData.data.top_collection_customer_name,
+        backgroundImage: "/images/mainCustomer.svg",
+        top: "150px",
+        marginTop: "-100px",
+        smallCardsData: [
+          {
+            id: "small_card_1",
+            text: `Was your Best customer`,
+          },
+          {
+            id: "small_card_2",
+            text: `With ${formatCurrency(
+              merchantData.data.top_collection_customer_value
+            )} payment`,
+          },
+          {
+            id: "small_card_3",
+            text: `Valued at ${merchantData.data.top_collection_customer_volume
+              }`,
+          },
+        ],
       });
     }
 
@@ -282,17 +410,43 @@ export default function Home() {
     }
 
 
+
+
   }, [merchantData]);
 
+//ore's request format
+  // const card = [
+  //   {
+  //     cardTitle: "Card 1 - List 1",
+  //     cardVolume: "Volume 1",
+  //     cardText: "This is card number 1 from List 1",
+  //     backgroundImage: "https://via.placeholder.com/600x400",
+  //   },
+  //   {
+  //     cardTitle: "Card 2 - List 1",
+  //     cardVolume: "Volume 2",
+  //     cardText: "This is card number 2 from List 1",
+  //      backgroundImage: "../images/mainCollection.svg"
+  //   },
+  //   {
+  //     cardTitle: "Card 3 - List 1",
+  //     cardVolume: "Volume 3",
+  //     cardText: "This is card number 3 from List 1",
+  //     backgroundImage: "https://via.placeholder.com/600x400",
+  //     // backgroundImage: "../images/collection.svg"
+  //   },
+  // ];
   return (
     <div className="h-auto w-full bg-main">
-      {/* <BgHeader merchantData={merchantData.data.business_name ?? ""} /> */}
+
       <BgHeader merchantData={merchantData} />
 
-      <div className="h-auto">
-        {/* 6 cards display on screen */}
+
+     
+      {/* <div className="h-auto">
+     
         {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2">
+          <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
             {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
 
             {error && (
@@ -301,11 +455,11 @@ export default function Home() {
               </p>
             )}
 
-            {/* Dynamically display cards based on merchant data */}
+            
 
 
             <ul id="cards">
-              {/* Map over the cardData array and render the Card component */}
+            
               {cardData.map((card, index) => (
                 <Card
                   index={index}
@@ -313,12 +467,22 @@ export default function Home() {
                   id={`card_${index}`}
                   numberTitle={card.numberTitle}
                   unit={card.unit}
-                  text={card.text}
+                  headerText={card.headerText}
                   top={card.top}
                   backgroundImage={card.backgroundImage}
                   smallCardsData={card.smallCardsData}
                   customerName={card.customerName}
                   img={card.img}
+                  specialUppertext={card.specialUppertext}
+                  cardUpperText={card.cardUpperText}
+                  cardText={card.cardText}
+                  uppertext={card.uppertext}
+                  numberValue={card.numberValue}
+                  numberVolume={card.numberVolume}
+                  cardSupText={card.cardSupText}
+                  afterBtnText={card.afterBtnText}
+                  beforeBtnText={card.beforeBtnText}
+                  marginTop ={card.marginTop}
                 />
               ))}
             </ul>
@@ -336,16 +500,31 @@ export default function Home() {
             )}
 
 
-            {/* 2 cards display disbursement on screen  */}
+      
             <ul id="cards">
               {disburseData.map((card, index) => (
                 <DisbursementCard
-                  index={index}
-                  numberTitle={card.numberTitle}
-                  backgroundImage={card.backgroundImage}
-                  text={card.text}
-                  unit={card.unit}
-                  top={card.top}
+                index={index}
+                key={index}
+                id={`card_${index}`}
+                numberTitle={card.numberTitle}
+                unit={card.unit}
+                headerText={card.headerText}
+                top={card.top}
+                backgroundImage={card.backgroundImage}
+                smallCardsData={card.smallCardsData}
+                customerName={card.customerName}
+                img={card.img}
+                specialUppertext={card.specialUppertext}
+                cardUpperText={card.cardUpperText}
+                cardText={card.cardText}
+                uppertext={card.uppertext}
+                numberValue={card.numberValue}
+                numberVolume={card.numberVolume}
+                cardSupText={card.cardSupText}
+                afterBtnText={card.afterBtnText}
+                beforeBtnText={card.beforeBtnText}
+                marginTop ={card.marginTop}
                 />
               ))}
             </ul>
@@ -363,32 +542,54 @@ export default function Home() {
             )}
 
 
-            {/* 4 cards display collection screen  */}
+         
             <ul id="cards">
               {collectData.map((card, index) => (
                 <CollectionCard
-                  index={index}
-                  id={`card_${index}`}
-                  numberTitle={card.numberTitle}
-                  backgroundImage={card.backgroundImage}
-                  text={card.text}
-                  unit={card.unit}
-                  top={card.top}
-                  smallCardsData={card.smallCardsData}
-                  customerName={card.customerName}
-                  img={card.img}
+                index={index}
+                key={index}
+                id={`card_${index}`}
+                numberTitle={card.numberTitle}
+                unit={card.unit}
+                headerText={card.headerText}
+                top={card.top}
+                backgroundImage={card.backgroundImage}
+                smallCardsData={card.smallCardsData}
+                customerName={card.customerName}
+                img={card.img}
+                specialUppertext={card.specialUppertext}
+                cardUpperText={card.cardUpperText}
+                cardText={card.cardText}
+                uppertext={card.uppertext}
+                numberValue={card.numberValue}
+                numberVolume={card.numberVolume}
+                cardSupText={card.cardSupText}
+                afterBtnText={card.afterBtnText}
+                beforeBtnText={card.beforeBtnText}
+                marginTop ={card.marginTop}
                 />
               ))}
             </ul>
 
+
+
           </main>
 
         )
-
-
-
         }
+      </div> */}
+
+      {/* <div className="flex justify-center items-center">
+        <Cards cardList={card}  />
+      </div> */}
+
+      <div className="flex justify-center items-center">
+        {cardData.length > 0 ? <CardStack cardList={
+          merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? cardData :
+            merchantData?.data?.collection_value ? collectData: disburseData
+        } /> : null}
       </div>
+
       <MessageCard
         subTitle="Your performance this year describe you as a"
         title=" Monni Maker"

@@ -1,16 +1,31 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import useScrollAnimations from "./scrollAnimation";
+import throttle from 'lodash.throttle';
 import Image from "next/image";
+import { UIEventHandler, useEffect, useRef, useState } from "react";
+import { useMediaQuery } from 'react-responsive';
+import useScrollAnimations from "./scrollAnimation";
+
+function runAfterFramePaint(callback) {
+    // Queue a "before Render Steps" callback via requestAnimationFrame.
+    requestAnimationFrame(() => {
+        const messageChannel = new MessageChannel();
+
+        // Setup the callback to run in a Task
+        messageChannel.port1.onmessage = callback;
+
+        // Queue the Task on the Task Queue
+        messageChannel.port2.postMessage(undefined);
+    });
+}
 
 
 // Define the props for the Card component
 type CardProps = {
     numberTitle: string;
     unit: string;
-    text: string;
+    headerText: string;
     backgroundImage: string;
     index: number;
     id: string;
@@ -18,14 +33,35 @@ type CardProps = {
     customerName: string;
     img: string | null;
     smallCardsData?: any[];
+    uppertext: string;
+    numberValue: string;
+    cardSupText: string;
+    numberVolume: string;
+    cardUpperText: string;
+    cardText: string;
+    specialUppertext:string;
+    beforeBtnText:string
+    afterBtnText:string
+    marginTop:string
 };
 
-function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsData, top, customerName, img }: CardProps) {
+function Card({ numberTitle, headerText, unit, backgroundImage, index, id,  marginTop, specialUppertext,afterBtnText, beforeBtnText,smallCardsData, top, customerName, img, uppertext,
+    numberValue, cardSupText, numberVolume, cardUpperText, cardText }: CardProps) {
+
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+
+    const preventBodyScroll = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
 
     // Scroll event handler to track scrolling of small cards
-    const handleChildScroll = () => {
+    const handleChildScroll: UIEventHandler<HTMLLIElement> = (e) => {
+        // e.stopPropagation();
+        // e.preventDefault();
         const smallCardsContainer = smallCardsContainerRef.current;
 
         if (smallCardsContainer) {
@@ -41,7 +77,7 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     // Update isScrollingPaused when index changes
     useEffect(() => {
-        if (index === 2) {
+        if (index === 2 ) {
             // Initially pause scrolling for all sections when index === 2
             setIsScrollingPaused(true);
         } else {
@@ -49,53 +85,161 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
         }
     }, [index]);
 
-    const [formattedText, setFormattedText] = useState<string>("");
+
+   
+
+
+    const [isParentStuck, setIsParentStuck] = useState(false);
+    const [isInnerScrollComplete, setIsInnerScrollComplete] = useState(false);
+    const parentCardRef = useRef<HTMLLIElement>(null);
 
     useEffect(() => {
-        const styleLastWord = (text: string) => {
-            if (!text) {
-                return ''; // Return empty string if text is undefined or null
+        if (index === 5) {
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutationRecord) {
+                    console.log("🚀 ~ mutationRecord:", mutationRecord)
+                    const isAbsolute = mutationRecord.target.style.position === 'absolute';
+                    console.log("🚀 ~ newHeight:", isAbsolute)
+                    // if (!isAbsolute) {
+                    //         window.scrollBy({
+                    //             top: 2200
+                    //         })
+                    // }
+                });
+            });
+
+            var target = document.querySelectorAll('li.card')[0];
+            observer.observe(target, { attributes: true, attributeFilter: ['style'] });
+            return () => {
+                observer.disconnect(target)
             }
-
-            const textArray = text.split(' '); // Split text into words
-            const lastWord = textArray.pop(); // Get the last word
-
-            if (lastWord) {
-                // Return the rest of the text and apply a span to the last word
-                return `${textArray.join(' ')} <span class="underline decoration-wavy">${lastWord}</span>`;
-            }
-            return text;
-        };
-
-
-        setFormattedText(styleLastWord(text));
-    }, [text]);
-
-    const [formattedUnitText, setFormattedUnitText] = useState<string>("");
-
-    useEffect(() => {
-        const styleLastWord = (text: string) => {
-            if (!text) {
-                return ""; // Return empty string if text is undefined or null
-            }
-
-            const textArray = text.split(" "); // Split text into words
-            const lastWord = textArray.pop(); // Get the last word
-
-            if (lastWord) {
-                // Return the rest of the text and apply a span to the last word
-                return `${textArray.join(" ")} <span class="underline decoration-wavy md:text-[60px] text-[20px]">${lastWord}</span>`;
-            }
-            return text;
-        };
-
-        // Check if the current index is 3 or 4
-        if ([3, 4].includes(index)) {
-            setFormattedUnitText(styleLastWord(unit));
-        } else {
-            setFormattedUnitText(unit); // Use the text as-is for other indices
         }
-    }, [unit, index]); // Dependencies include `unit` and `index`
+    }, [index])
+
+    useEffect(() => {
+        // Observer for parent card
+        if (parentCardRef.current && !isTabletOrMobile) {
+            // const observer = new IntersectionObserver(
+            //     ([entry]) => {
+            //         const stickyTop = parseInt(window.getComputedStyle(parentCardRef.current).top)
+            //         const currentTop = entry.boundingClientRect.top;
+            //         console.log("🚀 ~ useEffect ~ currentTop:", {currentTop, stickyTop})
+            //         // setIsParentStuck(currentTop < 385);
+            //         setIsParentStuck(stickyTop === 150);
+            //     },
+            //     {
+            //         threshold: [1],
+            //      }
+            // );
+            // observer.observe(parentCardRef.current);
+            const handleMainScroll = (e) => {
+                if (!parentCardRef.current) return;
+                if (index === 5) {
+                    const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
+                    const stickyElementTop = parseInt(stickyElementStyle.top, 10);
+                    const currentTop = parentCardRef.current.getBoundingClientRect().top;
+
+                    const oldHeight = document.querySelector('ul#cards')?.computedStyleMap().get('height')
+                    console.log("🚀 ~ handleMainScroll ~ oldHeight:", oldHeight)
+                    if (currentTop <= stickyElementTop) {
+                        console.log("🚀 ~ handleMainScroll ~ inside true og")
+                        if (oldHeight.value === 4000) {
+                            console.log("🚀 ~ handleMainScroll ~ inside true")
+                            document.querySelectorAll('li.card').forEach((item, index) => {
+                                item.style.position = 'absolute';
+                                //item.style.top = 'unset !important';
+                                // item.style.bottom = `${index * 50}px !important`;
+                                item.style.left = '50%';
+                                item.style.transform = 'translateX(-50%)';
+                            })
+                            document.querySelector('ul#cards').style.height = '900px'
+                            window.scrollBy({
+                                top: -1200
+                            })
+                        }
+                    } else {
+                        if (oldHeight.value === 900) {
+                            document.querySelectorAll('li.card').forEach((item, index) => {
+                                item.style.position = 'sticky';
+                                //item.style.top = 'unset !important';
+                                // item.style.bottom = `${index * 50}px !important`;
+                                item.style.left = '0';
+                                item.style.transform = 'none';
+                            })
+                            document.querySelector('ul#cards').style.height = '4000px'
+                            runAfterFramePaint(() => {
+                                window.scrollBy({
+                                    top: 2400
+                                })
+                            });
+                        }
+
+                    }
+
+                    return;
+                }
+                if (!smallCardsContainerRef.current || index !== 2) return;
+                const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
+                const stickyElementTop = parseInt(stickyElementStyle.top, 10);
+                const currentTop = parentCardRef.current.getBoundingClientRect().top;
+
+                if (currentTop <= stickyElementTop) {
+                    preventBodyScroll(e);
+                    e.preventDefault();
+                    window.document.body.style.overflow = 'hidden';
+                    // window.document.getElementById('bg-main').style.overflow = 'hidden';
+                    const container = smallCardsContainerRef.current;
+                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+                    const currentScroll = container.scrollTop;
+
+                    // Check if inner scroll is complete
+                    if (currentScroll >= scrollableHeight) {
+                        setIsInnerScrollComplete(true);
+                        document.body.style.overflow = 'auto';
+                        return;
+                    }
+
+                    // Calculate and apply scroll
+                    const scrollStep = 300; // Adjust scroll speed
+                    container.scrollTop = currentScroll + scrollStep;
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            const onWheel = (e: WheelEvent) => {
+                const isStuck = document.body.style.overflow === 'hidden';
+                if (!isStuck) return;
+                const container = smallCardsContainerRef.current;
+                if (container) {
+                    const currentScroll = container.scrollTop;
+                    const scrollableHeight = container.scrollHeight - container.clientHeight;
+
+                    if (currentScroll >= scrollableHeight) {
+                        setIsInnerScrollComplete(true);
+                        document.body.style.overflow = 'auto';
+                        return;
+                    }
+
+                    // Calculate and apply scroll
+                    const scrollStep = e.deltaY > 0 ? 330 : -330; // Adjust scroll speed
+                    container.scrollTop = currentScroll + scrollStep;
+                }
+                // Check if inner scroll is complete
+            }
+
+            window.addEventListener('scroll', throttle(handleMainScroll, 200));
+            window.addEventListener('wheel', throttle(onWheel, 200), { passive: false });
+
+            return () => {
+                // observer.disconnect();
+                window.removeEventListener('scroll', handleMainScroll);
+                window.removeEventListener('wheel', onWheel);
+            };
+        }
+
+    }, [isTabletOrMobile]);
+    // console.log("🚀 ~ Card ~ isParentStuck:", isParentStuck)
 
 
 
@@ -103,106 +247,161 @@ function Card({ numberTitle, text, unit, backgroundImage, index, id, smallCardsD
 
     return (
         <li
-            className={`card w-6/12 md:w-10/12 lg:w-10/12 mx-auto ${index === 5 ? 'h-[350px]' : 'h-auto'} ${[1, 4].includes(index) ? 'h-[600px]' : 'h-auto'}`}
+        // ${[1, 5].includes(index) ? 'h-[600px]' : 'h-auto'}
+            className={`card  mx-auto max-h-[37.5rem]`}
             style={{
                 backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover cover",
+                backgroundSize: "cover",
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 borderRadius: "50px",
                 position: 'sticky',
-                top: `${top}`,
+                top: `${top}`, // index === 0 ? 0 : `${((index + 1) * 50) + 150}px`,
+                marginTop: index >= 1 ? isTabletOrMobile ? '-20px' : `${marginTop}` : 0,
+                // zIndex: index,
                 // height:`${height}`
             }}
+            onScroll={handleChildScroll}
+            ref={parentCardRef}
         >
             <div className=" card__content block md:flex ">
-                <div className="w-full md:w-6/12  slide-left">
-                    <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik]">
-                        <h1
-                            className={`  text-[30px] md:text-[60px] font-bold 
-                                 ${[0, 1].includes(index) ? 'text-[#063A4F]' : 'text-white'} 
-                                 ${[3, 4].includes(index) ? 'lg:text-[60px]' : 'lg:text-[60px]'} 
-                                 ${[3, 4].includes(index) ? 'font-semibold' : ''} 
-                                    ${[3, 4].includes(index) ? 'card-header-text' : ''} 
-                                 ${[3, 4].includes(index) ? 'pt-5' : 'pt-0'}`}
-                        >
-                            {numberTitle}
-                        </h1>
+                <div className="w-full  slide-left">
+                    <div className=" pl-2 md:pl-5 w-full font-[rubik]">
 
-                        {index === 2 && (
-                            <div className="relative">
-                                {/* Responsive Image */}
-                                <Image
-                                    src={img || ''} 
-                                    alt="crown"
-                                    width={260}
-                                    height={260}
-                                    className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
+                        {(index === 0 || index === 3) && (
+                            <div className="pl-5 md:pl-14 lg:py-14 py-2 w-full font-[rubik]">
+                                <div>
+                                    <p className="lg:text-[32px] md:text-[20px] text-[16px] text-white font-[inter line-height1">{uppertext}</p>
+                                    <h1
+                                        className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                    >
+                                        {numberValue}
+                                    </h1>
+                                    <p
+                                        className={`text-[16px]  md:text-[24px] lg:text-[40px] font-bold text-white line-height3`}
+                                    >{headerText} </p>
 
-                                />
-                                <h3
-                                    className="card-text sm:text-[30px] md:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
-                                >
-                                    {customerName}
-                                </h3>
+                                </div>
+                                <div className="lg:pt-10 md:pt-5">
+                                    <p className="lg:w-6/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal leading-tight line-height3">{cardSupText}</p>
+                                    <h1
+                                        className={`text-[20px] md:text[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                    >
+                                        {numberVolume}
+                                    </h1>
+                                    <p
+                                        className={` text-[16px] md:text-[24px] lg:text-[35px] font-bold text-white pb-5 line-height1`}
+                                    > {cardUpperText}</p>
+
+                                    {cardText && (
+                                        <button
+                                            className="md:text-[20px] text-[16px] lg:text-[24px] font-normal py-5 px-7 text-white bg-[#063A4F33] rounded-full"
+                                        >
+                                            {cardText}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         )}
 
-                        <p
-                            className={` card-text sm:text-[25px] md:text-[35px] font-bold ${index === 5
-                                ? 'text-[#F8C47A]'
-                                : [3, 4].includes(index)
-                                    ? 'text-[#063A4F]'
-                                    : 'text-white'
-                                }
-                                ${index === 5
-                                    ? 'lg:text-[55px]' : [0, 1].includes(index)
-                                        ? 'lg:text-[60px]'
-                                        : 'lg:text-[40px]'}`}
+                        {(index === 1 || index === 4) && (
+                            <div>
+                                <div className="w-full md:w-8/12 lg:py-7 slide-left">
+                                    <div className=" pl-5 md:pl-14  py-2 w-full font-[rubik] leading-tight">
 
-                            dangerouslySetInnerHTML={{ __html: formattedUnitText }}
-                        />
-
-                        <p
-                            className={`md:text-[24px] text-base font-normal lg:py-7 py-2 text-white  `}
-                            dangerouslySetInnerHTML={{ __html: formattedText }}
-                        />
-                    </div>
-                </div>
-                <div
-                    className={`hidden md:w-6/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
-                    style={{
-                        overflowY: isScrollingPaused ? "hidden" : "scroll",
-                    }}>
-                    {/* If index === 2, render the small cards */}
-                    {index === 2 && smallCardsData && (
-                        <ul
-                            id="small-cards"
-                            ref={smallCardsContainerRef} // Ref for the small cards container
-                        >
-                            <li
-                                className="small-card"
-                                // style={{ maxHeight: "600px", }}
-                                onScroll={handleChildScroll}
-                            >
-                                <div className="small-card-container">
-                                    {smallCardsData.map((smallCard) => (
-                                        <div
-                                            key={smallCard.id}
-                                            className="small-card-content flex justify-center items-center text-left backdrop-blur-lg text-white bg-transparent p-10"
-                                            style={{
-                                                height: "300px",
-                                                margin: "30px",
-                                                borderRadius: "40px",
-                                            }}
+                                    {specialUppertext && (
+                                        <p className=" text-[16px] md:text-[20px] lg:text-[30px] text-white">{specialUppertext}</p>
+                                    )}
+                                   
+                                        <h1
+                                            className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F]`}
                                         >
-                                            <h3 className=" text-base lg:text-3xl  md:text-lg font-bold">{smallCard.text}</h3>
-                                        </div>
-                                    ))}
+                                            {numberValue}
+                                        </h1>
+                                        <p
+                                            className={`text-[16px] md:text-[24px] lg:text-[40px] font-normal text-white`}
+                                        >{cardText}</p>
+
+                                    </div>
+                                    <div className=" pl-5 md:pl-14 lg:py-10 py-2 w-full font-[rubik] leading-tight">
+                                    {cardSupText && (
+                                    <p className="lg:w-8/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal line-height3">{cardSupText}</p>
+                                    )}
+                                        <h1
+                                            className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
+                                        >
+                                            {numberVolume}
+                                        </h1>
+
+                                        <button
+                                            className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
+                                        > {beforeBtnText} <span className="text-[#063A4F]">{numberTitle} </span>{afterBtnText} </button>
+                                    </div>
                                 </div>
-                            </li>
-                        </ul>
-                    )}
+
+
+                            </div>
+                        )}
+
+                        {(index === 2 || index === 5) && (
+                            <div className="flex">
+                                <div className="relative md:w-5/12 md:pl-5">
+                                    {/* Responsive Image */}
+                                    <Image
+                                        src={img || ''}
+                                        alt="crown"
+                                        width={260}
+                                        height={260}
+                                        className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
+
+                                    />
+                                    <h3
+                                        className="card-text sm:text-[24px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
+                                    >
+                                        {customerName}
+                                    </h3>
+                                </div>
+                                <div
+                                    className={`hidden md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                                    style={{
+                                        overflowY: isScrollingPaused ? "hidden" : "scroll",
+                                    }}>
+                                    {/* If index === 2, render the small cards */}
+                                    {(index === 2 || index === 5) && smallCardsData && (
+                                        <ul
+                                            id="small-cards"
+                                            ref={smallCardsContainerRef} // Ref for the small cards container
+                                        >
+                                            <li
+                                                className="small-card"
+                                                // style={{ maxHeight: "600px", }}
+                                                onScroll={handleChildScroll}
+                                            >
+                                                <div className="small-card-container">
+                                                    {smallCardsData.map((smallCard) => (
+                                                        <div
+                                                            key={smallCard.id}
+                                                            className="small-card-content flex justify-center items-center text-left  text-white p-10 border-[0.5px]"
+                                                            style={{
+                                                                height: "300px",
+                                                                margin: "30px",
+                                                                borderRadius: "40px",
+                                                                // backgroundColor: "rgba(255, 255, 255, 0.1)",
+                                                                // backdropFilter: "blur(5px)",
+                                                            }}
+                                                        >
+                                                            <h3 className="text-[16px] md:text-[26px] lg:text-[32px] font-bold">{smallCard.text}</h3>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                            </div>
+
+                        )}
+                    </div>
                 </div>
             </div>
         </li >

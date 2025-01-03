@@ -36,6 +36,7 @@ body {
 	background: white;
 	font-family: "Rubik", sans-serif;
 	overflow-x: hidden;
+	scroll-behavior: smooth;
 }
 
 .bg-header1 {
@@ -54,14 +55,14 @@ body {
 	line-height: 150px;
 }
 
-.header-img>img {
+/* .header-img>img {
 	max-width: none !important;
-}
+} */
 
 .header-img {
 	width: 700px !important;
 	height: 420px !important;
-	max-width: none !important;
+	/* max-width: none !important; */
 
 	/* border:1px solid red; */
 }
@@ -222,19 +223,19 @@ body {
 
 #cards {
 	padding-bottom: calc(var(--numcards) * var(--card-top-offset));
-	position: relative;
-	/* Make place at bottom, as items will slide to that position*/
-	/* margin-bottom: 50px;  */
+	height: 4000px;
 }
 
 /* animation top spacing */
 
 .card {
-	position: sticky;
+	/* position: sticky; */
 	top: 0px;
-	height: 600px;
+	/* height: 600px; whyyyy?  */ 
+	width:100%;
+	max-width: 1260px;
+	margin: 0 auto;
 	/* margin-top:150px; */
-	/* border: 1px solid red; */
 }
 
 
@@ -300,14 +301,12 @@ main {
 }
 
 #cards {
-	position: sticky;
 	padding-top: calc(var(--index) * var(--card-top-offset));
 	list-style: none;
-	outline: calc(var(--outline-width) * 10) solid blue;
+	/* outline: calc(var(--outline-width) * 10) solid blue;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: repeat(var(--numcards), var(--card-height));
-
+	grid-template-rows: repeat(var(--numcards), var(--card-height)); */
 }
 
 .card__content {
@@ -324,30 +323,34 @@ main {
 }
 
 
-
 /* inner scroll card  */
 
 
 #small-cards {
-	height: 500px;
+	height: 570px;
 	width: 400px;
 	margin: 20px auto;
 	border-radius: 30px;
 	overflow-y: scroll;
 	scrollbar-width: none !important;
 	-ms-overflow-style: none !important;
+	scroll-behavior: smooth;
 }
 
 .small-card {
 	-ms-overflow-style: none !important;
 	scrollbar-width: none !important;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 }
-
+ 
 .small-card-content {
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	z-index: 3
-}
+	border: 1px solid rgba(255, 255, 255, 0.2) !important; 
+	z-index: 3 !important;
+	background: transparent !important; 
+	backdrop-filter: blur(22.73px) !important; 
+  } 
+
+  
 
 /* end of card content */
 
@@ -387,35 +390,39 @@ main {
 		overflow-y: none;
 	}
 
+	#small-cards {
+		width: 150px;
+	}
+
 	.card {
-		width: 80%;
+		width: 100%;
 		background-size: cover;
-		margin-top: -15px;
+		/* margin-top: -15px; */
 		border-radius: 35px !important;
 		border: none;
 		height: auto;
 		overflow-y: hidden;
+	
 		/* margin:auto; */
 	}
 
-	.small-card-content {
+	/* .small-card-content {
 		display: none;
 		border: none;
-
-	}
+	} */
 /* 
 	.card__content > li{
 		overflow-y: none;
 	} */
 
-	.header-img>img {
+	/* .header-img>img {
 		max-width: none !important;
-	}
+	} */
 
 	.header-img {
 		width: 150px !important;
 		height: 200px !important;
-		max-width: none !important;
+		/* max-width: none !important; */
 
 		/* border:1px solid red; */
 	}
@@ -437,6 +444,18 @@ main {
 		width: 100%;
 	}
 
+
+	.line-height1{
+		line-height:none;
+	}
+	.line-height2{
+		line-height:none;
+	}
+	.line-height3{
+		line-height: none
+	}
+
+
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
@@ -452,19 +471,32 @@ main {
 
 	#small-cards {
 		/* border:1px solid red; */
-		height: 700 !important;
-		width: 250px;
+		/* height: 700 !important; */
+		height: 320px;
+		width: 350px;
 		overflow-y: scroll;
 		scrollbar-width: none !important;
 		-ms-overflow-style: none !important;
 
 	}
 
-	.small-card-content {
+
+.line-height1{
+	line-height: none;
+}
+.line-height2{
+	line-height: none;
+}
+.line-height3{
+	line-height: none;
+}
+
+
+	/* .small-card-content {
 		height: 200px !important;
 		width: 200px;
 		border: 1px solid rgba(255, 255, 255, 0.2);
-	}
+	} */
 
 
 }
@@ -476,4 +508,16 @@ main {
 		background-size: cover;
 		background-position: center center;
 	}
+
+
+.line-height1{
+	line-height: 32px;
+}
+.line-height2{
+	line-height: 71px;
+}
+.line-height3{
+	line-height: 47px;
+}
+
 }

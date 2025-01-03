@@ -1,14 +1,12 @@
-import Image from "next/image";
 import Merchantcard from "./Merchantcard";
 import Navbar from "./Navbar";
-import getMerchantData from "../api/page";
 
 
 
 const BgHeader = (merchantData : any) => {
 
 
-  console.log(merchantData)
+  // console.log(merchantData)
   return (
     <div className="w-full ">
       <div className="">
