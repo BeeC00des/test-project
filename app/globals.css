@@ -233,6 +233,8 @@ body {
 	top: 0px;
 	/* height: 600px; whyyyy?  */ 
 	width:100%;
+	max-width: 1260px;
+	margin: 0 auto;
 	border:1px solid red;
 	/* margin-top:150px; */
 }
