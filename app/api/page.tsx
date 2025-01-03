@@ -1,9 +1,7 @@
- import React from "react";
-import { useState } from "react";
-
+ 
   
 
-const getMerchantData = async (id: string) => {
+const getMerchantData = async (id: any) => {
     const baseurl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     console.log(`Base URL: ${baseurl}`);

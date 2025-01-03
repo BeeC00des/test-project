@@ -1,22 +1,17 @@
-// KARAN
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 
 "use client";
 
-import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-
-import Card from "../components/Card";
+import { useEffect, useState } from "react";
 import CardStack from "../components/CardStack";
-import DisbursementCard from "../components/disbursementCard";
-import CollectionCard from "../components/collectionCard";
 
 
 import getMerchantData from "../api/page";
-import MessageCard from "../components/MessageCard";
-import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
+import Footer from "../components/Footer";
+import MessageCard from "../components/MessageCard";
 
-import Cards from "../components/Newcard"
 
 
 

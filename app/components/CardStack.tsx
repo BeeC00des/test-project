@@ -1,12 +1,11 @@
 
 "use client";
 
-import { useState, useEffect, useRef, UIEventHandler } from "react";
-import useScrollAnimations from "./scrollAnimation";
-import Image from "next/image";
 import throttle from 'lodash.throttle';
-import { useMediaQuery } from 'react-responsive'
-import { motion, useScroll, useTransform } from 'motion/react';
+import { useScroll, useTransform } from 'motion/react';
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from 'react-responsive';
 
 
 function runAfterFramePaint(callback) {

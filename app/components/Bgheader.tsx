@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Merchantcard from "./Merchantcard";
 import Navbar from "./Navbar";
-import getMerchantData from "../api/page";
 
 
 

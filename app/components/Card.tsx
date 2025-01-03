@@ -1,11 +1,11 @@
 
 "use client";
 
-import { useState, useEffect, useRef, UIEventHandler } from "react";
-import useScrollAnimations from "./scrollAnimation";
-import Image from "next/image";
 import throttle from 'lodash.throttle';
-import { useMediaQuery } from 'react-responsive'
+import Image from "next/image";
+import { UIEventHandler, useEffect, useRef, useState } from "react";
+import { useMediaQuery } from 'react-responsive';
+import useScrollAnimations from "./scrollAnimation";
 
 function runAfterFramePaint(callback) {
     // Queue a "before Render Steps" callback via requestAnimationFrame.
