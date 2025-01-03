@@ -218,7 +218,7 @@ export default function Home() {
         id: "card_6",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/footerCustomer.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "300px",
         marginTop: "-50px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
@@ -255,7 +255,7 @@ export default function Home() {
         id: "card_1",
         numberTitle: formatCurrency(merchantData.data?.disbursement_value),
         headerText: "total paid out amount",
-        backgroundImage: "../images/collectionImg.svg",
+        backgroundImage: "../images/mainCollection.svg",
         top: `${topValue}`,
         marginTop: "0px", // set up right value
         uppertext: "",
@@ -276,7 +276,7 @@ export default function Home() {
         id: "card_2",
         numberTitle: merchantData.data?.best_disbursement_month_volume,
         headerText: "Collected",
-        backgroundImage: "../images/disbursement.svg",
+        backgroundImage: "../images/mainDisbursement.svg",
         top: "50px",
         marginTop: "-100px", // set up right value
         uppertext: "", //no content,
@@ -301,7 +301,7 @@ export default function Home() {
         id: "card_3",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/settle.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "100px",
         marginTop: "-150px", // there sth going on here (reduce pixel to see the effect)
         smallCardsData: [
@@ -337,7 +337,7 @@ export default function Home() {
         id: "card_1",
         numberTitle: formatCurrency(merchantData.data?.collection_value),
         headerText: "Collected",
-        backgroundImage: "../images/collectionImg.svg",
+        backgroundImage: "../images/mainCollection.svg",
         top: `${topValue}px`,
         marginTop: "0px",
         uppertext: "In 2024, you had",
@@ -361,7 +361,7 @@ export default function Home() {
         id: "card_2",
         numberTitle: merchantData.data.best_collection_month_volume,
         headerText: "Collected",
-        backgroundImage: "../images/disbursement.svg",
+        backgroundImage: "../images/mainDisbursement.svg",
         // top: `${topValue * 2}px`,
         top: "100px",
         marginTop: '-50px',
@@ -387,7 +387,7 @@ export default function Home() {
         id: "card_3",
         img: "/images/crown.png",
         customerName: merchantData.data.top_collection_customer_name,
-        backgroundImage: "/images/customer.svg",
+        backgroundImage: "/images/mainCustomer.svg",
         top: "150px",
         marginTop: "-100px",
         smallCardsData: [
@@ -420,27 +420,27 @@ export default function Home() {
   }, [merchantData]);
 
 //ore's request format
-  const card = [
-    {
-      cardTitle: "Card 1 - List 1",
-      cardVolume: "Volume 1",
-      cardText: "This is card number 1 from List 1",
-      backgroundImage: "https://via.placeholder.com/600x400",
-    },
-    {
-      cardTitle: "Card 2 - List 1",
-      cardVolume: "Volume 2",
-      cardText: "This is card number 2 from List 1",
-       backgroundImage: "../images/mainCollection.svg"
-    },
-    {
-      cardTitle: "Card 3 - List 1",
-      cardVolume: "Volume 3",
-      cardText: "This is card number 3 from List 1",
-      backgroundImage: "https://via.placeholder.com/600x400",
-      // backgroundImage: "../images/collection.svg"
-    },
-  ];
+  // const card = [
+  //   {
+  //     cardTitle: "Card 1 - List 1",
+  //     cardVolume: "Volume 1",
+  //     cardText: "This is card number 1 from List 1",
+  //     backgroundImage: "https://via.placeholder.com/600x400",
+  //   },
+  //   {
+  //     cardTitle: "Card 2 - List 1",
+  //     cardVolume: "Volume 2",
+  //     cardText: "This is card number 2 from List 1",
+  //      backgroundImage: "../images/mainCollection.svg"
+  //   },
+  //   {
+  //     cardTitle: "Card 3 - List 1",
+  //     cardVolume: "Volume 3",
+  //     cardText: "This is card number 3 from List 1",
+  //     backgroundImage: "https://via.placeholder.com/600x400",
+  //     // backgroundImage: "../images/collection.svg"
+  //   },
+  // ];
   return (
     <div className="h-auto w-full bg-main">
 
@@ -589,7 +589,10 @@ export default function Home() {
       </div> */}
 
       <div className="flex justify-center items-center">
-        {cardData.length > 0 ? <CardStack cardList ={cardData}/>: null}
+        {cardData.length > 0 ? <CardStack cardList={
+          merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? cardData :
+            merchantData?.data?.collection_value ? collectData: disburseData
+        } /> : null}
       </div>
 
       <MessageCard

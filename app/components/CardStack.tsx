@@ -192,7 +192,7 @@ function CardStack({ cardList }: CardProps) {
 
     return (
 
-        <div className="mainCard " style={{
+        <div className="mainCard" style={{
             width: '80%',
             margin: '80px auto 420px',
             position: 'relative'
@@ -421,7 +421,7 @@ const Card = ({
     }) => {
     const [isScrollingPaused, setIsScrollingPaused] = useState(true); // Initially paused
     const smallCardsContainerRef = useRef<HTMLUListElement | null>(null);
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
     const parentCardRef = useRef<HTMLLIElement>(null);
 
@@ -450,7 +450,7 @@ const Card = ({
 
     useEffect(() => {
         // Observer for parent card
-        if (parentCardRef.current && !isTabletOrMobile) {
+        if (parentCardRef.current) {
             const handleMainScroll = (e) => {
                 if (!parentCardRef.current) return;
                 if (index === 5) {
@@ -473,7 +473,7 @@ const Card = ({
                             })
                             document.querySelector('ul#mainCards').style.height = '900px'
                             window.scrollBy({
-                                top: -600
+                                top: -1300
                             })
                         }
                     } else {
@@ -561,7 +561,7 @@ const Card = ({
 
     }, [isTabletOrMobile]);
 
-    const tops = [100, 200, 250, 300, 350, 400]
+    const tops = [100, 175, 250, 325, 400, 475]
 
     return (
         // <motion.div
@@ -700,7 +700,7 @@ const Card = ({
                                         </h3>
                                     </div>
                                     <div
-                                        className={`hidden md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                                        className={`md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
                                         style={{
                                             overflowY: isScrollingPaused ? "hidden" : "scroll",
                                         }}>

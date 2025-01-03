@@ -392,7 +392,7 @@ main {
 	}
 
 	.card {
-		width: 80%;
+		width: 100%;
 		background-size: cover;
 		/* margin-top: -15px; */
 		border-radius: 35px !important;
@@ -403,11 +403,10 @@ main {
 		/* margin:auto; */
 	}
 
-	.small-card-content {
+	/* .small-card-content {
 		display: none;
 		border: none;
-
-	}
+	} */
 /* 
 	.card__content > li{
 		overflow-y: none;
