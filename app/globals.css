@@ -391,6 +391,10 @@ main {
 		overflow-y: none;
 	}
 
+	#small-cards {
+		width: 150px;
+	}
+
 	.card {
 		width: 100%;
 		background-size: cover;

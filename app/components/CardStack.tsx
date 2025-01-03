@@ -686,7 +686,7 @@ const Card = ({
 
                             {(index === 2 || index === 5) && (
                                 <div className="flex">
-                                    <div className="relative md:w-5/12 md:pl-5">
+                                    <div className="relative w-5/12 md:w-5/12 md:pl-5">
                                         {/* Responsive Image */}
                                         <Image
                                             src={card.img || ''}
@@ -703,7 +703,7 @@ const Card = ({
                                         </h3>
                                     </div>
                                     <div
-                                        className={`md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                                        className={`w-7/12 md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
                                         style={{
                                             overflowY: isScrollingPaused ? "hidden" : "scroll",
                                         }}>
@@ -724,9 +724,10 @@ const Card = ({
                                                                 key={smallCard.id}
                                                                 className="small-card-content flex justify-center items-center text-left  text-white p-10 border-[0.5px]"
                                                                 style={{
-                                                                    height: "300px",
-                                                                    margin: "30px",
+                                                                    height: isMobile? '150px': "300px",
+                                                                    margin: isMobile? '0': "30px",
                                                                     borderRadius: "40px",
+                                                                    marginBottom: isMobile ? '10px': '0'
                                                                     // backgroundColor: "rgba(255, 255, 255, 0.1)",
                                                                     // backdropFilter: "blur(5px)",
                                                                 }}
