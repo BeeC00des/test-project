@@ -226,185 +226,7 @@ function CardStack({ cardList }: CardProps) {
                             key={index}
                         />
                     )
-                    // return (
-                    //     // <motion.div
-                    //     //     key={card.index}
-                    //     //     style={{
-                    //     //         y,
-                    //     //         zIndex: index,
-                    //     //         position: 'sticky',
-                    //     //         top: '50px',
-                    //     //         // overflow: 'hidden',
-                    //     //     }}
-                    //     // >
-                    //         <li
-                    //             key={index}
-                    //             className="card lg:mb-[-80px] md:mb-[-40px] mb-[-10px]"
-                    //             style={{
-                    //                 position: 'sticky',
-                    //                 // top: `${tops[index]}px`,
-                    //                 overflow: 'hidden',
-                    //                 // marginTop: `${index * marginBetweenSticky}px`,
-                    //                 scrollBehavior: 'smooth',
-                    //                 // marginBottom: '-80px', Adjust this value for spacing between cards
-                    //             }}
-                    //             ref={(el) => cardRefs.current[index] = el}
-                    //         >
-                    //             <div className="card-container " style={{ position: 'relative', width: "100%", height: "100%" }}>
-                    //                 {/* Card with background image */}
-                    //                 <img
-                    //                     src={card.backgroundImage}
-                    //                     alt="Card Background"
-                    //                     className="card-background border border-green-500 w-full h-full object-cover"
-                    //                 />
-
-
-                    //                 {/* Card text-content*/}
-                    //                 <div
-                    //                     className="card-content top-0 bottom-0 left-5 right-0" //set all to 0
-                    //                     style={{
-                    //                         position: 'absolute',
-                    //                         width: '100%',
-                    //                         height: "100%",
-                    //                         color: 'white',
-                    //                         zIndex: 1,
-                    //                     }}
-                    //                 >
-                    //                     <div className="text-left">
-                    //                         {(index === 0 || index === 3) && (
-                    //                             <div className="pl-5 md:pl-7 lg:pl-14 lg:py-14 py-0 w-full font-[rubik]">
-                    //                                 <div className="lg:pt-16 md:pt-7 pt-2">
-                    //                                     <p className="lg:text-[32px] md:text-[20px] text-[16px] text-white font-[inter line-height1">{card.uppertext}</p>
-                    //                                     <h1
-                    //                                         className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
-                    //                                     >
-                    //                                         {card.numberValue}
-                    //                                     </h1>
-                    //                                     <p
-                    //                                         className={`text-[16px]  md:text-[24px] lg:text-[40px] font-bold text-white line-height3`}
-                    //                                     >{card.headerText} </p>
-
-                    //                                 </div>
-                    //                                 <div className="lg:pt-16 md:pt-5 pt-2">
-                    //                                     <p className="md:w-7/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal leading-tight line-height3">{card.cardSupText}</p>
-                    //                                     <h1
-                    //                                         className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
-                    //                                     >
-                    //                                         {card.numberVolume}
-                    //                                     </h1>
-                    //                                     <p
-                    //                                         className={` text-[16px] md:text-[24px] lg:text-[35px] font-bold text-white lg:pb-5 pb-0 line-height1`}
-                    //                                     > {card.cardUpperText}</p>
-
-                    //                                     {card.cardText && (
-                    //                                         <button
-                    //                                             className="md:text-[20px] text-[16px] lg:text-[24px] font-normal md:py-3 md:px-7 py-1 px-2 text-white bg-[#063A4F33] rounded-full"
-                    //                                         >
-                    //                                             {card.cardText}
-                    //                                         </button>
-                    //                                     )}
-                    //                                 </div>
-                    //                             </div>
-                    //                         )}
-
-                    //                         {(index === 1 || index === 4) && (
-                    //                             <div className="pl-5 md:pl-7 lg:pl-14  w-full font-[rubik] w-full md:w-8/12 slide-left">
-                    //                                 <div className=" lg:pt-16 md:pt-10 pt-2 leading-tight">
-
-                    //                                     {card.specialUppertext && (
-                    //                                         <p className=" text-[16px] md:text-[20px] lg:text-[30px] text-white">{card.specialUppertext}</p>
-                    //                                     )}
-
-                    //                                     <h1
-                    //                                         className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F]`}
-                    //                                     >
-                    //                                         {card.numberValue}
-                    //                                     </h1>
-                    //                                     <p
-                    //                                         className={`text-[16px] md:text-[24px] lg:text-[40px] font-normal text-white`}
-                    //                                     >{card.cardText}</p>
-
-                    //                                 </div>
-                    //                                 <div className="lg:pt-16 md:pt-10 pt-2  leading-tight">
-                    //                                     {card.cardSupText && (
-                    //                                         <p className="lg:w-8/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal line-height3">{card.cardSupText}</p>
-                    //                                     )}
-                    //                                     <h1
-                    //                                         className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
-                    //                                     >
-                    //                                         {card.numberVolume}
-                    //                                     </h1>
-
-                    //                                     <button
-                    //                                         className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
-                    //                                     > {card.beforeBtnText} <span className="text-[#063A4F]">{card.numberTitle} </span>{card.afterBtnText} </button>
-                    //                                 </div>
-                    //                             </div>
-                    //                         )}
-
-                    //                         {(index === 2 || index === 5) && (
-                    //                             <div className="flex">
-                    //                                 <div className="relative md:w-5/12 md:pl-5">
-                    //                                     {/* Responsive Image */}
-                    //                                     <Image
-                    //                                         src={card.img || ''}
-                    //                                         alt="crown"
-                    //                                         width={260}
-                    //                                         height={260}
-                    //                                         className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
-
-                    //                                     />
-                    //                                     <h3
-                    //                                         className="card-text text-[22px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
-                    //                                     >
-                    //                                         {card.customerName}
-                    //                                     </h3>
-                    //                                 </div>
-                    //                                 <div
-                    //                                     className={`hidden md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
-                    //                                     style={{
-                    //                                         overflowY: isScrollingPaused ? "hidden" : "scroll",
-                    //                                     }}>
-                    //                                     {/* If index === 2, render the small cards */}
-                    //                                     {(index === 2 || index === 5) && card.smallCardsData && (
-                    //                                         <ul
-                    //                                             id="small-cards"
-                    //                                             ref={smallCardsContainerRef} // Ref for the small cards container
-                    //                                         >
-                    //                                             <li
-                    //                                                 className="small-card"
-                    //                                             // style={{ maxHeight: "600px", }}
-                    //                                             // onScroll={handleChildScroll}
-                    //                                             >
-                    //                                                 <div className="small-card-container">
-                    //                                                     {card.smallCardsData.map((smallCard) => (
-                    //                                                         <div
-                    //                                                             key={smallCard.id}
-                    //                                                             className="small-card-content flex justify-center items-center text-left  text-white p-10 border-[0.5px]"
-                    //                                                             style={{
-                    //                                                                 height: "300px",
-                    //                                                                 margin: "30px",
-                    //                                                                 borderRadius: "40px",
-                    //                                                                 // backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    //                                                                 // backdropFilter: "blur(5px)",
-                    //                                                             }}
-                    //                                                         >
-                    //                                                             <h3 className="text-[16px] md:text-[26px] lg:text-[32px] font-bold">{smallCard.text}</h3>
-                    //                                                         </div>
-                    //                                                     ))}
-                    //                                                 </div>
-                    //                                             </li>
-                    //                                         </ul>
-                    //                                     )}
-                    //                                 </div>
-                    //                             </div>
-                    //                         )}
-                    //                     </div>
-                    //                 </div>
-                    //             </div>
-                    //         </li>
-                    //     // </motion.div>
-                    // )
+              
                 })}
             </ul>
         </div>
@@ -649,7 +471,7 @@ const Card = ({
                         <div className="text-left">
                             {(index === 0 || index === 3) && (
                                 <div className="pl-5 md:pl-7 lg:pl-14 lg:py-14 py-0 w-full font-[rubik]">
-                                    <div className="lg:pt-16 md:pt-7 pt-2">
+                                    <div className="lg:pt-5 md:pt-3 pt-2">
                                         <p className="lg:text-[32px] md:text-[20px] text-[16px] text-white font-[inter line-height1">{card.uppertext}</p>
                                         <h1
                                             className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
@@ -661,7 +483,7 @@ const Card = ({
                                         >{card.headerText} </p>
 
                                     </div>
-                                    <div className="lg:pt-16 md:pt-5 pt-2">
+                                    <div className="lg:pt-10 md:pt-7 pt-2">
                                         <p className="md:w-7/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal leading-tight line-height3">{card.cardSupText}</p>
                                         <h1
                                             className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
@@ -690,6 +512,7 @@ const Card = ({
                                         {card.specialUppertext && (
                                             <p className=" text-[16px] md:text-[20px] lg:text-[30px] text-white">{card.specialUppertext}</p>
                                         )}
+                                        
 
                                         <h1
                                             className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F]`}
@@ -701,10 +524,11 @@ const Card = ({
                                         >{card.cardText}</p>
 
                                     </div>
-                                    <div className="lg:pt-16 md:pt-10 pt-2  leading-tight">
+                                    <div className="lg:pt-5 md:pt-7 pt-2  leading-tight">
                                         {card.cardSupText && (
                                             <p className="lg:w-8/12 w-full text-[16px] md:text-[20px] lg:text-[30px] text-white font-normal line-height3">{card.cardSupText}</p>
                                         )}
+                                        <p  className={`text-[20px] md:text-[32px] lg:text-[60px] text-white font-semibold`}>{card.uppertext}</p>
                                         <h1
                                             className={`text-[20px] md:text-[32px] lg:text-[60px] font-bold text-[#063A4F] line-height2`}
                                         >
@@ -713,6 +537,9 @@ const Card = ({
 
                                         <button
                                             className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
+                                            style={{
+                                                borderRadius:"20px"
+                                             }}
                                         > {card.beforeBtnText} <span className="text-[#063A4F]">{card.numberTitle} </span>{card.afterBtnText} </button>
                                     </div>
                                 </div>
@@ -720,14 +547,15 @@ const Card = ({
 
                             {(index === 2 || index === 5) && (
                                 <div className="flex">
-                                    <div className="relative w-5/12 md:w-5/12 md:pl-5">
+                                    <div className="relative w-4/12 md:w-5/12 md:pl-5 flex items-start justify-start ">
                                         {/* Responsive Image */}
+                                        <div className="customerDetails mt-[0px] lg:mt-[110px] lg:mt-[60px]">
                                         <Image
                                             src={card.img || ''}
                                             alt="crown"
                                             width={260}
                                             height={260}
-                                            className="md:w-45 md:h-45 top-0 left-0 hidden md:flex"
+                                            className="md:w-45 md:h-45 top-0 left-0 hidden md:flex md:items-center"
 
                                         />
                                         <h3
@@ -735,9 +563,11 @@ const Card = ({
                                         >
                                             {card.customerName}
                                         </h3>
+                                        </div>
+                                      
                                     </div>
                                     <div
-                                        className={`w-7/12 md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
+                                        className={`w-8/12 md:w-7/12  md:flex ${isScrollingPaused ? 'overflow-hidden' : ''}`}
                                         style={{
                                             overflowY: isScrollingPaused ? "hidden" : "scroll",
                                         }}>
@@ -756,11 +586,11 @@ const Card = ({
                                                         {card.smallCardsData.map((smallCard) => (
                                                             <div
                                                                 key={smallCard.id}
-                                                                className="small-card-content flex justify-center items-center text-left  text-white p-10 border-[0.5px]"
+                                                                className="small-card-content flex justify-center items-center text-left  text-white md:p-10 p-5 border-[0.5px]"
                                                                 style={{
                                                                     height: isMobile? '150px': "300px",
                                                                     margin: isMobile? '0': "30px",
-                                                                    borderRadius: "40px",
+                                                                    borderRadius: isMobile? '20': "30px",
                                                                     marginBottom: isMobile ? '10px': '0'
                                                                     // backgroundColor: "rgba(255, 255, 255, 0.1)",
                                                                     // backdropFilter: "blur(5px)",

@@ -316,7 +316,10 @@ function DisbursementCard({numberTitle, headerText, unit, backgroundImage, index
                                             </h1>
     
                                             <button
-                                                className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
+                                                className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] leading-normal `}
+                                                style={{
+                                                    borderRadius:"20px"
+                                                 }}
                                             > {beforeBtnText} <span className="text-[#063A4F]">{numberTitle} </span>{afterBtnText} </button>
                                         </div>
                                     </div>
