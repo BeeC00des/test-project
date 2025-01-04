@@ -133,13 +133,13 @@ function MessageCard({ title, subTitle, text, ratings, img }: CardProps) {
       ref={ref}
     >
       <div className="flex flex-col justify-center items-center w-full text-center text-white">
-        <div className="lg:w-3/12 md:w-6/12 w-7/12 text-center relative md:mt-55 mt-0 slide-top">
+      <div className="lg:w-3/12 md:w-6/12 w-8/12 text-center relative md:mt-55 mt-0 slide-top">
           <Image
             src={img}
             alt="items"
             width={imageSize}
             height={imageSize}
-            className="thumb absolute md:top-0 top-12  left-1/2 transform -translate-x-1/2 z-10"
+            className="thumb absolute md:top-0 top-20  left-1/2 transform -translate-x-1/2 z-10"
           />
           <h3 className="text-[20px] md:text-[24px] lg:text-[28px] font-normal leading-relaxed relative z-0 mt-40 slide-top">
             {subTitle}
@@ -155,7 +155,7 @@ function MessageCard({ title, subTitle, text, ratings, img }: CardProps) {
             <Image src={ratings} alt="star" width={90} height={32} />
           </div>
         </div>
-        <p className="md:w-6/12 w-full text-[16px] md:text-[24px] font-normal md:py-7 font-[inter] leading-relaxed slide-bottom">
+        <p className="md:w-6/12 w-full text-[20px] md:text-[24px] font-normal md:py-7 font-[inter] leading-relaxed slide-bottom">
           {text}
         </p>
 

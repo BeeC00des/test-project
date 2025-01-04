@@ -60,13 +60,13 @@ body {
 	max-width: none !important;
 } */
 
-/* .header-img {
+.header-img {
 	width: 700px !important;
 	height: 420px !important;
 	/* max-width: none !important; */
 
-	/* border:1px solid red; 
-} */
+	 /* border:1px solid red;  */
+}
 
 /* Base Card Style */
 /* Keyframes for sliding in from the left */
@@ -328,9 +328,12 @@ main {
 
 
 #small-cards {
-	height: 637px;
+	/* height: 637px;
 	width: 400px;
-	margin: 0px auto;
+	margin: 0px auto; */
+	height: 570px;
+	width: 400px;
+	margin: 20px auto;
 	border-radius: 30px;
 	overflow-y: scroll;
 	scrollbar-width: none !important;
@@ -393,7 +396,8 @@ main {
 
 	#small-cards {
 		width: 150px;
-		height: 200px;
+		height: 150px;
+		/* height: 200px; */
 	}
 
 	.card {
@@ -408,12 +412,13 @@ main {
 		/* margin:auto; */
 	}
 
-/* 
+
 	.header-img {
-		width: 300px !important;
+		/* width: 300px !important; */
+		width: 150px !important;
 		height: 200px !important;
 	
-	} */
+	}
 
 	.card-header-text {
 		line-height: 20px;

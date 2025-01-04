@@ -37,7 +37,8 @@ const BgHeader = (merchantData: any) => {
         <div className="flex justify-center items-center bg-header1">
           <div className="w-11/12">
             <div className="md:flex md:justify-start  justfy-center items-center w-full ">
-              <div className="font-[Rubik] text-left md:w-9/12  w-full lg:pl-10  lg:pr-4 slide-left " style={{
+              <div className="font-[Rubik] text-left md:w-9/12  w-full lg:pl-10  lg:pr-4 slide-left " 
+              style={{
                 position: 'relative',
                 top: isMobile ? "55px" : "0px",
               }}>
@@ -58,7 +59,7 @@ const BgHeader = (merchantData: any) => {
                     width: isMobile ? '230px' : '700px',
                     height: isMobile ? 'inherit' : '420px',
                     position: "relative",
-                    right: isMobile ? ' -177px' : '0px',
+                    right: isMobile ? ' -200px' : '0px',
                     top: isMobile ? '27px' : '0px'
 
                   }}//src="../images/calendar.svg"
