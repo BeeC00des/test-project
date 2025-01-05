@@ -72,7 +72,7 @@ const BgHeader = (merchantData: any) => {
         <div className="lg:w-full md:w-full h-[500px] mx-auto flex lg:py-10 md:py-50 justify-center items-center sm:px-5 text-center bg-header2">
           <Merchantcard
             title={merchantData?.merchantData?.data?.business_name ?? ""}
-            text="As the year comes to a close, we at Monnify want to express our heartfelt gratitude to all our amazing merchants. You’ve been remarkable, making great strides in your businesses, and we’re proud to have been a part of your journey. Now, it’s time to show you just how much you’ve achieved using Monnify this year—it’s an exciting sight to behold! So, sit back, relax, and enjoy a glimpse of all the magic we’ve created together."
+            text="We at Monnify want to express our heartfelt gratitude to all our amazing merchants. You’ve been remarkable, making great strides in your businesses, and we’re proud to have been a part of your journey. Now, it’s time to show you just how much you’ve achieved using Monnify in 2024—it’s an exciting sight to behold! So, sit back, relax, and enjoy a glimpse of all the magic we’ve created together."
             img="../images/merchantLogo.svg"
           />
         </div>

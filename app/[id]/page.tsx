@@ -72,6 +72,7 @@ export default function Home() {
     const disburseCardData: any[] = []; // disbursement
     const collectCardData: any[] = []; // collection 
 
+   
 
     const topValue = 50;
 
@@ -91,7 +92,7 @@ export default function Home() {
           merchantData.data.collection_value)
         ,
         numberVolume:
-          merchantData.data.collection_volume
+        new Intl.NumberFormat("en-NG").format(merchantData.data.collection_volume)
         ,
         cardSupText: "You've been raking in the Naira with",
         cardText: "🤑 Keep the bell ringing!",
@@ -105,7 +106,7 @@ export default function Home() {
       updatedCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: merchantData.data.best_collection_month_volume,
+        numberTitle: new Intl.NumberFormat("en-NG").format(merchantData.data.best_collection_month_volume),
         headerText: "Collected",
         backgroundImage: "../images/mainDisbursement.svg",
         // top: `${topValue * 2}px`,
@@ -143,13 +144,13 @@ export default function Home() {
           },
           {
             id: "small_card_2",
-            text: `With ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )} payment`,
+            text: `With ${
+              new Intl.NumberFormat("en-NG").format(merchantData.data.top_collection_customer_volume)
+            } payments`,
           },
           {
             id: "small_card_3",
-            text: `Valued at ${merchantData.data.top_collection_customer_volume
+            text: `Valued at ${formatCurrency(merchantData.data.top_collection_customer_value)
               }`,
           },
         ],
@@ -171,7 +172,7 @@ export default function Home() {
           merchantData.data.disbursement_value)
         ,
         numberVolume:
-          merchantData.data.disbursement_volume,
+        new Intl.NumberFormat("en-NG").format(merchantData.data.disbursement_volume),
         cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
         cardText: "",
         cardUpperText: "transaction",
@@ -184,7 +185,7 @@ export default function Home() {
       updatedCardData.push({
         index: 5,
         id: "card_5",
-        numberTitle: merchantData.data?.best_disbursement_month_volume,
+        numberTitle: new Intl.NumberFormat("en-NG").format(merchantData.data?.best_disbursement_month_volume),
         headerText: "Collected",
         backgroundImage: "../images/mainDisbursement.svg",
         top: "250px",
@@ -206,12 +207,12 @@ export default function Home() {
       });
     }
     //waiting for disbursement
-    if (merchantData?.data?.top_collection_customer_name) {
+    if (merchantData?.data?.disbursement_value) {
       updatedCardData.push({
         index: 6,
         id: "card_6",
         img: "/images/crown.png",
-        customerName: merchantData.data.top_collection_customer_name,
+        customerName: merchantData.data.top_disbursement_customer,
         backgroundImage: "/images/mainCustomer.svg",
         top: "300px",
         marginTop: "-50px", // there sth going on here (reduce pixel to see the effect)
@@ -222,13 +223,13 @@ export default function Home() {
           },
           {
             id: "small_card_2",
-            text: `With ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )} payment`,
+            text: `With ${
+              new Intl.NumberFormat("en-NG").format(merchantData.data.top_disbursement_customer_volume)
+            } payouts`,
           },
           {
             id: "small_card_3",
-            text: `Valued at ${merchantData.data.top_collection_customer_volume
+            text: `Valued at ${formatCurrency(merchantData.data.top_disbursement_customer_value)
               }`,
           },
         ],
@@ -257,7 +258,7 @@ export default function Home() {
           merchantData.data.disbursement_value)
         ,
         numberVolume:
-          merchantData.data.disbursement_volume,
+        new Intl.NumberFormat("en-NG").format(merchantData.data.disbursement_volume),
         cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
         cardText: "",
         cardUpperText: "transaction",
@@ -268,7 +269,7 @@ export default function Home() {
       disburseCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: merchantData.data?.best_disbursement_month_volume,
+        numberTitle: new Intl.NumberFormat("en-NG").format(merchantData.data?.best_disbursement_month_volume),
         headerText: "Collected",
         backgroundImage: "../images/mainDisbursement.svg",
         top: "50px",
@@ -289,12 +290,12 @@ export default function Home() {
       });
     }
     //waiting for disbursement
-    if (merchantData?.data?.top_collection_customer_name) {
+    if (merchantData?.data?.top_disbursement_customer) {
       disburseCardData.push({
         index: 3,
         id: "card_3",
         img: "/images/crown.png",
-        customerName: merchantData.data.top_collection_customer_name,
+        customerName: merchantData.data.top_disbursement_customer,
         backgroundImage: "/images/mainCustomer.svg",
         top: "100px",
         marginTop: "-150px", // there sth going on here (reduce pixel to see the effect)
@@ -305,13 +306,13 @@ export default function Home() {
           },
           {
             id: "small_card_2",
-            text: `With ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )} payment`,
+            text: `With ${
+              new Intl.NumberFormat("en-NG").format(merchantData.data.top_disbursement_customer_volume)
+            } payouts`,
           },
           {
             id: "small_card_3",
-            text: `Valued at ${merchantData.data.top_collection_customer_volume
+            text: `Valued at ${formatCurrency(merchantData.data.top_disbursement_customer_value)
               }`,
           },
         ],
@@ -339,7 +340,7 @@ export default function Home() {
           merchantData.data.collection_value)
         ,
         numberVolume:
-          merchantData.data.collection_volume
+        new Intl.NumberFormat("en-NG").format(merchantData.data.collection_volume)
         ,
         cardSupText: "You've been raking in the Naira with",
         cardText: "🤑 Keep the bell ringing!",
@@ -353,7 +354,7 @@ export default function Home() {
       collectCardData.push({
         index: 2,
         id: "card_2",
-        numberTitle: merchantData.data.best_collection_month_volume,
+        numberTitle: new Intl.NumberFormat("en-NG").format(merchantData.data.best_collection_month_volume),
         headerText: "Collected",
         backgroundImage: "../images/mainDisbursement.svg",
         // top: `${topValue * 2}px`,
@@ -391,13 +392,13 @@ export default function Home() {
           },
           {
             id: "small_card_2",
-            text: `With ${formatCurrency(
-              merchantData.data.top_collection_customer_value
-            )} payment`,
+            text: `With ${
+              new Intl.NumberFormat("en-NG").format(merchantData.data.top_collection_customer_volume)
+            } payments`,
           },
           {
             id: "small_card_3",
-            text: `Valued at ${merchantData.data.top_collection_customer_volume
+            text: `Valued at ${formatCurrency(merchantData.data.top_collection_customer_value)
               }`,
           },
         ],
@@ -413,7 +414,7 @@ export default function Home() {
 
   }, [merchantData]);
 
-//ore's request format
+
   // const card = [
   //   {
   //     cardTitle: "Card 1 - List 1",
@@ -441,147 +442,6 @@ export default function Home() {
       <BgHeader merchantData={merchantData} />
 
 
-     
-      {/* <div className="h-auto">
-     
-        {merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-24 md:mb-2 relative ">
-            {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
-
-            {error && (
-              <p className="text-red-500 mt-2 py-10 text-2xl text-center">
-                {error}
-              </p>
-            )}
-
-            
-
-
-            <ul id="cards">
-            
-              {cardData.map((card, index) => (
-                <Card
-                  index={index}
-                  key={index}
-                  id={`card_${index}`}
-                  numberTitle={card.numberTitle}
-                  unit={card.unit}
-                  headerText={card.headerText}
-                  top={card.top}
-                  backgroundImage={card.backgroundImage}
-                  smallCardsData={card.smallCardsData}
-                  customerName={card.customerName}
-                  img={card.img}
-                  specialUppertext={card.specialUppertext}
-                  cardUpperText={card.cardUpperText}
-                  cardText={card.cardText}
-                  uppertext={card.uppertext}
-                  numberValue={card.numberValue}
-                  numberVolume={card.numberVolume}
-                  cardSupText={card.cardSupText}
-                  afterBtnText={card.afterBtnText}
-                  beforeBtnText={card.beforeBtnText}
-                  marginTop ={card.marginTop}
-                />
-              ))}
-            </ul>
-
-          </main>
-
-        ) : merchantData?.data?.disbursement_value ? (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2">
-            {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
-
-            {error && (
-              <p className="text-red-500 mt-2 py-10 text-2xl text-center">
-                {error}
-              </p>
-            )}
-
-
-      
-            <ul id="cards">
-              {disburseData.map((card, index) => (
-                <DisbursementCard
-                index={index}
-                key={index}
-                id={`card_${index}`}
-                numberTitle={card.numberTitle}
-                unit={card.unit}
-                headerText={card.headerText}
-                top={card.top}
-                backgroundImage={card.backgroundImage}
-                smallCardsData={card.smallCardsData}
-                customerName={card.customerName}
-                img={card.img}
-                specialUppertext={card.specialUppertext}
-                cardUpperText={card.cardUpperText}
-                cardText={card.cardText}
-                uppertext={card.uppertext}
-                numberValue={card.numberValue}
-                numberVolume={card.numberVolume}
-                cardSupText={card.cardSupText}
-                afterBtnText={card.afterBtnText}
-                beforeBtnText={card.beforeBtnText}
-                marginTop ={card.marginTop}
-                />
-              ))}
-            </ul>
-
-          </main>
-
-        ) : (
-          <main className="mt-10 mb-2 md:mt-32 md:mb-2">
-            {loading && <p className="py-10 text-2xl text-center ">Loading...</p>}
-
-            {error && (
-              <p className="text-red-500 mt-2 py-10 text-2xl text-center">
-                {error}
-              </p>
-            )}
-
-
-         
-            <ul id="cards">
-              {collectData.map((card, index) => (
-                <CollectionCard
-                index={index}
-                key={index}
-                id={`card_${index}`}
-                numberTitle={card.numberTitle}
-                unit={card.unit}
-                headerText={card.headerText}
-                top={card.top}
-                backgroundImage={card.backgroundImage}
-                smallCardsData={card.smallCardsData}
-                customerName={card.customerName}
-                img={card.img}
-                specialUppertext={card.specialUppertext}
-                cardUpperText={card.cardUpperText}
-                cardText={card.cardText}
-                uppertext={card.uppertext}
-                numberValue={card.numberValue}
-                numberVolume={card.numberVolume}
-                cardSupText={card.cardSupText}
-                afterBtnText={card.afterBtnText}
-                beforeBtnText={card.beforeBtnText}
-                marginTop ={card.marginTop}
-                />
-              ))}
-            </ul>
-
-
-
-          </main>
-
-        )
-        }
-      </div> */}
-
-      {/* <div className="flex justify-center items-center">
-        <Cards cardList={card}  />
-      </div> */}
-
       <div className="flex justify-center items-center">
         {cardData.length > 0 ? <CardStack cardList={
           merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? cardData :
@@ -591,7 +451,7 @@ export default function Home() {
 
       <MessageCard
         subTitle="Your performance this year describe you as a"
-        title=" Monni Maker"
+        title= {merchantData?.data?.performance_category ?? "Monnie Maker"}
         ratings="/images/star.svg"
         text="You have done an amazing job and we are happy to continue our partnership with you in 2025"
         img="/images/thumb.png"

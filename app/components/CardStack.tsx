@@ -559,7 +559,7 @@ const Card = ({
 
                                         />
                                         <h3
-                                            className="card-text text-[22px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
+                                            className="card-text capitalize text-[22px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
                                         >
                                             {card.customerName}
                                         </h3>
