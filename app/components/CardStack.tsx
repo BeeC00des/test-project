@@ -248,6 +248,8 @@ const Card = ({
     const isTabletOrMobile = isMobile || isTablet
 
     const parentCardRef = useRef<HTMLLIElement>(null);
+    const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
 
     useEffect(() => {
         if (index === 5) {
@@ -362,19 +364,22 @@ const Card = ({
                 // Check if inner scroll is complete
             }
 
-            window.addEventListener('scroll', throttle(handleMainScroll, 200));
-            window.addEventListener('wheel', throttle(onWheel, 200), { passive: false });
-            document.addEventListener('touchmove', throttle(onTouchMove, 200), { passive: false });
+            if (!isSafari) {
+                window.addEventListener('scroll', throttle(handleMainScroll, 200));
+                window.addEventListener('wheel', throttle(onWheel, 200), { passive: false });
+                document.addEventListener('touchmove', throttle(onTouchMove, 200), { passive: false });
+    
+                return () => {
+                    // observer.disconnect();
+                    window.removeEventListener('scroll', handleMainScroll);
+                    window.removeEventListener('wheel', onWheel);
+                    document.addEventListener('touchmove', onTouchMove);
+                };
+            }
 
-            return () => {
-                // observer.disconnect();
-                window.removeEventListener('scroll', handleMainScroll);
-                window.removeEventListener('wheel', onWheel);
-                document.addEventListener('touchmove', onTouchMove);
-            };
         }
 
-    }, [isTabletOrMobile, isTablet, isMobile]);
+    }, [isTabletOrMobile, isTablet, isMobile, isSafari]);
 
     const tops =
         isTabletOrMobile ? [50, 100, 150, 200, 250, 300] : [100, 175, 250, 325, 400, 475]
