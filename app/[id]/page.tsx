@@ -175,7 +175,7 @@ export default function Home() {
         new Intl.NumberFormat("en-NG").format(merchantData.data.disbursement_volume),
         cardSupText: "You were spreading the wealth like a pro generously completing 🔥",
         cardText: "",
-        cardUpperText: "transaction",
+        cardUpperText: "transactions",
 
       });
     }
@@ -201,8 +201,8 @@ export default function Home() {
         cardSupText: "When you paid out the most,",
         cardText: "", //no content
         cardUpperText: "", //no content
-        beforeBtnText: 'This day you paid out',
-        afterBtnText: "what a day!👍🏽"
+        beforeBtnText: 'This month you paid out',
+        afterBtnText: "transactions what a month!👍🏽"
 
       });
     }
@@ -285,8 +285,8 @@ export default function Home() {
         cardSupText: "When you paid out the most,",
         cardText: "", //no content
         cardUpperText: "", //no content
-        beforeBtnText: 'This day you paid out',
-        afterBtnText: "what a day!👍🏽"
+        beforeBtnText: 'This month you paid out',
+        afterBtnText: "transactions what a month!👍🏽"
       });
     }
     //waiting for disbursement

@@ -540,7 +540,7 @@ const Card = ({
                                             style={{
                                                 borderRadius:"20px"
                                              }}
-                                        > {card.beforeBtnText} <span className="text-[#063A4F]">{card.numberTitle} </span>{card.afterBtnText} </button>
+                                        > {card.beforeBtnText} <span className="text-[#063A4F]">{card.numberTitle}, </span>{card.afterBtnText} </button>
                                     </div>
                                 </div>
                             )}
