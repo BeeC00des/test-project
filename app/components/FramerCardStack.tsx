@@ -180,7 +180,7 @@ const Card = ({
                         >
                             <div className="text-left">
                                 {(index === 0 || index === 3) && (
-                                    <div className="pl-5 md:pl-7 lg:pl-14 lg:py-14 py-0 w-full font-[rubik]">
+                                    <div className="pl-0 md:pl-7 lg:pl-14 lg:py-14 py-0 w-full font-[rubik]">
                                         <div className="lg:pt-5 md:pt-3 pt-2">
                                             <p className="lg:text-[32px] md:text-[20px] text-[16px] text-white font-[inter line-height1">{card.uppertext}</p>
                                             <h1
@@ -216,7 +216,7 @@ const Card = ({
                                 )}
 
                                 {(index === 1 || index === 4) && (
-                                    <div className="pl-5 md:pl-7 lg:pl-14  w-full font-[rubik] w-full md:w-8/12 slide-left">
+                                    <div className="pl-0 md:pl-7 lg:pl-14  w-full font-[rubik] w-full md:w-8/12 slide-left">
                                         <div className=" lg:pt-16 md:pt-10 pt-2 leading-tight">
 
                                             {card.specialUppertext && (
@@ -246,7 +246,7 @@ const Card = ({
                                             </h1>
 
                                             <button
-                                                className={`md:text-[20px] text-[16px] lg:text-[28px]  w-8/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
+                                                className={`md:text-[20px] text-[16px] lg:text-[28px] md:w-8/12 w-10/12 text-left text-sm font-normal py-3 pl-3 pr-10 text-white bg-[#063A4F33] rounded-lg leading-normal `}
                                                 style={{
                                                     borderRadius:"20px"
                                                 }}
@@ -257,7 +257,7 @@ const Card = ({
 
                                 {(index === 2 || index === 5) && (
                                     <div className="flex">
-                                        <div className="relative w-4/12 md:w-5/12 md:pl-5 flex items-start justify-start ">
+                                        <div className="relative w-4/12 md:w-5/12 pl-0 md:pl-5 flex items-start justify-start ">
                                             {/* Responsive Image */}
                                             <div className="customerDetails mt-[0px] lg:mt-[110px] lg:mt-[60px]">
                                             <Image
@@ -269,7 +269,7 @@ const Card = ({
 
                                             />
                                             <h3
-                                                className="card-text capitalize text-[22px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] pl-5"
+                                                className="card-text capitalize text-[22px] md:text-[32px] lg:text-[60px] font-[Rubik] font-semibold text-white md:mt-[-85px] mt-[-40px] mt-[40px] md:pl-5 pl-0"
                                             >
                                                 {card.customerName}
                                             </h3>

@@ -12,13 +12,13 @@ const BgHeader = (merchantData: any) => {
 
   //seperate caller for responsiveness follwing client side role
   const [isMobile, setIsMobile] = useState(false);
- 
+
 
   // Update the isMobile state on mount or screen resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Set breakpoint for mobile screens
-     
+
     };
 
     handleResize(); // Check initial screen size
@@ -37,11 +37,11 @@ const BgHeader = (merchantData: any) => {
         <div className="flex justify-center items-center bg-header1">
           <div className="w-11/12">
             <div className="md:flex md:justify-start  justfy-center items-center w-full ">
-              <div className="font-[Rubik] text-left md:w-9/12  w-full lg:pl-10  lg:pr-4 slide-left " 
-              style={{
-                position: 'relative',
-                top: isMobile ? "55px" : "0px",
-              }}>
+              <div className="font-[Rubik] text-left md:w-9/12  w-full lg:pl-10  lg:pr-4 slide-left "
+                style={{
+                  position: 'relative',
+                  top: isMobile ? "55px" : "0px",
+                }}>
                 <p className="lg:text-[155px] md:text-[100px] text-[55px] text-[#063A4F] font-bold  header-text">
                   End of year review
                 </p>
@@ -59,11 +59,25 @@ const BgHeader = (merchantData: any) => {
                     width: isMobile ? '230px' : '700px',
                     height: isMobile ? 'inherit' : '420px',
                     position: "relative",
-                    right: isMobile ? ' -200px' : '0px',
-                    top: isMobile ? '27px' : '0px'
+                    right: isMobile ? `-256px` : '0px', 
+                    top: isMobile ? '58px' : '0px' ,
 
-                  }}//src="../images/calendar.svg"
-                  alt="calendar" src={isMobile ? "../images/calendar.svg" : "../images/calend.svg"}  />
+                    // right: isMobile
+                    //   ? window.innerWidth <= 320
+                    //     ? '-157px'  // For screen width <= 320px
+                    //     : window.innerWidth <= 375
+                    //       ? '-210px' 
+                    //       : '-256px'  
+                    //   : '0px',  
+
+                    // top: isMobile
+                    //   ? window.innerWidth <= 320
+                    //     ? '33px'  
+                    //     : '58px'  
+                    //   : '0px',
+
+                  }}
+                  alt="calendar" src={isMobile ? "../images/calendar.svg" : "../images/calend.svg"} />
               </div>
             </div>
           </div>

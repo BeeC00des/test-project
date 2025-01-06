@@ -7,12 +7,10 @@ import { useParams } from "next/navigation";
 
 import CardStack from "../components/CardStack";
 
-
 import getMerchantData from "../helper/api";
 import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
-import FramerCardStack from "../components/FramerCardStack";
 
 
 
@@ -27,10 +25,6 @@ export default function Home() {
   const [merchantData, setMerchantData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-
-  // console.log(merchantData.data.best_collection_month);
-  // console.log(merchantData)
 
   // currency formatter function
 
@@ -416,39 +410,18 @@ export default function Home() {
   }, [merchantData]);
 
 
-  // const card = [
-  //   {
-  //     cardTitle: "Card 1 - List 1",
-  //     cardVolume: "Volume 1",
-  //     cardText: "This is card number 1 from List 1",
-  //     backgroundImage: "https://via.placeholder.com/600x400",
-  //   },
-  //   {
-  //     cardTitle: "Card 2 - List 1",
-  //     cardVolume: "Volume 2",
-  //     cardText: "This is card number 2 from List 1",
-  //      backgroundImage: "../images/mainCollection.svg"
-  //   },
-  //   {
-  //     cardTitle: "Card 3 - List 1",
-  //     cardVolume: "Volume 3",
-  //     cardText: "This is card number 3 from List 1",
-  //     backgroundImage: "https://via.placeholder.com/600x400",
-  //     // backgroundImage: "../images/collection.svg"
-  //   },
-  // ];
+
   return (
     <div className="w-full bg-main">
 
       <BgHeader merchantData={merchantData} />
 
 
-      {/* <div> */}
         {cardData.length > 0 ? <CardStack cardList={
           merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? cardData :
             merchantData?.data?.collection_value ? collectData: disburseData
         } /> : null}
-      {/* </div> */}
+  
 
       <MessageCard
         subTitle="Your performance this year describe you as a"

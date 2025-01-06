@@ -455,6 +455,10 @@ main {
 		line-height: none
 	}
 
+	.card-text {
+		line-height: 25px;
+	}
+
 
 }
 
