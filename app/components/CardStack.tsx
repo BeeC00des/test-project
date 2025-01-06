@@ -192,7 +192,7 @@ function CardStack({ cardList }: CardProps) {
 
     return (
 
-        <div className="mainCard my-[80px] mx-auto mb-[50px] lg:mb-[420px]" style={{
+        <div className="mainCard my-[80px] mx-auto mb-[50px] lg:mb-[220px]" style={{
             width: '80%',
             // margin: '80px auto',
             position: 'relative'
@@ -277,50 +277,7 @@ const Card = ({
         if (parentCardRef.current) {
             const handleMainScroll = (e) => {
                 if (!parentCardRef.current) return;
-                if (index === 5) {
-                    const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
-                    const stickyElementTop = parseInt(stickyElementStyle.top, 10);
-                    const currentTop = parentCardRef.current.getBoundingClientRect().top;
-
-                    const oldPosition = document.querySelectorAll('li.card')?.[0].computedStyleMap().get('position');
-                    // console.log("🚀 ~ handleMainScroll ~ oldHeight:", oldPosition);
-                    if (currentTop <= stickyElementTop) {
-                        // console.log("🚀 ~ handleMainScroll ~ inside true og")
-                        if (oldPosition.value === 'sticky') {
-                            // console.log("🚀 ~ handleMainScroll ~ inside true")
-                            document.querySelectorAll('li.card').forEach((item, index) => {
-                                item.style.position = 'absolute';
-                                //item.style.top = 'unset !important';
-                                // item.style.bottom = `${index * 50}px !important`;
-                                item.style.left = '50%';
-                                item.style.transform = 'translateX(-50%)';
-                            })
-                            document.querySelector('ul#mainCards').style.height = isMobile ? '550px' : isTablet ? '700px' :  '900px'
-                            window.scrollBy({
-                                top: isMobile ? -570 : isTablet ? -1100:  -1300
-                            })
-                        }
-                    } else {
-                        if (oldPosition.value === 'absolute') {
-                            document.querySelectorAll('li.card').forEach((item, index) => {
-                                item.style.position = 'sticky';
-                                //item.style.top = 'unset !important';
-                                // item.style.bottom = `${index * 50}px !important`;
-                                item.style.left = '0';
-                                item.style.transform = 'none';
-                            })
-                            document.querySelector('ul#mainCards').style.height = 'auto'
-                            runAfterFramePaint(() => {
-                                window.scrollBy({
-                                    top: isMobile ? 550: isTablet ? 1300:  2900
-                                })
-                            });
-                        }
-
-                    }
-
-                    return;
-                }
+                
                 if (!smallCardsContainerRef.current || ![2, 5].includes(index)) return;
                 const stickyElementStyle = window.getComputedStyle(parentCardRef.current);
                 const stickyElementTop = parseInt(stickyElementStyle.top, 10);

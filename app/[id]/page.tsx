@@ -12,6 +12,7 @@ import getMerchantData from "../helper/api";
 import MessageCard from "../components/MessageCard";
 import Footer from "../components/Footer";
 import BgHeader from "../components/Bgheader";
+import FramerCardStack from "../components/FramerCardStack";
 
 
 
@@ -437,17 +438,17 @@ export default function Home() {
   //   },
   // ];
   return (
-    <div className="h-auto w-full bg-main">
+    <div className="w-full bg-main">
 
       <BgHeader merchantData={merchantData} />
 
 
-      <div className="flex justify-center items-center">
+      {/* <div> */}
         {cardData.length > 0 ? <CardStack cardList={
           merchantData?.data?.collection_value && merchantData?.data?.disbursement_value ? cardData :
             merchantData?.data?.collection_value ? collectData: disburseData
         } /> : null}
-      </div>
+      {/* </div> */}
 
       <MessageCard
         subTitle="Your performance this year describe you as a"
