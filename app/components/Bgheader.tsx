@@ -59,22 +59,22 @@ const BgHeader = (merchantData: any) => {
                     width: isMobile ? '230px' : '700px',
                     height: isMobile ? 'inherit' : '420px',
                     position: "relative",
-                    right: isMobile ? `-256px` : '0px', 
-                    top: isMobile ? '58px' : '0px' ,
+                    // right: isMobile ? `-256px` : '0px', 
+                    // top: isMobile ? '58px' : '0px' ,
 
-                    // right: isMobile
-                    //   ? window.innerWidth <= 320
-                    //     ? '-157px'  // For screen width <= 320px
-                    //     : window.innerWidth <= 375
-                    //       ? '-210px' 
-                    //       : '-256px'  
-                    //   : '0px',  
+                    right: isMobile
+                      ? window.innerWidth <= 320
+                        ? '-157px'  // For screen width <= 320px
+                        : window.innerWidth <= 375
+                          ? '-210px' 
+                          : '-256px'  
+                      : '0px',  
 
-                    // top: isMobile
-                    //   ? window.innerWidth <= 320
-                    //     ? '33px'  
-                    //     : '58px'  
-                    //   : '0px',
+                    top: isMobile
+                      ? window.innerWidth <= 320
+                        ? '33px'  
+                        : '58px'  
+                      : '0px',
 
                   }}
                   alt="calendar" src={isMobile ? "../images/calendar.svg" : "../images/calend.svg"} />
