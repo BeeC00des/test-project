@@ -250,30 +250,6 @@ const Card = ({
     const parentCardRef = useRef<HTMLLIElement>(null);
     const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
-
-    useEffect(() => {
-        if (index === 5) {
-            var observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutationRecord) {
-                    // console.log("🚀 ~ mutationRecord:", mutationRecord)
-                    const isAbsolute = mutationRecord.target.style.position === 'absolute';
-                    // console.log("🚀 ~ newHeight:", isAbsolute)
-                    // if (!isAbsolute) {
-                    //         window.scrollBy({
-                    //             top: 2200
-                    //         })
-                    // }
-                });
-            });
-
-            var target = document.querySelectorAll('li.card')[0];
-            observer.observe(target, { attributes: true, attributeFilter: ['style'] });
-            return () => {
-                observer.disconnect(target)
-            }
-        }
-    }, [index])
-
     useEffect(() => {
         // Observer for parent card
         if (parentCardRef.current) {
@@ -293,7 +269,7 @@ const Card = ({
                     window.document.body.style.overflow = 'hidden';
                     // window.document.getElementById('bg-main').style.overflow = 'hidden';
                     const container = smallCardsContainerRef.current;
-                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight;
+                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight - 100;
                     const currentScroll = container.scrollTop;
                     console.log("🚀 ~ handleMainScroll ~ container:", container)
 
@@ -307,10 +283,10 @@ const Card = ({
                     }
 
                     // Calculate and apply scroll
-                    const scrollStep = isTabletOrMobile ? 100: 300; // Adjust scroll speed
-                    requestAnimationFrame(() => {
+                    const scrollStep = isMobile ? 100: 300; // Adjust scroll speed
+                    // requestAnimationFrame(() => {
                         container.scrollTop = currentScroll + scrollStep;
-                    })
+                    // })
                     // container.scrollTo(0, currentScroll + scrollStep)
                 } else {
                     document.body.style.overflow = 'auto';
@@ -324,8 +300,8 @@ const Card = ({
                 // console.log("🚀 ~ handleMainScroll ~ container:", container)
                 if (container && parentCardRef.current) {
                     const currentScroll = container.scrollTop;
-                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight;
-                    // console.log("🚀 ~ handleMainScroll ~ currentScroll:", { currentScroll, scrollableHeight })
+                    const scrollableHeight = container.scrollHeight - parentCardRef.current.clientHeight - 100;
+                    console.log("🚀 ~ onWheel ~ currentScroll:", { currentScroll, scrollableHeight })
 
                     if (currentScroll >= scrollableHeight) {
                         // setIsInnerScrollComplete(true);
