@@ -13,12 +13,32 @@
     }
 }
 
+@media (max-width: 414px) {
+    .header-img {
+        right: -246px;
+        top: 47px;
+    }
+}
+
+@media (max-width: 390px){
+    .header-img {
+        right: -224px;
+        top: 47px;
+    }
+}
 
 
 @media (max-width: 375px){
     .header-img{
     right: -210px;
     top : 47px;
+    }
+}
+
+@media (max-width: 360px) {
+    .header-img {
+        right: -195px;
+        top: 47px;
     }
 }
 
