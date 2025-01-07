@@ -7,6 +7,7 @@ import Image from "next/image";
 import throttle from 'lodash.throttle';
 import { useMediaQuery } from 'react-responsive'
 import { motion, useScroll, useTransform } from 'motion/react';
+import { isSafari } from 'react-device-detect';
 
 
 function runAfterFramePaint(callback) {
@@ -248,7 +249,6 @@ const Card = ({
     const isTabletOrMobile = isMobile || isTablet
 
     const parentCardRef = useRef<HTMLLIElement>(null);
-    const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
     useEffect(() => {
         // Observer for parent card
@@ -355,7 +355,7 @@ const Card = ({
 
         }
 
-    }, [isTabletOrMobile, isTablet, isMobile, isSafari]);
+    }, [isTabletOrMobile, isTablet, isMobile]);
 
     const tops =
         isTabletOrMobile ? [50, 100, 150, 200, 250, 300] : [100, 175, 250, 325, 400, 475]
