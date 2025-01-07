@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Merchantcard from "./Merchantcard";
 import Navbar from "./Navbar";
 import { useMediaQuery } from 'react-responsive'
-
+import "./Bgheader.css"
 
 
 const BgHeader = (merchantData: any) => {
@@ -42,7 +42,7 @@ const BgHeader = (merchantData: any) => {
                   position: 'relative',
                   top: isMobile ? "55px" : "0px",
                 }}>
-                <p className="lg:text-[155px] md:text-[100px] text-[55px] text-[#063A4F] font-bold  header-text">
+                <p className="lg:text-[155px] md:text-[90px] text-[55px] text-[#063A4F] font-bold  header-text">
                   End of year review
                 </p>
 
@@ -58,23 +58,6 @@ const BgHeader = (merchantData: any) => {
                   style={{
                     width: isMobile ? '230px' : '700px',
                     height: isMobile ? 'inherit' : '420px',
-                    position: "relative",
-                    // right: isMobile ? `-256px` : '0px', 
-                    // top: isMobile ? '58px' : '0px' ,
-
-                    right: isMobile
-                      ? window.innerWidth <= 320
-                        ? '-157px'  // For screen width <= 320px
-                        : window.innerWidth <= 375
-                          ? '-210px' 
-                          : '-256px'  
-                      : '0px',  
-
-                    top: isMobile
-                      ? window.innerWidth <= 320
-                        ? '33px'  
-                        : '58px'  
-                      : '0px',
 
                   }}
                   alt="calendar" src={isMobile ? "../images/calendar.svg" : "../images/calend.svg"} />

@@ -1,0 +1,36 @@
+.header-img{
+    position: relative;
+    right:0px;
+    top:0px;
+
+   
+}
+
+@media (max-width: 640px){
+    .header-img{
+    right:-256px;
+    top : 58px;
+    }
+}
+
+
+
+@media (max-width: 375px){
+    .header-img{
+    right: -210px;
+    top : 58px;
+    }
+}
+
+@media (max-width: 320px){
+    .header-img{
+        
+    right: -157px;
+    top : 33px ;
+    }
+}
+
+
+
+
+
