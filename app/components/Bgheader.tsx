@@ -42,7 +42,7 @@ const BgHeader = (merchantData: any) => {
                   position: 'relative',
                   top: isMobile ? "55px" : "0px",
                 }}>
-                <p className="lg:text-[155px] md:text-[90px] text-[55px] text-[#063A4F] font-bold  header-text">
+                <p className="lg:text-[155px] md:text-[80px] text-[55px] text-[#063A4F] font-bold  header-text">
                   End of year review
                 </p>
 
@@ -60,7 +60,7 @@ const BgHeader = (merchantData: any) => {
                     height: isMobile ? 'inherit' : '420px',
 
                   }}
-                  alt="calendar" src={isMobile ? "../images/calendar.svg" : "../images/calend.svg"} />
+                  alt="calendar" src={isMobile ? "../images/calend.svg" : "../images/calendar1.svg"} />
               </div>
             </div>
           </div>
